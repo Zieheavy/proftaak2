@@ -15,7 +15,7 @@ $(document).ready(function(){
     }else{
       logout();
     }
-  });
+  }); 
 
   $("body").on("click",".login",function(){
     //checks if username and password are not blank
