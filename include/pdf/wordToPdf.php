@@ -10,6 +10,7 @@ $word->Visible = 0;
 // recommend to set to 0, disables alerts like "Do you want MS Word to be the default .. etc"
 $word->DisplayAlerts = 0;
 // open the word 2007-2013 document
+echo $directory . '../../_docs/' . $fileName . '.docx';
 $word->Documents->Open($directory . '../../_docs/' . $fileName . '.docx');
 // save it as word 2003
 $word->ActiveDocument->SaveAs('newdocument.doc');
