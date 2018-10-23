@@ -66,7 +66,7 @@ $(document).ready(function(){
     // console.log(files);
     // console.log(pages);
 
-    $.post( "include/pdfMerge.php", {
+    $.post( "include/pdf/pdfMerge.php", {
       files: files,
       pages: pages
     }, function(response,status){
@@ -80,8 +80,9 @@ $(document).ready(function(){
   loadIframes();
 
   function loadIframes(){
-    $.post("include/getPdfs.php",{
+    $.post("include/pdf/getPdfs.php",{
     }, function(response, status){
+      console.log(response);
       response = JSON.parse(response);
       var m_data = [];
       for(var i = 0; i < response.length; i++){
@@ -117,7 +118,7 @@ Upload.prototype.doUpload = function () {
 
     $.ajax({
         type: "POST",
-        url: "include/editProfilePic.php",
+        url: "include/uploadDocs.php",
         xhr: function () {
             var myXhr = $.ajaxSettings.xhr();
             if (myXhr.upload) {
@@ -130,7 +131,7 @@ Upload.prototype.doUpload = function () {
             var extension = data.split(".");
             if(extension != "pdf"){
               if(extension[1] == "xlsx" || extension[1] == "xls"){
-                $.post( "include/excelToPdf.php", {
+                $.post( "include/pdf/excelToPdf.php", {
                   fileName: extension[0]
                 }, function(response,status){
                   console.log(response)
@@ -140,7 +141,7 @@ Upload.prototype.doUpload = function () {
                 })
               }else if(extension[1] == "docx" || extension[1] == "doc"){
                 console.log(extension[0])
-                $.post( "include/wordToPdf.php", {
+                $.post( "include/pdf/wordToPdf.php", {
                   fileName: extension[0]
                 }, function(response,status){
                   console.log(response)

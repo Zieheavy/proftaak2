@@ -1,10 +1,10 @@
 <?php
 
 $mergeOrder = [];
-require_once('../fpdf/fpdf.php');
-require_once("../tcpdf/tcpdf.php");
-require_once('../fpdi/fpdi.php');
-define("APPLICATION_PATH",  str_replace("include","",dirname(__FILE__)));
+require_once('../../fpdf/fpdf.php');
+require_once("../../tcpdf/tcpdf.php");
+require_once('../../fpdi/fpdi.php');
+define("APPLICATION_PATH",  str_replace("include\\pdf","",dirname(__FILE__)));
 
 $files = $_POST["files"];
 $pages = $_POST["pages"];
@@ -14,17 +14,17 @@ for($i = 0; $i < count($files); $i++){
     split_pdf($files[$i], '_pdf', "_pdf-split");
     $numbers = explode(",",$pages[$i]);
     for($j = 0; $j < count($numbers); $j++){
-      $mergeOrder[] = "../_pdf-split/" . $files[$i] . "_" . $numbers[$j] . ".pdf";
+      $mergeOrder[] = "../../_pdf-split/" . $files[$i] . "_" . $numbers[$j] . ".pdf";
     }
   }else{
-    $mergeOrder[] = "../_pdf/" . $files[$i] . ".pdf";
+    $mergeOrder[] = "../../_pdf/" . $files[$i] . ".pdf";
   }
 }
 
 // echo json_encode($mergeOrder);
 
 
-require_once("../MergePdf.class.php");
+require_once("../../MergePdf.class.php");
 MergePdf::merge(
   $mergeOrder,
   MergePdf::DESTINATION__DISK_INLINE

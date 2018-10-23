@@ -1,6 +1,13 @@
-<div class="templateContainer">
-  <template class="product-template">
-      {{#.}}
-      {{/.}}
-  </template>
-</div>
+<template class="product-template">
+    {{#.}}
+    {{/.}}
+</template>
+<template class="iframe-template">
+  {{#.}}
+  <div class="iframe-container">
+    <iframe class="iframe" src="{{name}}" width="100%"></iframe>
+    <input class="pages" type="text" data-file={{name}} placeholder="Pages... (1,2,3 all)" value="">
+    <input class="selected" type="checkbox">Select pdf
+  </div>
+  {{/.}}
+</template>

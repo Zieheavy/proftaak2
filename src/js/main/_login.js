@@ -6,6 +6,7 @@ $(document).ready(function(){
   $.post("include/session.php",{
     return: true
   },function(response,status){
+    console.log(response);
     session = JSON.parse(response);
 
     //checks if there is a user in the session if so log the user in
