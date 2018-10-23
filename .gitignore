@@ -3,4 +3,5 @@ include/database.php
 gulpfile.js
 package.json
 dest
+vendor
 package-lock.json
