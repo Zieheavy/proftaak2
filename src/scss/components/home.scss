@@ -1,0 +1,14 @@
+.iframe-container{
+  width: 45vmin;
+  height: 55vmin;
+  display: inline-block;
+  .iframe{
+    height: 90%;
+    width: 100%;
+    border: none;
+  }
+  .pages{
+    height: 10%;
+    width: 100%;
+  }
+}

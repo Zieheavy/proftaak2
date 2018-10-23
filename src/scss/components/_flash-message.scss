@@ -1,0 +1,32 @@
+.flash-message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px 15px;
+    z-index: 2000;
+    transition: .2s ease;
+    margin-top: 20px;
+    margin-right: 20px;
+    text-align: right;
+    transform: translateX(200px);
+    &--show{
+        transform: translateX(0px);
+    }
+    &-container{
+        position: fixed;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        flex-direction: column;
+        z-index: 2000;
+        transition: .2s ease;
+    }
+    &.alert-success{
+        color: #fff;
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+}
