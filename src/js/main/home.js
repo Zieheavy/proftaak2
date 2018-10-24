@@ -14,7 +14,8 @@ $(document).ready(function(){
     $.post( "include/excelToPdf.php", {
       fileName: "urenSeletor2"
     }, function(response,status){
-      if(response.indexOf("%PDF-1.5") != -1){
+      // console.log(response)
+      if(response == "succes"){
         showFlashMessage("Excel to Pdf succes", "success")
       }
     })
@@ -25,9 +26,8 @@ $(document).ready(function(){
       files: ["doc1", "urenSeletor2"],
       pages: ["all","2,1,3,6,2"]
     }, function(response,status){
-      console.log(response)
-      if(response == "succes"){
-        showFlashMessage("Pdf merge succes", "success")
+      if(response.indexOf("%PDF-1.5") != -1){
+        showFlashMessage("Excel to Pdf succes", "success")
       }
     })
   })
