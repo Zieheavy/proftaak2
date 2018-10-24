@@ -12,6 +12,7 @@
   <div class="btn btn-primary js-mergePdf">Merge pdf</div> -->
   <button id="open_btn" class="btn btn-primary open-dialog">Upload File</button>
   <div class="btn btn-primary js-mergeSelected">Merge selected</div>
+  <input type="text" class="js-merge-name" placeholder="Merge name">
   <?php include 'partials/templates.html'; ?>
   <?php include 'partials/modals.html'; ?>
 
