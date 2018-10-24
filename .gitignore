@@ -5,3 +5,6 @@ package.json
 dest
 vendor
 package-lock.json
+_pdf
+_pdf-split
+_completed
