@@ -47,14 +47,19 @@ if(file_exists("../../_completed/" . $mergeName)){
   }
 }
 
-//merge the pdfs
+merge the pdfs
 require_once("../../MergePdf.class.php");
 MergePdf::merge(
   $mergeOrder,
   MergePdf::DESTINATION__DISK_INLINE
 );
 
-echo "splitHere";
+$folder = array_diff(scandir("../../_pdf-split"), array('..', '.'));
+foreach($folder as $file){ // iterate files
+  if(is_file("../../_pdf-split/" . $file)){
+    unlink("../../_pdf-split/" . $file); // delete file
+  }
+}
 
 //checks if the name is empty if so the name becouse the date
 if($mergeName == ""){
@@ -89,7 +94,9 @@ function split_pdf($filename, $directory, $split_directory)
 	// Split each page into a new PDF
 	for ($i = 1; $i <= $pagecount; $i++) {
 		$new_pdf = new FPDI();
-		$new_pdf->AddPage();
+    $size = $pdf->getTemplateSize($pdf->importPage($i));
+    $orientation = $size['w'] > $size['h'] ? 'L' : 'P';
+		$new_pdf->AddPage($orientation);
 		$new_pdf->setSourceFile(APPLICATION_PATH . $directory . "/" . $filename);
 		$new_pdf->useTemplate($new_pdf->importPage($i));
 
@@ -97,7 +104,7 @@ function split_pdf($filename, $directory, $split_directory)
 			$new_filename = str_replace('.pdf', '', $filename).'_'.$i.".pdf";
       // echo $new_filename;
 			$new_pdf->Output(APPLICATION_PATH . $split_directory . "/" . $new_filename, "F");
-			echo "Page ".$i." split into ".$new_filename."<br />\n";
+			// echo "Page ".$i." split into ".$new_filename."<br />\n";
 		} catch (Exception $e) {
 			echo 'Caught exception: ',  $e->getMessage(), "\n";
 		}

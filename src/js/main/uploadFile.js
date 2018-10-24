@@ -68,7 +68,7 @@ $(document).ready(function(){
       pages: pages,
       mergeName: $(".js-merge-name").val()
     }, function(response,status){
-      // console.log(response)
+      console.log(response)
       // console.log(response.split("splitHere")[1])
       if(response.indexOf("%PDF-1.7") != -1 && response.indexOf("%PDF-1.7") < 5){
         showFlashMessage("Pdf succesfuly merged", "success")
