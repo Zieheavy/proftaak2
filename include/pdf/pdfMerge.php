@@ -47,21 +47,11 @@ if(file_exists("../../_completed/" . $mergeName)){
   }
 }
 
-<<<<<<< HEAD
-merge the pdfs
 require_once("../../MergePdf.class.php");
 MergePdf::merge(
   $mergeOrder,
   MergePdf::DESTINATION__DISK_INLINE
 );
-=======
-//merge the pdfs
-// require_once("../../MergePdf.class.php");
-// MergePdf::merge(
-//   $mergeOrder,
-//   MergePdf::DESTINATION__DISK_INLINE
-// );
->>>>>>> f04c6d6c0795e027acd87eeee74c12a12330e642
 
 $folder = array_diff(scandir("../../_pdf-split"), array('..', '.'));
 foreach($folder as $file){ // iterate files
