@@ -47,7 +47,7 @@ if(file_exists("../../_completed/" . $mergeName)){
   }
 }
 
-
+//merge the pdfs
 require_once("../../MergePdf.class.php");
 MergePdf::merge(
   $mergeOrder,
@@ -56,25 +56,27 @@ MergePdf::merge(
 
 echo "splitHere";
 
+//checks if the name is empty if so the name becouse the date
 if($mergeName == ""){
   $mergeName =  "unnamed".$date;
 }
+
+//moves the default merged file
 rename ("../../merged-files.pdf", "../../_completed/" . $mergeName . "_" . $mergeVersion . ".pdf");
-// unlink ("../../merged-files.pdf");
 $mergeVersion++;
 
+//check if the mergeversion is 5 or higher and if a folder is already created if not create a new folder with the file name
 if($mergeVersion > 5 && !file_exists("../../_completed/" . $mergeName)){
   mkdir("../../_completed/" . $mergeName, 0777);
 }
 
+//moves the files to the new folder
 for($i = 0; $i < $mergeVersion; $i++){
   $file = $mergeName . "_" . $i . ".pdf";
   if(file_exists("../../_completed/" . $file) == 1){
     rename ("../../_completed/" . $file, "../../_completed/" . $mergeName . "/" . $file);
-    // unlink ("../../_completed/" . $file);
   }
 }
-
 
 function split_pdf($filename, $directory, $split_directory)
 {
