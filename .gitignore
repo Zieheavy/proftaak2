@@ -5,8 +5,10 @@ package.json
 dest
 vendor
 package-lock.json
+merged-files.pdf
 _pdf
 _pdf-split
 _completed
 _docs
 _excel
+_html
