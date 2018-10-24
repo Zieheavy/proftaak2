@@ -14,13 +14,12 @@ $(document).ready(function(){
     $.post( "include/excelToPdf.php", {
       fileName: "urenSeletor2"
     }, function(response,status){
-      console.log(response)
-      if(response == "succes"){
+      if(response.indexOf("%PDF-1.5") != -1){
         showFlashMessage("Excel to Pdf succes", "success")
       }
     })
   })
-   
+
   $('body').on('click', '.js-mergePdf', function(){
     $.post( "include/pdfMerge.php", {
       files: ["doc1", "urenSeletor2"],
