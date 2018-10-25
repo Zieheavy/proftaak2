@@ -42,7 +42,7 @@ function getImage($ar, $map = ""){
 //function used to get the correct folder for the selected file
 function getFolder($arr){
   $folder = "";
-  if($arr[1] == "xlsx" || $arr[1] == "xls" || strrpos($arr[1], ".xlsm")  != -1){
+  if($arr[1] == "xlsx" || $arr[1] == "xls" || $arr[1]  == "xlsm"){
     $folder.= "_excel/";
   }else if($arr[1] == "docx" || $arr[1] == "doc"){
     $folder .= "_docs/";

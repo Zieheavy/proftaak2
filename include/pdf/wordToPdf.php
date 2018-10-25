@@ -11,7 +11,6 @@ $word->Visible = 0;
 // recommend to set to 0, disables alerts like "Do you want MS Word to be the default .. etc"
 $word->DisplayAlerts = 0;
 // open the word 2007-2013 document
-echo $extension . "  ";
 if($extension == "docx"){
   $word->Documents->Open($directory . '_docs\\' . $fileName . '.docx');
 
