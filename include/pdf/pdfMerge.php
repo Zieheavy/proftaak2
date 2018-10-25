@@ -1,7 +1,6 @@
 <?php
 date_default_timezone_set('UTC');
 
-require_once('../../fpdf/fpdf.php');
 require_once("../../tcpdf/tcpdf.php");
 require_once('../../fpdi/fpdi.php');
 define("APPLICATION_PATH",  str_replace("include\\pdf","",dirname(__FILE__)));
