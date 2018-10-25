@@ -21,7 +21,7 @@ if ($_FILES['file']['error'] != 0){
 function getImage($ar, $map = ""){
     $name = $ar["id"];
     $folder = "";
-    if(strrpos($name, ".xlsx") != -1 || strrpos($name, ".xls")  != -1){
+    if(strrpos($name, ".xlsx") != -1 || strrpos($name, ".xls")  != -1 || strrpos($name, ".xlsm")  != -1){
       $folder = "_excel/";
     }else if(strrpos($name, ".docx") != -1 || strrpos($name, ".doc")  != -1){
       $folder = "_docs/";
@@ -42,7 +42,7 @@ function getImage($ar, $map = ""){
 //function used to get the correct folder for the selected file
 function getFolder($arr){
   $folder = "";
-  if($arr[1] == "xlsx" || $arr[1] == "xls"){
+  if($arr[1] == "xlsx" || $arr[1] == "xls" || strrpos($arr[1], ".xlsm")  != -1){
     $folder.= "_excel/";
   }else if($arr[1] == "docx" || $arr[1] == "doc"){
     $folder .= "_docs/";

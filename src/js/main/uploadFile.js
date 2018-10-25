@@ -40,7 +40,6 @@ $(document).ready(function(){
     for(var i = 0; i < file.length; i++){
       var upload = new Upload(file[i]);
       upload.doUpload();
-      loadIframes();
     }
   })
 
@@ -85,22 +84,23 @@ $(document).ready(function(){
   })
 
   loadIframes();
-  function loadIframes(){
-    //gets all the pdfs in the pdf folder
-    $.post("include/pdf/getPdfs.php",{
-    }, function(response, status){
-      console.log(response);
-      response = JSON.parse(response);
-      var m_data = [];
-      for(var i = 0; i < response.length; i++){
-        m_data.push({name: "_pdf/" + response[i]});
-      }
-
-      //loads all the found pdfs to the page
-      mustache(".iframe-template", ".container", m_data)
-    })
-  }
 });
+
+function loadIframes(){
+  //gets all the pdfs in the pdf folder
+  $.post("include/pdf/getPdfs.php",{
+  }, function(response, status){
+    console.log(response);
+    response = JSON.parse(response);
+    var m_data = [];
+    for(var i = 0; i < response.length; i++){
+      m_data.push({name: "_pdf/" + response[i]});
+    }
+
+    //loads all the found pdfs to the page
+    mustache(".iframe-template", ".container", m_data)
+  })
+}
 
 
 //////////////////////////////
@@ -145,30 +145,35 @@ Upload.prototype.doUpload = function () {
             //checks if the file is not a pdf
             if(extension != "pdf"){
               //if the file is excel file convert the excel to pdf
-              if(extension[1] == "xlsx" || extension[1] == "xls"){
+              if(extension[1] == "xlsx" || extension[1] == "xls" || extension[1] == "xlsm"){
                 $.post( "include/pdf/excelToPdf.php", {
-                  fileName: extension[0]
+                  fileName: extension[0],
+                  extension: extension[1]
                 }, function(response,status){
                   console.log(response)
                   if(response == "succes"){
                     showFlashMessage("Upload excel Succes", "success")
+                    loadIframes();
                   }
                 })
               //if the file is word file convert the word to pdf
               }else if(extension[1] == "docx" || extension[1] == "doc"){
                 console.log(extension[0])
                 $.post( "include/pdf/wordToPdf.php", {
-                  fileName: extension[0]
+                  fileName: extension[0],
+                  extension: extension[1]
                 }, function(response,status){
                   console.log(response)
                   if(response == "succes"){
                     showFlashMessage("Upload word Succes", "success")
+                    loadIframes();
                   }
                 })
               }
 
             }else{
               showFlashMessage("Upload pdf Succes","success")
+              loadIframes();
             }
 
         },
