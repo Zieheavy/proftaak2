@@ -77,7 +77,7 @@ $(document).ready(function(){
     }, function(response,status){
       console.log(response)
       // console.log(response.split("splitHere")[1])
-      if(response.indexOf("%PDF-1.7") != -1 && response.indexOf("%PDF-1.7") < 5){
+      if(response.indexOf("%PDF-1.") != -1 && response.indexOf("%PDF-1.") < 5){
         showFlashMessage("Pdf succesfuly merged", "success")
       }
     })
