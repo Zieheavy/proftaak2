@@ -1,10 +1,6 @@
 <?php
-
-$directory = __DIR__ . DIRECTORY_SEPARATOR;
-
+// $directory = __DIR__ . DIRECTORY_SEPARATOR;
 $fileName = $_POST["fileName"];
-// echo $fileName;
-// $fileName = "urenSeletor2";
 
 ///////////////////////////
 // converts xlms to html //

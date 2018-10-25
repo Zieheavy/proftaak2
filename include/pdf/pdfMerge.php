@@ -47,12 +47,14 @@ if(file_exists("../../_completed/" . $mergeName)){
   }
 }
 
+//requires mergepdf that is then merges the selected files in the array
 require_once("../../MergePdf.class.php");
 MergePdf::merge(
   $mergeOrder,
   MergePdf::DESTINATION__DISK_INLINE
 );
 
+//emptys all the spilt pdf files
 $folder = array_diff(scandir("../../_pdf-split"), array('..', '.'));
 foreach($folder as $file){ // iterate files
   if(is_file("../../_pdf-split/" . $file)){
@@ -82,6 +84,7 @@ for($i = 0; $i < $mergeVersion; $i++){
   }
 }
 
+//function used to split the pdf in seaprated pages
 function split_pdf($filename, $directory, $split_directory)
 {
   $filename = $filename . ".pdf";
@@ -109,10 +112,4 @@ function split_pdf($filename, $directory, $split_directory)
 		}
 	}
 }
-
-
-
-
-
-
- ?>
+?>

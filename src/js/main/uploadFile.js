@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  //opens the upload dialog window
   $("#open_btn").click(function() {
     setTimeout(function () {
       $('input:file').filestyle({
@@ -33,28 +34,34 @@ $(document).ready(function(){
     })
   });
 
+  //if you press ok in the upload window upload the files to php
   $("body").on("click", ".bfd-ok", function(){
     var file = $('input:file')[0].files;
     for(var i = 0; i < file.length; i++){
       var upload = new Upload(file[i]);
       upload.doUpload();
+      loadIframes();
     }
   })
 
+  //automaticly checks the checkbox whenever you start typing page numbers
   $("body").on("input paste keyup", ".pages", function(){
     var checkbox = $(this).closest(".iframe-container").find(".selected");
     checkbox.attr("checked", true)
   })
 
+  //merges the selected files
   $("body").on("click", ".js-mergeSelected", function(){
     var files = [];
     var pages = [];
 
+    //checks if the checkbox is checked
     $(".iframe-container").each(function(){
       var m_pages = $(this).find(".pages");
       var m_checked = $(this).find(".selected");
       if(m_checked.prop('checked') == true){
         files.push(m_pages.data("file").split(".")[0].split("/")[1])
+        //checks if you want all pages or a select range of pages
         if(m_pages.val() == ""){
           pages.push("all")
         }else{
@@ -63,6 +70,7 @@ $(document).ready(function(){
       }
     })
 
+    //sends the merge command to php
     $.post( "include/pdf/pdfMerge.php", {
       files: files,
       pages: pages,
@@ -77,8 +85,8 @@ $(document).ready(function(){
   })
 
   loadIframes();
-
   function loadIframes(){
+    //gets all the pdfs in the pdf folder
     $.post("include/pdf/getPdfs.php",{
     }, function(response, status){
       console.log(response);
@@ -88,10 +96,16 @@ $(document).ready(function(){
         m_data.push({name: "_pdf/" + response[i]});
       }
 
+      //loads all the found pdfs to the page
       mustache(".iframe-template", ".container", m_data)
     })
   }
 });
+
+
+//////////////////////////////
+// default upload functions //
+//////////////////////////////
 
 var Upload = function (file) {
     this.file = file;
@@ -128,7 +142,9 @@ Upload.prototype.doUpload = function () {
         success: function (data) {
             console.log(data);
             var extension = data.split(".");
+            //checks if the file is not a pdf
             if(extension != "pdf"){
+              //if the file is excel file convert the excel to pdf
               if(extension[1] == "xlsx" || extension[1] == "xls"){
                 $.post( "include/pdf/excelToPdf.php", {
                   fileName: extension[0]
@@ -138,6 +154,7 @@ Upload.prototype.doUpload = function () {
                     showFlashMessage("Upload excel Succes", "success")
                   }
                 })
+              //if the file is word file convert the word to pdf
               }else if(extension[1] == "docx" || extension[1] == "doc"){
                 console.log(extension[0])
                 $.post( "include/pdf/wordToPdf.php", {

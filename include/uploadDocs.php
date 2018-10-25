@@ -6,32 +6,18 @@ $oldFileAr = [
 ];
 
 $img = getImage($oldFileAr, "../");
-// if (file_exists($img)) {
-//     unlink($img);
-//     $temp = explode(".", $_FILES["file"]["name"]);
-//     // echo json_encode($temp);
-//     $folder = getFolder($temp);
-//     $newfilename = $id . '.' . end($temp);
-//     if ($_FILES['file']['error'] != 0){
-//       echo "Something whent Wrong";
-//     }else{
-//       move_uploaded_file($_FILES["file"]["tmp_name"], "../" . $folder . $newfilename);
-//       echo $newfilename;
-//     }
-// }else{
-  $temp = explode(".", $_FILES["file"]["name"]);
-  // echo json_encode($temp);
-  $folder = getFolder($temp);
-  $newfilename = $id;
-  // echo json_encode($_FILES);
-  if ($_FILES['file']['error'] != 0){
-    echo "Something whent Wrong";
-  }else{
-    move_uploaded_file($_FILES["file"]["tmp_name"], "../" . $folder . $newfilename);
-    echo $newfilename;
-  }
-// }
 
+$temp = explode(".", $_FILES["file"]["name"]);
+$folder = getFolder($temp);
+$newfilename = $id;
+if ($_FILES['file']['error'] != 0){
+  echo "Something whent Wrong";
+}else{
+  move_uploaded_file($_FILES["file"]["tmp_name"], "../" . $folder . $newfilename);
+  echo $newfilename;
+}
+
+//checks if the image already exist if so it will delete the image
 function getImage($ar, $map = ""){
     $name = $ar["id"];
     $folder = "";
@@ -53,6 +39,7 @@ function getImage($ar, $map = ""){
     return $img;
 }
 
+//function used to get the correct folder for the selected file
 function getFolder($arr){
   $folder = "";
   if($arr[1] == "xlsx" || $arr[1] == "xls"){

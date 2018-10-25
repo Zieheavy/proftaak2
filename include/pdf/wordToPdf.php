@@ -14,9 +14,7 @@ $word->Documents->Open($directory . '_docs\\' . $fileName . '.docx');
 // save it as word 2003
 $word->ActiveDocument->SaveAs('newdocument.doc');
 // convert word 2007-2013 to PDF
-//D:\\school\\Semester 4\\web\\documents\\
 $word->ActiveDocument->ExportAsFixedFormat($directory . '_pdf\\' . $fileName . '.pdf', 17, false, 0, 0, 0, 0, 7, true, true, 2, true, true, false);
-// $pdfList[] = '../_pdf\\' . $fileName . '.pdf';
 // quit the Word process
 $word->Quit(false);
 // clean up
