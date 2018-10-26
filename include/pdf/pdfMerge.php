@@ -78,10 +78,19 @@ if($mergeVersion > 5 && !file_exists("../../_completed/" . $mergeName)){
 //moves the files to the new folder
 for($i = 0; $i < $mergeVersion; $i++){
   $file = $mergeName . "_" . $i . ".pdf";
-  if(file_exists("../../_completed/" . $file) == 1){
+  if(file_exists("../../_completed/" . $file) == 1 && $mergeVersion > 5){
     rename ("../../_completed/" . $file, "../../_completed/" . $mergeName . "/" . $file);
   }
 }
+
+$file = "_completed/";
+if ($mergeVersion  > 5) {
+  $file .= $mergeName . "/" . $mergeName . "_" . ($i - 1) . ".pdf";
+}
+else {
+  $file .= $mergeName . "_" . ($i - 1) . ".pdf";
+}
+echo $file;
 
 //function used to split the pdf in seaprated pages
 function split_pdf($filename, $directory, $split_directory)
