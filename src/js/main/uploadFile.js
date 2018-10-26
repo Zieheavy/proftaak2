@@ -76,7 +76,9 @@ $(document).ready(function(){
       mergeName: $(".js-merge-name").val()
     }, function(response,status){
       console.log(response)
-      // console.log(response.split("splitHere")[1])
+      $('body').append('<a id="js-download" href="' + response + '" download="' + response + '">click me</a>')
+      $('#js-download')[0].click();
+      $('#js-download').remove();
       if(response.indexOf("%PDF-1.") != -1 && response.indexOf("%PDF-1.") < 5){
         showFlashMessage("Pdf succesfuly merged", "success")
       }
