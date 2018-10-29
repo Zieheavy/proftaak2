@@ -1,6 +1,7 @@
 <?php
 include 'database.php';
 include 'session.php';
+include 'functions.php';
 
 $loginError = "";
 $registerError = "";
@@ -9,6 +10,7 @@ if (isset($_POST['logoutSub'])) {
     $loggedIn = false;
     echo "succes";
 }
+dump($_POST);
 if (isset($_POST['loginSub'])) {
     $name = $_POST['username'];
     $pass = $_POST['password'];
@@ -61,6 +63,9 @@ if (isset($_POST['registerSub'])) {
         echo "userExists";
     }
 }
+
+header("Location: ../index.?><?php");
+die();
 
 function encrypt($str){
     return password_hash($str, PASSWORD_BCRYPT);

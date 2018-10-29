@@ -4,8 +4,9 @@
   <?php include 'partials/head.html'; ?>
 </head>
 <body>
-
   <div class="flash-message-container"> </div>
+
+  <?php include 'partials/navigation.php'; ?>
 
   <!-- <div class="btn btn-primary js-wordToPdf">word to pdf</div>
   <div class="btn btn-primary js-excelToPdf">excel to pdf</div>

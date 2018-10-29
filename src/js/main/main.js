@@ -50,7 +50,7 @@ function shuffle(array) {
   }
 
   return array;
-}
+} 
 
 function initMap(x, y, location) {
   var myLatLng = "";
@@ -97,33 +97,33 @@ function mustache(origin, location, information, append){
     }
 }
 
-var confirmClassOld = "";
-var deleteClassOld = "";
-function confirmModal(title, body, confirmClass, deleteClass, data){
-    if(deleteClass == undefined){
-        deleteClass = "close-confirm"
-    }
-    if(confirmClass != "" && deleteClassOld != ""){
-        $('.confirm-save-change').removeClass(confirmClassOld)
-        $('.confirm-delete-change').removeClass(deleteClassOld)
-    }
-    $('.confirm-save-change').addClass(confirmClass)
-
-    if(data != undefined){
-      $('.confirm-save-change').attr("data",data)
-    }else{
-      $('.confirm-save-change').attr("data","")
-    }
-    $('.confirm-delete-change').addClass(deleteClass)
-
-    confirmClassOld = confirmClass;
-    deleteClassOld = deleteClass;
-
-    $('.confirm-title').text(title)
-    $('.confirm-text').text(body)
-
-    $('.js-confirm').modal("show")
-}
+// var confirmClassOld = "";
+// var deleteClassOld = "";
+// function confirmModal(title, body, confirmClass, deleteClass, data){
+//     if(deleteClass == undefined){
+//         deleteClass = "close-confirm"
+//     }
+//     if(confirmClass != "" && deleteClassOld != ""){
+//         $('.confirm-save-change').removeClass(confirmClassOld)
+//         $('.confirm-delete-change').removeClass(deleteClassOld)
+//     }
+//     $('.confirm-save-change').addClass(confirmClass)
+//
+//     if(data != undefined){
+//       $('.confirm-save-change').attr("data",data)
+//     }else{
+//       $('.confirm-save-change').attr("data","")
+//     }
+//     $('.confirm-delete-change').addClass(deleteClass)
+//
+//     confirmClassOld = confirmClass;
+//     deleteClassOld = deleteClass;
+//
+//     $('.confirm-title').text(title)
+//     $('.confirm-text').text(body)
+//
+//     $('.js-confirm').modal("show")
+// }
 
 function checkInput(container,button){
   button.closest(container).find(".form-control").each(function(i){
