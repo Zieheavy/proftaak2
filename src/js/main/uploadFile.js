@@ -45,7 +45,7 @@ $(document).ready(function(){
 
   //automaticly checks the checkbox whenever you start typing page numbers
   $("body").on("input paste keyup", ".pages", function(){
-    var checkbox = $(this).closest(".iframe-container").find(".selected");
+    var checkbox = $(this).closest(".iframe-container").find(".js-selectToMerge");
     checkbox.attr("checked", true)
   })
 
@@ -57,7 +57,7 @@ $(document).ready(function(){
     //checks if the checkbox is checked
     $(".iframe-container").each(function(){
       var m_pages = $(this).find(".pages");
-      var m_checked = $(this).find(".selected");
+      var m_checked = $(this).find(".js-selectToMerge");
       if(m_checked.prop('checked') == true){
         files.push(m_pages.data("file").split(".")[0].split("/")[1])
         //checks if you want all pages or a select range of pages
