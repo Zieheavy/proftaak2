@@ -51,19 +51,15 @@ function resetSession(){
     $_SESSION['userId'] = -1;
     $_SESSION['username'] = '';
     $_SESSION['password'] = '';
-
-    $_SESSION['dice'] = [];
-    $_SESSION['gameId'] = -1;
+    $_SESSION['userLevel'] = -1;
 }
 
-function setSession($id, $usn, $pass){
+function setSession($id, $usn, $pass, $userLevel){
     $_SESSION['loggedIn'] = 1;
     $_SESSION['userId'] = $id;
     $_SESSION['username'] = $usn;
     $_SESSION['password'] = $pass;
-
-    $_SESSION['dice'] = [];
-    $_SESSION['gameId'] = -1;
+    $_SESSION['userLevel'] = $userLevel;
 }
 
 function setFlash($str,$type,$dism,$secs){

@@ -14,11 +14,13 @@ switch ($currentPage) {
 
 <nav>
   <div class="nav-wrapper">
-    <a href="#!" class="brand-logo right">Logo</a>
-    <ul class="left hide-on-med-and-down">
-      <li class="<?php if($active == 1) echo "active"; ?>"><a href="">Home</a></li>
-      <li class="<?php if($active == 2) echo "active"; ?>"><a href="">Components</a></li>
-      <li class="<?php if($active == 3) echo "active"; ?>"><a href="">JavaScript</a></li>
-    </ul>
+    <a href="#!" class="brand-logo left"><img class="logo" src="img/logo-trans.png"></a>
+    <?php if($active != -1){ ?>
+      <ul class="hide-on-med-and-down">
+        <li class="<?php if($active == 1) echo "active"; ?>"><a href="">Home</a></li>
+        <li class="<?php if($active == 2) echo "active"; ?>"><a href="">Components</a></li>
+        <li class="<?php if($active == 3) echo "active"; ?>"><a href="">JavaScript</a></li>
+      </ul>
+    <?php } ?>
   </div>
 </nav>

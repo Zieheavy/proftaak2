@@ -6,24 +6,36 @@
 <body>
   <div class="flash-message-container"> </div>
 
-  <!-- <?php include 'partials/navigation.php'; ?> -->
+  <?php include 'partials/navigation.php'; ?>
+
 
   <div class="row">
     <form class="col s12" method="post" action="include/logIn.php">
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="email" type="text" class="validate" name="username">
-          <label for="Gebruikersnaam">Gebruikersnaam</label>
+      <div class="card login-card">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="email" type="text" class="validate" name="username">
+            <label for="Gebruikersnaam">Gebruikersnaam</label>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="password" type="password" class="validate" name="password">
-          <label for="Wachtwoord">Wachtwoord</label>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" type="password" class="validate" name="password">
+            <label for="Wachtwoord">Wachtwoord</label>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <button class="btn waves-effect waves-light" type="submit" name="loginSub">Login</button>
+        <!-- <div class="row">
+          <div class="input-field col s12">
+            <input id="userlevel" type="text" class="validate" name="userLevel">
+            <label for="userlevel">Wachtwoord</label>
+          </div>
+        </div> -->
+        <div class="row btn-row">
+          <div class="input-field col s12">
+            <button class="btn waves-effect waves-light login-btn" type="submit" name="loginSub">Login</button>
+            <!-- <button class="btn waves-effect waves-light" type="submit" name="registerSub">Register</button> -->
+          </div>
+        </div>
       </div>
     </form>
   </div>
