@@ -1,3 +1,15 @@
+<?php
+  $files = [];
+  $sql = "SELECT * FROM sourcefiles";
+  $stmt = $con->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  while ($row = $result->fetch_array(MYSQLI_ASSOC))
+  {
+    $files[] = $row;
+  }
+  $stmt->close();
+?>
 <html>
 <head>
   <title>Proftaak</title>
