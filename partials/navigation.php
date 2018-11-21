@@ -6,6 +6,9 @@ switch ($currentPage) {
   case 'home.php':
   $active = 1;
     break;
+  case 'nieuw-document.php':
+    $active = 1;
+    break;
   default:
   $active = -1;
     break;
