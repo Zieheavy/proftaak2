@@ -45,7 +45,9 @@ function login($name, $pass){
   include 'database.php';
   $sql = 'SELECT id, password, userlevel FROM users WHERE username = ?';
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("s", $name);
+    $stmt->bind_param("s", $name);
+    printf("Error: %s.\n", $stmt->error);
+
   $stmt->execute();
   $stmt->store_result();
   $stmt->bind_result($idResult, $hash, $userLevel);
