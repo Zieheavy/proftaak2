@@ -3,7 +3,7 @@ $currentPage = explode("/",$_SERVER['PHP_SELF'])[2];
 $active = -1;
 
 switch ($currentPage) {
-  case 'index.php':
+  case 'home.php':
   $active = 1;
     break;
   default:
@@ -14,7 +14,7 @@ switch ($currentPage) {
 
 <nav>
   <div class="nav-wrapper">
-    <a href="#!" class="brand-logo left"><img class="logo" src="img/logo-trans.png"></a>
+    <a href="#!" class="brand-logo right"><img class="logo" src="img/logo-trans.png"></a>
     <?php if($active != -1){ ?>
       <ul class="hide-on-med-and-down">
         <li class="<?php if($active == 1) echo "active"; ?>"><a href="">Home</a></li>

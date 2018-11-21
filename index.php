@@ -8,17 +8,39 @@
 
   <?php include 'partials/navigation.php'; ?>
 
-  <!-- <div class="btn btn-primary js-wordToPdf">word to pdf</div>
-  <div class="btn btn-primary js-excelToPdf">excel to pdf</div>
-  <div class="btn btn-primary js-mergePdf">Merge pdf</div> -->
-  <button id="open_btn" class="btn btn-primary open-dialog">Upload File</button>
-  <button class="btn btn-primary deleteAll">Delete all</button>
-  <div class="btn btn-primary js-mergeSelected">Merge selected</div>
-  <input type="text" class="js-merge-name" placeholder="Merge name">
+  <div class="row">
+    <form class="col s12" method="post" action="include/logIn.php">
+      <div class="card login-card">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="email" type="text" class="validate" name="username">
+            <label for="Gebruikersnaam">Gebruikersnaam</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" type="password" class="validate" name="password">
+            <label for="Wachtwoord">Wachtwoord</label>
+          </div>
+        </div>
+        <!-- <div class="row">
+          <div class="input-field col s12">
+            <input id="userlevel" type="text" class="validate" name="userLevel">
+            <label for="userlevel">Wachtwoord</label>
+          </div>
+        </div> -->
+        <div class="row btn-row">
+          <div class="input-field col s12">
+            <button class="btn waves-effect waves-light login-btn" type="submit" name="loginSub">Login</button>
+            <!-- <button class="btn waves-effect waves-light" type="submit" name="registerSub">Register</button> -->
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
   <?php include 'partials/templates.html'; ?>
   <?php include 'partials/modals.html'; ?>
-
-  <div class="container"></div>
 
   <?php include 'partials/scripts.html'; ?>
   <script src="dest/js/main.js" charset="utf-8"></script>
