@@ -57,7 +57,7 @@ function login($name, $pass){
               setSession($idResult, $name, $hash, $userLevel);
               $loggedIn = true;
               echo "succes";
-              header("Location: ../index.php");
+              header("Location: ../home.php");
           }
           else{
             echo "Username or password is wrong";
