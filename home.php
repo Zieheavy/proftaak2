@@ -2,11 +2,11 @@
 include 'include/session.php';
 include 'include/database.php';
 
-dump($_SESSION);
-$id = $_SESSION['userId'];
+// dump($_SESSION);
+$id = $_SESSION['collegeId'];
 
 $itemArrays = [];
-$sql = "SELECT m.id as mergedId, m.name, m.version, u.id as userId FROM mergedfiles m,users u WHERE m.users_id = ? AND m.users_id = u.id";
+$sql = "SELECT m.id as mergedId, m.name, m.version, u.id as userId, u.userLevel FROM mergedfiles m,users u WHERE m.colleges_id = ? AND m.users_id = u.id";
 // $stmt = $conn->prepare($sql);
 // $stmt->bind_param("i", $id);
 // $stmt->execute();
