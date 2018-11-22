@@ -5,10 +5,11 @@ session_start();
 include 'database.php'; // Should create a var $conn
 include 'functions.php';
 
-dump($_SESSION);
-if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == 0) { // If this variable doesn't exist, it creates all the session vars
+// dump($_SESSION);
+if (!isset($_SESSION['loggedIn'])) { // If this variable doesn't exist, it creates all the session vars
     resetSession();
 }
+
 
 if(isset($_POST["return"])){
   echo json_encode($_SESSION);
@@ -45,6 +46,9 @@ if ($loggedIn) {
 }
 else {
     // header('Location:index.php');
+    // if( $_SESSION['loggedIn'] == 0){
+    //   header("Location: ../index.php");
+    // }
 }
 // The reset
 function resetSession(){
@@ -54,7 +58,7 @@ function resetSession(){
     $_SESSION['username'] = '';
     $_SESSION['password'] = '';
     $_SESSION['userLevel'] = -1;
-    header("Location: index.php");
+      header("Location: ../index.php");
 }
 
 function setSession($id, $usn, $pass, $userLevel){

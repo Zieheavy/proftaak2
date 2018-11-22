@@ -7,3 +7,4 @@ $('body').on('click', '.deleteAll', function(){
     }
   });
 });
+ 

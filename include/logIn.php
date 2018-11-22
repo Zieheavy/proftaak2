@@ -1,7 +1,8 @@
   <?php
 include 'database.php';
 include 'session.php';
-include 'functions.php';
+// session_start();
+// include 'functions.php';
 
 $loginError = "";
 $registerError = "";
@@ -10,12 +11,12 @@ if (isset($_POST['logoutSub'])) {
     $loggedIn = false;
     echo "succes";
 }
-dump($_POST);
 if (isset($_POST['loginSub'])) {
     $name = $_POST['username'];
     $pass = $_POST['password'];
     login($name, $pass);
 }
+
 if (isset($_POST['registerSub'])) {
     $name = $_POST['username'];
     $pass = $_POST['password'];
