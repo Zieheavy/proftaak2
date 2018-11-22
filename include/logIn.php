@@ -30,9 +30,9 @@ if (isset($_POST['registerSub'])) {
     $num = $stmt->num_rows;
     $stmt->close();
     if (!$num) {
-        $sql = "INSERT INTO users (username, password, userlevel) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO users (username, password) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssi', $name, $passE, $userLevel);
+        $stmt->bind_param('ssi', $name, $passE);
         $stmt->execute();
         $stmt->close();
         login($name, $pass);
@@ -44,18 +44,17 @@ if (isset($_POST['registerSub'])) {
 
 function login($name, $pass){
   include 'database.php';
-  $sql = 'SELECT id, password, userlevel FROM users WHERE username = ?';
+  $sql = 'SELECT id, password, confirm, newcollege FROM users WHERE username = ?';
   $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $name);
-    printf("Error: %s.\n", $stmt->error);
+  $stmt->bind_param("s", $name);
 
   $stmt->execute();
   $stmt->store_result();
-  $stmt->bind_result($idResult, $hash, $userLevel);
+  $stmt->bind_result($idResult, $hash, $confirm, $newcollege);
   if ($stmt->num_rows == 1) {
       if($stmt->fetch()) {
           if (password_verify($pass, $hash)) {
-              setSession($idResult, $name, $hash, $userLevel);
+              setSession($idResult, $name, $hash, $confirm, $newcollege);
               $loggedIn = true;
               echo "succes";
               header("Location: ../home.php");
