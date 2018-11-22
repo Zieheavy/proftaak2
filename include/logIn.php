@@ -1,4 +1,4 @@
-<?php
+  <?php
 include 'database.php';
 include 'session.php';
 include 'functions.php';
