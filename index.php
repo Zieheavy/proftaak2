@@ -15,16 +15,17 @@ session_start();
   <div class="row">
     <form class="col s12" method="post" action="include/logIn.php">
       <div class="card login-card">
+        <div class="card-title">Login</div>
         <div class="row">
           <div class="input-field col s12">
             <input id="email" type="text" class="validate" name="username">
-            <label for="Gebruikersnaam">Gebruikersnaam</label>
+            <label for="email">Gebruikersnaam</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
             <input id="password" type="password" class="validate" name="password">
-            <label for="Wachtwoord">Wachtwoord</label>
+            <label class="active" for="password">Wachtwoord</label>
           </div>
         </div>
         <!-- <div class="row">

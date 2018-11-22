@@ -21,7 +21,6 @@ if (isset($_POST['registerSub'])) {
     $name = $_POST['username'];
     $pass = $_POST['password'];
     $passE = encrypt($_POST['password']);
-    $userLevel = $_POST['userLevel'];
     $sql = "SELECT * FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('s', $name);
@@ -30,9 +29,9 @@ if (isset($_POST['registerSub'])) {
     $num = $stmt->num_rows;
     $stmt->close();
     if (!$num) {
-        $sql = "INSERT INTO users (username, password) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssi', $name, $passE);
+        $stmt->bind_param('ss', $name, $passE);
         $stmt->execute();
         $stmt->close();
         login($name, $pass);
