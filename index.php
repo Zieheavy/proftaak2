@@ -28,16 +28,10 @@ session_start();
             <label class="active" for="password">Wachtwoord</label>
           </div>
         </div>
-        <!-- <div class="row">
-          <div class="input-field col s12">
-            <input id="userlevel" type="text" class="validate" name="userLevel">
-            <label for="userlevel">Wachtwoord</label>
-          </div>
-        </div> -->
         <div class="row btn-row">
           <div class="input-field col s12">
             <button class="btn waves-effect waves-light login-btn" type="submit" name="loginSub">Login</button>
-            <!-- <button class="btn waves-effect waves-light" type="submit" name="registerSub">Register</button> -->
+            <button class="btn waves-effect waves-light" type="submit" name="registerSub">Register</button>
           </div>
         </div>
       </div>
