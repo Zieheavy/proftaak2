@@ -6,4 +6,13 @@
 @import 'components/login.scss';
 @import 'components/_flash-message.scss';
 @import 'components/nav.scss';
-@import 'components/home.scss'
+@import 'components/home.scss';
+
+.fuuuuuck{
+  // background-color: red;
+  margin:  2px 0px;
+  border: 2px dashed yellow;
+}
+.item{
+  transition: .2s ease;
+}
