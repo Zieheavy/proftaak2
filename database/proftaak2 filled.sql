@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2018 at 10:30 AM
+-- Generation Time: Nov 22, 2018 at 11:35 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -51,8 +51,8 @@ CREATE TABLE `colleges` (
 --
 
 INSERT INTO `colleges` (`id`, `name`) VALUES
-(1, 'BouwCollege'),
-(2, 'ICTCollege'),
+(1, 'ictcollege'),
+(2, 'bouwcollege'),
 (3, 'none');
 
 -- --------------------------------------------------------
@@ -72,10 +72,10 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `name`, `colleges_id`) VALUES
-(1, 'Applicatie', 2),
-(2, 'Beheer', 2),
-(3, ' bouw opleiding 1', 1),
-(4, 'bouw opleiding 2', 1);
+(1, 'applicatie', 1),
+(2, 'beheer', 1),
+(3, 'bouwcourse1', 2),
+(4, 'bouwcourse2', 2);
 
 -- --------------------------------------------------------
 
@@ -86,7 +86,6 @@ INSERT INTO `courses` (`id`, `name`, `colleges_id`) VALUES
 CREATE TABLE `mergedfiles` (
   `id` int(11) NOT NULL,
   `name` varchar(200) DEFAULT NULL,
-  `version` int(11) DEFAULT NULL,
   `users_id` int(11) NOT NULL,
   `courses_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -95,9 +94,9 @@ CREATE TABLE `mergedfiles` (
 -- Dumping data for table `mergedfiles`
 --
 
-INSERT INTO `mergedfiles` (`id`, `name`, `version`, `users_id`, `courses_id`) VALUES
-(1, 'merged1', 0, 3, 1),
-(2, 'merged2', 0, 2, 3);
+INSERT INTO `mergedfiles` (`id`, `name`, `users_id`, `courses_id`) VALUES
+(1, 'merged1', 2, 1),
+(2, 'merged2', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -108,7 +107,6 @@ INSERT INTO `mergedfiles` (`id`, `name`, `version`, `users_id`, `courses_id`) VA
 CREATE TABLE `permissions` (
   `id` int(11) NOT NULL,
   `read` tinyint(4) DEFAULT '0',
-  `write` tinyint(4) DEFAULT '0',
   `edit` tinyint(4) DEFAULT '0',
   `users_id` int(11) NOT NULL,
   `colleges_id` int(11) NOT NULL
@@ -118,10 +116,9 @@ CREATE TABLE `permissions` (
 -- Dumping data for table `permissions`
 --
 
-INSERT INTO `permissions` (`id`, `read`, `write`, `edit`, `users_id`, `colleges_id`) VALUES
-(1, 1, 1, 1, 1, 3),
-(2, 1, 1, 0, 3, 2),
-(3, 1, 0, 0, 2, 1);
+INSERT INTO `permissions` (`id`, `read`, `edit`, `users_id`, `colleges_id`) VALUES
+(1, 1, 1, 2, 1),
+(2, 1, 0, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -133,7 +130,6 @@ CREATE TABLE `sourcefiles` (
   `id` int(11) NOT NULL,
   `name` varchar(400) DEFAULT NULL,
   `extension` varchar(10) DEFAULT NULL,
-  `version` int(11) DEFAULT NULL,
   `users_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -159,8 +155,32 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `confirm`, `newcollege`, `verified`, `colleges_id`) VALUES
 (1, 'admin', '$2y$10$flaaac3eoz86G5q0z/./M.2aD./x/kwmdfXuWje9x9tCBCNAsFF4C', 1, 1, 1, 3),
-(2, 'bouwuser', '$2y$10$flaaac3eoz86G5q0z/./M.2aD./x/kwmdfXuWje9x9tCBCNAsFF4C', 0, 0, 1, 1),
-(3, 'ictuser', '$2y$10$flaaac3eoz86G5q0z/./M.2aD./x/kwmdfXuWje9x9tCBCNAsFF4C', 1, 0, 1, 2);
+(2, 'ictuser', '$2y$10$flaaac3eoz86G5q0z/./M.2aD./x/kwmdfXuWje9x9tCBCNAsFF4C', 1, 0, 1, 1),
+(3, 'bouwuser', '$2y$10$flaaac3eoz86G5q0z/./M.2aD./x/kwmdfXuWje9x9tCBCNAsFF4C', 0, 0, 1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `versions`
+--
+
+CREATE TABLE `versions` (
+  `id` int(11) NOT NULL,
+  `version` int(11) DEFAULT NULL,
+  `mergedfiles_id` int(11) DEFAULT NULL,
+  `sourcefiles_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `versions`
+--
+
+INSERT INTO `versions` (`id`, `version`, `mergedfiles_id`, `sourcefiles_id`) VALUES
+(6, 0, 1, NULL),
+(7, 1, 1, NULL),
+(8, 2, 1, NULL),
+(9, 3, 1, NULL),
+(10, 4, 1, NULL);
 
 --
 -- Indexes for dumped tables
@@ -218,6 +238,14 @@ ALTER TABLE `users`
   ADD KEY `fk_users_colleges1_idx` (`colleges_id`);
 
 --
+-- Indexes for table `versions`
+--
+ALTER TABLE `versions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_versions_mergedfiles1_idx` (`mergedfiles_id`),
+  ADD KEY `fk_versions_sourcefiles1_idx` (`sourcefiles_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -245,7 +273,7 @@ ALTER TABLE `mergedfiles`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `sourcefiles`
 --
@@ -256,6 +284,11 @@ ALTER TABLE `sourcefiles`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `versions`
+--
+ALTER TABLE `versions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- Constraints for dumped tables
 --
@@ -298,6 +331,13 @@ ALTER TABLE `sourcefiles`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `fk_users_colleges1` FOREIGN KEY (`colleges_id`) REFERENCES `colleges` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `versions`
+--
+ALTER TABLE `versions`
+  ADD CONSTRAINT `fk_versions_mergedfiles1` FOREIGN KEY (`mergedfiles_id`) REFERENCES `mergedfiles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_versions_sourcefiles1` FOREIGN KEY (`sourcefiles_id`) REFERENCES `sourcefiles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

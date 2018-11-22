@@ -6,15 +6,25 @@ include 'include/database.php';
 $id = $_SESSION['collegeId'];
 
 $itemArrays = [];
-$sql = "SELECT m.id as mergedId, m.name, m.version, u.id as userId FROM mergedfiles m,users u WHERE m.colleges_id = ? AND m.users_id = u.id";
+$sql = "SELECT  m.id as mergedId,
+                m.name,
+                m.version,
+                m.users_id,
+                m.courses_id,
+                p.read,
+                p.edit,
+                p.colleges_id
+                FROM mergedfiles m, permissions p WHERE p.users_id = ?;";
 // $stmt = $conn->prepare($sql);
 // $stmt->bind_param("i", $id);
 // $stmt->execute();
 if (false === ($stmt = $conn->prepare($sql))) {
     echo 'error preparing statement: ' . $conn->error;
-} elseif (!$stmt->bind_param("i", $id)) {
+}
+elseif (!$stmt->bind_param("i", $id)) {
     echo 'error binding params: ' . $stmt->error;
-} elseif (!$stmt->execute()) {
+}
+elseif (!$stmt->execute()) {
     echo 'error executing statement: ' . $stmt->error;
 }
 $result = $stmt->get_result();
@@ -23,7 +33,7 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
     $itemArrays[] = $row;
 }
 
-// echo json_encode($itemArrays);
+dump($itemArrays);
 
 
 ?>
@@ -48,36 +58,39 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
   <div class="btn btn-primary js-mergeSelected">Merge selected</div>
   <input type="text" class="js-merge-name" placeholder="Merge name"> -->
 
-  <?php foreach($itemArrays as $item){ ?>
   <div class="container">
-    <div class="home-card col s10 offset-s1 m7">
-      <div class="card horizontal">
-        <div class="card-image">
-          <iframe class="iframe" src="_completed\<?php echo $item["name"]; ?>.pdf"></iframe>
-        </div>
-        <div class="card-stacked">
-          <div class="card-content">
-            <p>I am a very simple card. I am good at containing small bits of information.</p>
+    <?php foreach($itemArrays as $item){
+      if($item["read"] == 1){ ?>
+      <div class="home-card col m10 offset-m1">
+        <div class="card horizontal">
+          <div class="card-image">
+              <iframe class="iframe" src="_completed\<?php echo $item["name"]; ?>.pdf"></iframe>
           </div>
-          <div class="card-action home-card-action">
-            <a href="#">Edit</a>
-            <a href="#">Download</a>
-            <div class="input-field">
-              <select>
-                <option value="" disabled selected></option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-              </select>
-              <label>Versie</label>
+          <div class="card-stacked">
+            <div class="card-content">
+              <p>I am a very simple card. I am good at containing small bits of information.</p>
+            </div>
+            <div class="card-action home-card-action">
+              <?php if($_SESSION["collegeId"] == $item["courses_id"] && $item["edit"] == 1){ ?>
+                <a href="#">Edit</a>
+              <?php } ?>
+              <a href="#">Download</a>
+              <div class="input-field">
+                <select>
+                  <option value="" disabled selected></option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+                <label>Versie</label>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    <?php } } ?>
   </div>
 
-  <?php } ?>
 
 
   <?php include 'partials/templates.html'; ?>
