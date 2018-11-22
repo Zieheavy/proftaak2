@@ -1,3 +1,7 @@
+<?php include 'include/functions.php';
+session_start();
+  // dump($_SESSION)
+ ?>
 <html>
 <head>
   <title>Proftaak</title>

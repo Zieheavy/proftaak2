@@ -13,10 +13,6 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-$(document).ready(function(){
-  // $('input.selected').formSelect();
-});
-
 function addUrlParameter(indentifer,key,indentifer2,key2,indentifer3,key3){
   if(indentifer3 != undefined){
     window.history.pushState(null, null, "?" + indentifer + "="+key+"&"+indentifer2+"="+key2+"&"+indentifer3+"="+key3);
