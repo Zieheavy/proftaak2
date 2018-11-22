@@ -44,17 +44,17 @@ if (isset($_POST['registerSub'])) {
 
 function login($name, $pass){
   include 'database.php';
-  $sql = 'SELECT id, password, confirm, newcollege FROM users WHERE username = ?';
+  $sql = 'SELECT id, password, confirm, newcollege, verified FROM users WHERE username = ?';
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s", $name);
 
   $stmt->execute();
   $stmt->store_result();
-  $stmt->bind_result($idResult, $hash, $confirm, $newcollege);
+  $stmt->bind_result($idResult, $hash, $confirm, $newcollege, $verified);
   if ($stmt->num_rows == 1) {
       if($stmt->fetch()) {
           if (password_verify($pass, $hash)) {
-              setSession($idResult, $name, $hash, $confirm, $newcollege);
+              setSession($idResult, $name, $hash, $confirm, $newcollege, $verified);
               $loggedIn = true;
               echo "succes";
               header("Location: ../home.php");
