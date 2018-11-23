@@ -12,7 +12,7 @@ session_start();
 
   <?php include 'partials/navigation.php'; ?>
 
-  <div class="row">
+  <div class="row login js-login login--active">
     <form class="col s12" method="post" action="include/logIn.php">
       <div class="card login-card">
         <div class="card-title">Login</div>
@@ -31,7 +31,36 @@ session_start();
         <div class="row btn-row">
           <div class="input-field col s12">
             <button class="btn waves-effect waves-light login-btn" type="submit" name="loginSub">Login</button>
-            <button class="btn waves-effect waves-light" type="submit" name="registerSub">Register</button>
+          </div>
+        </div>
+        <div class="card-action">
+          <a class="blue-text js-activate-registerForm" href="#">Of klik hier om te registreren</a>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row login js-register">
+    <form class="col s12" method="post" action="include/logIn.php">
+      <div class="card login-card">
+        <div class="card-title">Login</div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="email" type="text" class="validate" name="username">
+            <label for="email">Gebruikersnaam</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" type="password" class="validate" name="password">
+            <label class="active" for="password">Wachtwoord</label>
+          </div>
+        </div>
+        <div class="row btn-row">
+          <div class="input-field col s6">
+            <button class="btn waves-effect waves-light login-btn" type="submit" name="loginSub">Login</button>
+          </div>
+          <div class="col s6">
+            <a class="js-activate-loginSub btn white black-text waves-effect waves-light" href="#">Terug</a>
           </div>
         </div>
       </div>

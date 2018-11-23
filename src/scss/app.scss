@@ -16,3 +16,21 @@
 .item{
   transition: .2s ease;
 }
+.login{
+  transition: .2s ease;
+  opacity: 0;
+  display: none;
+  &--inline{
+    display:inline;
+  }
+  &--appear{
+    opacity: 1;
+  }
+  &--active{
+    display:inline;
+    opacity: 1;
+  }
+  &--disappear{
+    opacity: 0;
+  }
+}
