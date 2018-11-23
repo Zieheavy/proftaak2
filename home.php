@@ -65,8 +65,6 @@ for($i = 0; $i < count($itemArrays); $i++){
 }
 
 // dump($itemArrays);
-
-
 ?>
 <html>
 <head>
@@ -99,7 +97,7 @@ for($i = 0; $i < count($itemArrays); $i++){
               <p>Opleiding:   <?php echo $item["courseName"]; ?></p>
             </div>
             <div class="card-action home-card-action">
-              <?php if($_SESSION["collegeId"] == $item["courses_id"] && $item["edit"] == 1){ ?>
+              <?php if($_SESSION["collegeId"] == $item["colleges_id"] && $item["edit"] == 1){ ?>
                 <a href="#">Edit</a>
               <?php } ?>
               <a href="#">Download</a>
