@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2018 at 11:35 AM
+-- Generation Time: Nov 23, 2018 at 10:26 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `proftaak2`
 --
+CREATE DATABASE IF NOT EXISTS `proftaak2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `proftaak2`;
 
 -- --------------------------------------------------------
 
@@ -96,7 +98,9 @@ CREATE TABLE `mergedfiles` (
 
 INSERT INTO `mergedfiles` (`id`, `name`, `users_id`, `courses_id`) VALUES
 (1, 'merged1', 2, 1),
-(2, 'merged2', 2, 2);
+(2, 'merged2', 2, 2),
+(3, 'merged3', 2, 3),
+(4, 'merged1', 3, 4);
 
 -- --------------------------------------------------------
 
@@ -180,7 +184,10 @@ INSERT INTO `versions` (`id`, `version`, `mergedfiles_id`, `sourcefiles_id`) VAL
 (7, 1, 1, NULL),
 (8, 2, 1, NULL),
 (9, 3, 1, NULL),
-(10, 4, 1, NULL);
+(10, 4, 1, NULL),
+(11, 0, 2, NULL),
+(12, 0, 3, NULL),
+(13, 0, 4, NULL);
 
 --
 -- Indexes for dumped tables
@@ -268,7 +275,7 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `mergedfiles`
 --
 ALTER TABLE `mergedfiles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `permissions`
 --
@@ -288,7 +295,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `versions`
 --
 ALTER TABLE `versions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- Constraints for dumped tables
 --

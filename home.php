@@ -46,15 +46,9 @@ $stmt->close();
 for($i = 0; $i < count($itemArrays); $i++){
   $tempVersionArray = [];
   $sql = "SELECT * FROM versions WHERE mergedfiles_id = ? ORDER BY version";
-  if (false === ($stmt = $conn->prepare($sql))) {
-      echo 'error preparing statement: ' . $conn->error;
-  }
-  elseif (!$stmt->bind_param("i", $itemArrays[$i]["mergedId"])) {
-      echo 'error binding params: ' . $stmt->error;
-  }
-  elseif (!$stmt->execute()) {
-      echo 'error executing statement: ' . $stmt->error;
-  }
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("i", $itemArrays[$i]["mergedId"]);
+  $stmt->execute();
   $result = $stmt->get_result();
   while ($row = $result->fetch_array(MYSQLI_ASSOC))
   {
@@ -102,7 +96,7 @@ for($i = 0; $i < count($itemArrays); $i++){
               <?php } ?>
               <a href="#">Download</a>
               <div class="input-field">
-                <select>
+                <select class="js-versionSelect" data-name="<?php echo $item["name"] ?>">
                   <?php
                     $counter = 0;
                     $echoVar = "";
