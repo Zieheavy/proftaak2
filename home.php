@@ -29,7 +29,7 @@ $sql = "SELECT  m.id as mergedId,
                 ORDER BY p.colleges_id ASC,
                   m.courses_id ASC,
                   m.name ASC";
-                  
+
 if (false === ($stmt = $conn->prepare($sql))) {
     echo 'error preparing statement: ' . $conn->error;
 }
@@ -61,7 +61,7 @@ for($i = 0; $i < count($itemArrays); $i++){
   $itemArrays[$i]["versions"] = $tempVersionArray;
 }
 
-// dump($itemArrays);
+dump($itemArrays);
 ?>
 <html>
 <head>
@@ -81,7 +81,8 @@ for($i = 0; $i < count($itemArrays); $i++){
               <?php
                 $fileName = "";
                 $fileName .= $item["name"] . "_";
-                $fileName .= $item["versions"][count($item["versions"]) - 1]["version"];
+                $selectedVersion = $item["versions"][count($item["versions"]) - 1];
+                $fileName .= $selectedVersion["version"];
               ?>
               <iframe class="iframe" src="_completed\<?php echo $fileName ?>.pdf"></iframe>
           </div>
@@ -89,7 +90,7 @@ for($i = 0; $i < count($itemArrays); $i++){
             <span class="card-title center"><?php echo $item["name"] ?></span>
             <div class="card-content">
               <p>CreatorName: <?php echo $item["username"]; ?></p>
-              <p>Datum:       00-00-0000</p>
+              <p>Datum:       <?php echo $selectedVersion["version"]; ?></p>
               <p>College:     <?php echo $item["collageName"]; ?></p>
               <p>Opleiding:   <?php echo $item["courseName"]; ?></p>
             </div>
@@ -132,6 +133,6 @@ for($i = 0; $i < count($itemArrays); $i++){
   <div class="container"></div>
 
   <?php include 'partials/scripts.html'; ?>
-  <script src="dest/js/main.js" charset="utf-8"></script>
+  <script src="dest/js/home.js" charset="utf-8"></script>
 </body>
 </html>
