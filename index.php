@@ -57,7 +57,7 @@ session_start();
         </div>
         <div class="row btn-row">
           <div class="input-field col s6">
-            <button class="btn waves-effect waves-light login-btn" type="submit" name="loginSub">Login</button>
+            <button class="btn waves-effect waves-light login-btn" type="submit" name="registerSub">Registreer</button>
           </div>
           <div class="col s6">
             <a class="js-activate-loginSub btn white black-text waves-effect waves-light" href="#">Terug</a>
