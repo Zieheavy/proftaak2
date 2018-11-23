@@ -3,18 +3,37 @@ include 'include/session.php';
 include 'include/database.php';
 
 // dump($_SESSION);
-$id = $_SESSION['collegeId'];
+$id = $_SESSION['userId'];
 
 $itemArrays = [];
-$sql = "SELECT m.id as mergedId, m.name, m.version, u.id as userId FROM mergedfiles m,users u WHERE m.colleges_id = ? AND m.users_id = u.id";
-// $stmt = $conn->prepare($sql);
-// $stmt->bind_param("i", $id);
-// $stmt->execute();
+$sql = "SELECT  m.id as mergedId,
+                m.name,
+                m.users_id as creatorId,
+                m.courses_id,
+                p.read,
+                p.edit,
+                u.username,
+                c.name as collageName,
+                z.name as courseName,
+                z.colleges_id
+                FROM  mergedfiles m,
+                      permissions p,
+                      users u,
+                      colleges c,
+                      courses z WHERE p.users_id = ? AND
+                                      p.read = 1 AND
+                                      u.id = m.users_id AND
+                                      z.id = m.courses_id AND
+                                      c.id = z.colleges_id ORDER BY p.colleges_id ASC,
+                                                                    m.courses_id ASC,
+                                                                    m.name ASC";
 if (false === ($stmt = $conn->prepare($sql))) {
     echo 'error preparing statement: ' . $conn->error;
-} elseif (!$stmt->bind_param("i", $id)) {
+}
+elseif (!$stmt->bind_param("i", $id)) {
     echo 'error binding params: ' . $stmt->error;
-} elseif (!$stmt->execute()) {
+}
+elseif (!$stmt->execute()) {
     echo 'error executing statement: ' . $stmt->error;
 }
 $result = $stmt->get_result();
@@ -22,10 +41,30 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
 {
     $itemArrays[] = $row;
 }
+$stmt->close();
 
-// echo json_encode($itemArrays);
+for($i = 0; $i < count($itemArrays); $i++){
+  $tempVersionArray = [];
+  $sql = "SELECT * FROM versions WHERE mergedfiles_id = ? ORDER BY version";
+  if (false === ($stmt = $conn->prepare($sql))) {
+      echo 'error preparing statement: ' . $conn->error;
+  }
+  elseif (!$stmt->bind_param("i", $itemArrays[$i]["mergedId"])) {
+      echo 'error binding params: ' . $stmt->error;
+  }
+  elseif (!$stmt->execute()) {
+      echo 'error executing statement: ' . $stmt->error;
+  }
+  $result = $stmt->get_result();
+  while ($row = $result->fetch_array(MYSQLI_ASSOC))
+  {
+      $tempVersionArray[] = $row;
+  }
+  $stmt->close();
+  $itemArrays[$i]["versions"] = $tempVersionArray;
+}
 
-
+// dump($itemArrays);
 ?>
 <html>
 <head>
@@ -37,47 +76,57 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
 
   <?php include 'partials/navigation.php'; ?>
 
-  <!-- <div class="btn btn-primary js-wordToPdf">word to pdf</div>
-  <div class="btn btn-primary js-excelToPdf">excel to pdf</div>
-  <div class="btn btn-primary js-mergePdf">Merge pdf</div> -->
-  <!-- <button id="open_btn" class="btn btn-primary open-dialog">Upload File</button> -->
-  <!-- <div class="col s12 m8 l9">
-      <div class="dropify-wrapper"><div class="dropify-message"><span class="file-icon"></span> <p>Drag and drop a file here or click</p><p class="dropify-error">Sorry, this file is too large</p></div><input type="file" id="input-file-now" class="dropify" data-default-file=""><button type="button" class="dropify-clear">Remove</button><div class="dropify-preview"><span class="dropify-render"></span><div class="dropify-infos"><div class="dropify-infos-inner"><p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner"></span></p><p class="dropify-infos-message">Drag and drop or click to replace</p></div></div></div></div>
-  </div> -->
-  <!-- <button class="btn btn-primary deleteAll">Delete all</button>
-  <div class="btn btn-primary js-mergeSelected">Merge selected</div>
-  <input type="text" class="js-merge-name" placeholder="Merge name"> -->
-
-  <?php foreach($itemArrays as $item){ ?>
   <div class="container">
-    <div class="home-card col s10 offset-s1 m7">
-      <div class="card horizontal">
-        <div class="card-image">
-          <iframe class="iframe" src="_completed\<?php echo $item["name"]; ?>.pdf"></iframe>
-        </div>
-        <div class="card-stacked">
-          <div class="card-content">
-            <p>I am a very simple card. I am good at containing small bits of information.</p>
+    <?php foreach($itemArrays as $item){ ?>
+      <div class="home-card col m10 offset-m1">
+        <div class="card horizontal">
+          <div class="card-image">
+              <?php
+                $fileName = "";
+                $fileName .= $item["name"] . "_";
+                $fileName .= $item["versions"][count($item["versions"]) - 1]["version"];
+              ?>
+              <iframe class="iframe" src="_completed\<?php echo $fileName ?>.pdf"></iframe>
           </div>
-          <div class="card-action home-card-action">
-            <a href="#">Edit</a>
-            <a href="#">Download</a>
-            <div class="input-field">
-              <select>
-                <option value="" disabled selected></option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-              </select>
-              <label>Versie</label>
+          <div class="card-stacked">
+            <span class="card-title center"><?php echo $item["name"] ?></span>
+            <div class="card-content">
+              <p>CreatorName: <?php echo $item["username"]; ?></p>
+              <p>Datum:       00-00-0000</p>
+              <p>College:     <?php echo $item["collageName"]; ?></p>
+              <p>Opleiding:   <?php echo $item["courseName"]; ?></p>
+            </div>
+            <div class="card-action home-card-action">
+              <?php if($_SESSION["collegeId"] == $item["colleges_id"] && $item["edit"] == 1){ ?>
+                <a href="#">Edit</a>
+              <?php } ?>
+              <a href="#">Download</a>
+              <div class="input-field">
+                <select>
+                  <?php
+                    $counter = 0;
+                    $echoVar = "";
+                    foreach ($item["versions"] as $version) {
+                      $counter++;
+                      $ver = $version["version"];
+                      $echoVar .= '<option value="' . $ver . '"';
+                      if($counter == count($item["versions"])){
+                        $echoVar .= " selected";
+                      }
+                      $echoVar.= '> ' . $ver . '</option>';
+                    }
+                    echo $echoVar;
+                  ?>
+                </select>
+                <label>Versie</label>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    <?php } ?>
   </div>
 
-  <?php } ?>
 
 
   <?php include 'partials/templates.html'; ?>

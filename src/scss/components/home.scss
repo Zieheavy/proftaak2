@@ -6,9 +6,13 @@
   height: 100%;
 }
 .home-card{
-  height: 10vmin;
+  height: 40vmin;
+  margin-bottom: 2vmin;
 }
 .home-card-action{
   display: flex;
   justify-content: space-around;
+}
+.container{
+  height: 100%;
 }
