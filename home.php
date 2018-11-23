@@ -20,13 +20,16 @@ $sql = "SELECT  m.id as mergedId,
                       permissions p,
                       users u,
                       colleges c,
-                      courses z WHERE p.users_id = ? AND
-                                      p.read = 1 AND
-                                      u.id = m.users_id AND
-                                      z.id = m.courses_id AND
-                                      c.id = z.colleges_id ORDER BY p.colleges_id ASC,
-                                                                    m.courses_id ASC,
-                                                                    m.name ASC";
+                      courses z
+                WHERE p.users_id = ?
+                  AND p.read = 1
+                  AND u.id = m.users_id
+                  AND z.id = m.courses_id
+                  AND c.id = z.colleges_id
+                ORDER BY p.colleges_id ASC,
+                  m.courses_id ASC,
+                  m.name ASC";
+                  
 if (false === ($stmt = $conn->prepare($sql))) {
     echo 'error preparing statement: ' . $conn->error;
 }
