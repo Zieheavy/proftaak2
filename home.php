@@ -61,7 +61,7 @@ for($i = 0; $i < count($itemArrays); $i++){
   $itemArrays[$i]["versions"] = $tempVersionArray;
 }
 
-dump($itemArrays);
+// dump($itemArrays);
 ?>
 <html>
 <head>
@@ -98,7 +98,7 @@ dump($itemArrays);
               <?php if($_SESSION["collegeId"] == $item["colleges_id"] && $item["edit"] == 1){ ?>
                 <a href="#">Edit</a>
               <?php } ?>
-              <a href="#">Download</a>
+              <a href="_completed\<?php echo $fileName ?>.pdf" class="js-download" download>Download</a>
               <div class="input-field">
                 <select class="js-versionSelect" data-name="<?php echo $item["name"] ?>">
                   <?php

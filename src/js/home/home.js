@@ -3,9 +3,11 @@ $(document).ready(function(){
 
   $(document).on('change', '.js-versionSelect', function() {
     var source = "";
+    var container = $(this).closest(".card");
     source += "_completed/";
     source += $(this).data("name") + "_" + $(this).val();
     source += ".pdf";
-    $(this).closest(".card").find(".iframe").attr("src", source);
+    container.find(".iframe").attr("src", source);
+    container.find(".js-download").attr("href", source);
   });
 });
