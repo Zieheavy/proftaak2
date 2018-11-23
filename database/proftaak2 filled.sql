@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2018 at 10:26 AM
--- Server version: 10.1.26-MariaDB
--- PHP Version: 7.1.8
+-- Gegenereerd op: 23 nov 2018 om 12:09
+-- Serverversie: 10.1.30-MariaDB
+-- PHP-versie: 7.2.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -27,29 +27,33 @@ USE `proftaak2`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attached-files`
+-- Tabelstructuur voor tabel `attached-files`
 --
 
-CREATE TABLE `attached-files` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `attached-files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `pages` varchar(400) DEFAULT NULL,
   `mergedfiles_id` int(11) NOT NULL,
-  `sourcefiles_id` int(11) NOT NULL
+  `sourcefiles_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_attached-files_mergedfiles1_idx` (`mergedfiles_id`),
+  KEY `fk_attached-files_sourcefiles1_idx` (`sourcefiles_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `colleges`
+-- Tabelstructuur voor tabel `colleges`
 --
 
-CREATE TABLE `colleges` (
-  `id` int(11) NOT NULL,
-  `name` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `colleges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `colleges`
+-- Gegevens worden geëxporteerd voor tabel `colleges`
 --
 
 INSERT INTO `colleges` (`id`, `name`) VALUES
@@ -60,17 +64,19 @@ INSERT INTO `colleges` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `courses`
+-- Tabelstructuur voor tabel `courses`
 --
 
-CREATE TABLE `courses` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `courses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
-  `colleges_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `colleges_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_courses_colleges_idx` (`colleges_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `courses`
+-- Gegevens worden geëxporteerd voor tabel `courses`
 --
 
 INSERT INTO `courses` (`id`, `name`, `colleges_id`) VALUES
@@ -82,18 +88,21 @@ INSERT INTO `courses` (`id`, `name`, `colleges_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mergedfiles`
+-- Tabelstructuur voor tabel `mergedfiles`
 --
 
-CREATE TABLE `mergedfiles` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `mergedfiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) DEFAULT NULL,
   `users_id` int(11) NOT NULL,
-  `courses_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `courses_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_mergedfiles_users1_idx` (`users_id`),
+  KEY `fk_mergedfiles_courses1_idx` (`courses_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `mergedfiles`
+-- Gegevens worden geëxporteerd voor tabel `mergedfiles`
 --
 
 INSERT INTO `mergedfiles` (`id`, `name`, `users_id`, `courses_id`) VALUES
@@ -105,56 +114,77 @@ INSERT INTO `mergedfiles` (`id`, `name`, `users_id`, `courses_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permissions`
+-- Tabelstructuur voor tabel `permissions`
 --
 
-CREATE TABLE `permissions` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `read` tinyint(4) DEFAULT '0',
+  `write` tinyint(4) DEFAULT '0',
   `edit` tinyint(4) DEFAULT '0',
   `users_id` int(11) NOT NULL,
-  `colleges_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `colleges_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_permissions_users1_idx` (`users_id`),
+  KEY `fk_permissions_colleges1_idx` (`colleges_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `permissions`
+-- Gegevens worden geëxporteerd voor tabel `permissions`
 --
 
-INSERT INTO `permissions` (`id`, `read`, `edit`, `users_id`, `colleges_id`) VALUES
-(1, 1, 1, 2, 1),
-(2, 1, 0, 3, 2);
+INSERT INTO `permissions` (`id`, `read`, `write`, `edit`, `users_id`, `colleges_id`) VALUES
+(1, 1, 0, 1, 2, 1),
+(2, 1, 0, 0, 3, 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sourcefiles`
+-- Tabelstructuur voor tabel `sourcefiles`
 --
 
-CREATE TABLE `sourcefiles` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `sourcefiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(400) DEFAULT NULL,
   `extension` varchar(10) DEFAULT NULL,
-  `users_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `users_id` int(11) NOT NULL,
+  `colleges_id` int(11) DEFAULT NULL,
+  `courses_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_sourcefiles_users1_idx` (`users_id`),
+  KEY `fk_sourcefiles_colleges1_idx` (`colleges_id`),
+  KEY `fk_sourcefiles_courses1_idx` (`courses_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `sourcefiles`
+--
+
+INSERT INTO `sourcefiles` (`id`, `name`, `extension`, `users_id`, `colleges_id`, `courses_id`) VALUES
+(1, 'request-for-proposal', 'docx', 2, 1, 1),
+(2, 'WBS Monitor - assignment - ao  - wd - s4p1 - ict college', 'docx', 2, 1, 2),
+(3, 'Urenselector - voortgang 16AO - AO - Vdef - ict college', 'xlsx', 2, 2, 3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Tabelstructuur voor tabel `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(200) DEFAULT NULL,
   `password` varchar(400) DEFAULT NULL,
   `confirm` tinyint(4) DEFAULT '0',
   `newcollege` tinyint(4) DEFAULT '0',
   `verified` tinyint(4) DEFAULT '0',
-  `colleges_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `colleges_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_users_colleges1_idx` (`colleges_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `users`
+-- Gegevens worden geëxporteerd voor tabel `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `confirm`, `newcollege`, `verified`, `colleges_id`) VALUES
@@ -165,182 +195,84 @@ INSERT INTO `users` (`id`, `username`, `password`, `confirm`, `newcollege`, `ver
 -- --------------------------------------------------------
 
 --
--- Table structure for table `versions`
+-- Tabelstructuur voor tabel `versions`
 --
 
-CREATE TABLE `versions` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `versions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `version` int(11) DEFAULT NULL,
+  `filedate` varchar(20) DEFAULT NULL,
   `mergedfiles_id` int(11) DEFAULT NULL,
-  `sourcefiles_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `sourcefiles_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_versions_mergedfiles1_idx` (`mergedfiles_id`),
+  KEY `fk_versions_sourcefiles1_idx` (`sourcefiles_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `versions`
+-- Gegevens worden geëxporteerd voor tabel `versions`
 --
 
-INSERT INTO `versions` (`id`, `version`, `mergedfiles_id`, `sourcefiles_id`) VALUES
-(6, 0, 1, NULL),
-(7, 1, 1, NULL),
-(8, 2, 1, NULL),
-(9, 3, 1, NULL),
-(10, 4, 1, NULL),
-(11, 0, 2, NULL),
-(12, 0, 3, NULL),
-(13, 0, 4, NULL);
+INSERT INTO `versions` (`id`, `version`, `filedate`, `mergedfiles_id`, `sourcefiles_id`) VALUES
+(6, 0, NULL, 1, NULL),
+(7, 1, NULL, 1, NULL),
+(8, 2, NULL, 1, NULL),
+(9, 3, NULL, 1, NULL),
+(10, 4, NULL, 1, NULL),
+(11, 0, NULL, 2, NULL),
+(12, 0, NULL, 3, NULL),
+(13, 0, NULL, 4, NULL),
+(14, 0, NULL, NULL, 1),
+(15, 0, NULL, NULL, 3),
+(16, 0, NULL, NULL, 2);
 
 --
--- Indexes for dumped tables
---
-
---
--- Indexes for table `attached-files`
---
-ALTER TABLE `attached-files`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_attached-files_mergedfiles1_idx` (`mergedfiles_id`),
-  ADD KEY `fk_attached-files_sourcefiles1_idx` (`sourcefiles_id`);
-
---
--- Indexes for table `colleges`
---
-ALTER TABLE `colleges`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `courses`
---
-ALTER TABLE `courses`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_courses_colleges_idx` (`colleges_id`);
-
---
--- Indexes for table `mergedfiles`
---
-ALTER TABLE `mergedfiles`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_mergedfiles_users1_idx` (`users_id`),
-  ADD KEY `fk_mergedfiles_courses1_idx` (`courses_id`);
-
---
--- Indexes for table `permissions`
---
-ALTER TABLE `permissions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_permissions_users1_idx` (`users_id`),
-  ADD KEY `fk_permissions_colleges1_idx` (`colleges_id`);
-
---
--- Indexes for table `sourcefiles`
---
-ALTER TABLE `sourcefiles`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_sourcefiles_users1_idx` (`users_id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_users_colleges1_idx` (`colleges_id`);
-
---
--- Indexes for table `versions`
---
-ALTER TABLE `versions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_versions_mergedfiles1_idx` (`mergedfiles_id`),
-  ADD KEY `fk_versions_sourcefiles1_idx` (`sourcefiles_id`);
-
---
--- AUTO_INCREMENT for dumped tables
+-- Beperkingen voor geëxporteerde tabellen
 --
 
 --
--- AUTO_INCREMENT for table `attached-files`
---
-ALTER TABLE `attached-files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `colleges`
---
-ALTER TABLE `colleges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `courses`
---
-ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `mergedfiles`
---
-ALTER TABLE `mergedfiles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `permissions`
---
-ALTER TABLE `permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `sourcefiles`
---
-ALTER TABLE `sourcefiles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `versions`
---
-ALTER TABLE `versions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `attached-files`
+-- Beperkingen voor tabel `attached-files`
 --
 ALTER TABLE `attached-files`
   ADD CONSTRAINT `fk_attached-files_mergedfiles1` FOREIGN KEY (`mergedfiles_id`) REFERENCES `mergedfiles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_attached-files_sourcefiles1` FOREIGN KEY (`sourcefiles_id`) REFERENCES `sourcefiles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `courses`
+-- Beperkingen voor tabel `courses`
 --
 ALTER TABLE `courses`
   ADD CONSTRAINT `fk_courses_colleges` FOREIGN KEY (`colleges_id`) REFERENCES `colleges` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `mergedfiles`
+-- Beperkingen voor tabel `mergedfiles`
 --
 ALTER TABLE `mergedfiles`
   ADD CONSTRAINT `fk_mergedfiles_courses1` FOREIGN KEY (`courses_id`) REFERENCES `courses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_mergedfiles_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `permissions`
+-- Beperkingen voor tabel `permissions`
 --
 ALTER TABLE `permissions`
   ADD CONSTRAINT `fk_permissions_colleges1` FOREIGN KEY (`colleges_id`) REFERENCES `colleges` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_permissions_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `sourcefiles`
+-- Beperkingen voor tabel `sourcefiles`
 --
 ALTER TABLE `sourcefiles`
+  ADD CONSTRAINT `fk_sourcefiles_colleges1` FOREIGN KEY (`colleges_id`) REFERENCES `colleges` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_sourcefiles_courses1` FOREIGN KEY (`courses_id`) REFERENCES `courses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_sourcefiles_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `users`
+-- Beperkingen voor tabel `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `fk_users_colleges1` FOREIGN KEY (`colleges_id`) REFERENCES `colleges` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `versions`
+-- Beperkingen voor tabel `versions`
 --
 ALTER TABLE `versions`
   ADD CONSTRAINT `fk_versions_mergedfiles1` FOREIGN KEY (`mergedfiles_id`) REFERENCES `mergedfiles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
