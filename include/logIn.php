@@ -60,18 +60,18 @@ function login($name, $pass){
           }
           else{
             echo "Username or password is wrong";
-            // header("Location: login.php");
+            header("Location: ../index.php?stat=1");
           }
       }
       else{
         echo "Username or password is wrong";
-        // header("Location: login.php");
+        header("Location: ../index.php?stat=1");
         $loggedIn = false;
       }
   }
   else{
     echo "Username or password is wrong";
-    // header("Location: login.php");
+    header("Location: ../index.php?stat=1");
   }
   $stmt->close();
 }

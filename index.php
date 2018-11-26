@@ -71,6 +71,6 @@ session_start();
   <?php include 'partials/modals.html'; ?>
 
   <?php include 'partials/scripts.html'; ?>
-  <script src="dest/js/main.js" charset="utf-8"></script>
+  <script src="dest/js/index.js" charset="utf-8"></script>
 </body>
 </html>
