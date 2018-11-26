@@ -25,6 +25,23 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
 $stmt->close();
 $newfiles = [];
 foreach ($files as $key => $file) {
+  $ext = $file['extension'];
+  $folder = "";
+  switch ($ext) {
+    case 'docx':
+    case 'doc':
+      $folder = "_docs";
+      break;
+    case 'xlsx':
+    case 'xls':
+    case 'xlsm':
+      $folder = "_excel";
+      break;
+    default:
+      $folder = "_pdf";
+      break;
+  }
+  $file['folder'] = $folder;
   if (!isset($newfiles[$file['colleges_name']])) {
     $newfiles[$file['colleges_name']] = [];
   }
@@ -34,7 +51,7 @@ foreach ($files as $key => $file) {
   array_push($newfiles[$file['colleges_name']][$file['courses_name']], $file);
 }
 $files = $newfiles;
-// dump($files);
+dump($files);
 ?>
 <html>
 <head>
@@ -79,11 +96,16 @@ $files = $newfiles;
                                       </div>
                                     </div>
                                     <div class="card-action file__links">
-                                      <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>
+                                      <a class='dropdown-trigger btn' href='#' data-target='dropdown<?=$file['sourcefiles_id']?>'>
                                         <i class="fa fa-download" aria-hidden="true"></i>
                                       </a>
-                                      <!-- Dropdown Structure -->
-                                      <ul id='dropdown1' class='dropdown-content'>
+                                      <ul id='dropdown' class='dropdown-content'>
+                                        <li>
+                                          <a href="_pdf/<?=$file['sourcefile_name']?>.pdf" download>pdf</a>
+                                        </li>
+                                        <li>
+                                          <a href="<?=$file['folder']?>/<?=$file['sourcefile_name']?>.<?=$file['extension']?>" download><?=$file['extension']?></a>
+                                        </li>
                                       </ul>
                                       <a class="btn js-delete-file" href="#">
                                         <i class="material-icons">delete</i>
@@ -105,7 +127,7 @@ $files = $newfiles;
         <?php endforeach; ?>
       </div>
       <div class="col s4">
-        <ul class="js-sortable-copy-target" style="min-height: 100px;" aria-dropeffect="move">
+        <ul class="js-sortable-copy-target copy-target col-min-500" style="min-height: 200px"aria-dropeffect="move">
     		</ul>
       </div>
       <div class="col s4">
