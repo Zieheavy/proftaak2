@@ -118,10 +118,6 @@ $files = $newfiles;
   <?php include 'partials/scripts.html'; ?>
 
   <script src="dest/js/html5sortable.min.js" charset="utf-8"></script>
-  <script src="dest/js/main.js" charset="utf-8"></script>
   <script src="dest/js/newDocument.js" charset="utf-8"></script>
-  <script type="text/javascript">
-
-  </script>
   </body>
   </html>
