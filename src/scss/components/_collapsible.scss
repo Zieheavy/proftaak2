@@ -1,0 +1,22 @@
+.collapsible.expandable{
+  box-shadow: none;
+  border: 0;
+  &>.collapsible-expand{
+    &>.collapsible-header>.collapsible-header-text:before
+    {
+      content: "+";
+      margin-right: 5px;
+    }
+    &.active>.collapsible-header>.collapsible-header-text:before
+    {
+      content: "-";
+      margin-right: 9.2px;
+    }
+  }
+}
+.collapsible-body{
+  padding: 5px 0 5px 20px;
+  & .collapsible-body{
+    padding: 5px 0 5px 30px;
+  }
+}

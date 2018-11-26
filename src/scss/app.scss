@@ -3,18 +3,15 @@
 @import 'modules/variables';
 @import 'modules/typography';
 
-@import 'components/login.scss';
-@import 'components/_flash-message.scss';
-@import 'components/nav.scss';
-@import 'components/home.scss';
+@import 'components/login';
+@import 'components/flash-message';
+@import 'components/nav';
+@import 'components/home';
+@import 'components/collapsible';
+@import 'components/file';
 
-.fuuuuuck{
-  // background-color: red;
-  margin:  2px 0px;
-  border: 2px dashed yellow;
-}
-.item{
-  transition: .2s ease;
+.disnone{
+  display: none;
 }
 .login{
   transition: .2s ease;
@@ -33,4 +30,12 @@
   &--disappear{
     opacity: 0;
   }
+}
+.no-border-bot{
+  border-bottom: 0;
+}
+.preview{
+  width: 100%;
+  height: 300px;
+  margin-top: 12px
 }

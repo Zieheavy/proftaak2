@@ -25,9 +25,16 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
 $stmt->close();
 $newfiles = [];
 foreach ($files as $key => $file) {
-  $newfiles[$file['colleges_name']][$file['courses_name']] = $file;
+  if (!isset($newfiles[$file['colleges_name']])) {
+    $newfiles[$file['colleges_name']] = [];
+  }
+  if (!isset($newfiles[$file['colleges_name']][$file['courses_name']])) {
+    $newfiles[$file['colleges_name']][$file['courses_name']] = [];
+  }
+  array_push($newfiles[$file['colleges_name']][$file['courses_name']], $file);
 }
-dump($newfiles);
+$files = $newfiles;
+// dump($files);
 ?>
 <html>
 <head>
@@ -36,39 +43,73 @@ dump($newfiles);
 </head>
 <body>
   <div class="flash-message-container"> </div>
-
   <?php include 'partials/navigation.php'; ?>
-  <!--  -->
-  <!-- <div class="" style="min-height: 100px;">
-    <h1>copy from here</h1>
-    <ul class="js-sortable-copy" aria-dropeffect="move">
-      <li class="p1 mb1 yellow bg-maroon item" style="position: relative; z-index: 10" draggable="true" role="option" aria-grabbed="false">Item 1</li>
-      <li class="p1 mb1 yellow bg-maroon item" style="position: relative; z-index: 10" draggable="true" role="option" aria-grabbed="false">Item 2</li>
-      <li class="p1 mb1 yellow bg-maroon item" style="position: relative; z-index: 10" draggable="true" role="option" aria-grabbed="false">Item 3</li>
-      <li class="p1 mb1 yellow bg-maroon item" style="position: relative; z-index: 10" draggable="true" role="option" aria-grabbed="false">Item 4</li>
-      <li class="p1 mb1 yellow bg-maroon item" style="position: relative; z-index: 10" draggable="true" role="option" aria-grabbed="false">Item 5</li>
-      <li class="p1 mb1 yellow bg-maroon item" style="position: relative; z-index: 10" draggable="true" role="option" aria-grabbed="false">Item 6</li>
-    </ul>
-  </div>
-  <div class="" style="min-height: 100px;"><h1>Copy here</h1>
-    <ul class="js-sortable-copy-target" style="min-height: 100px;" aria-dropeffect="move">
-		</ul>
-  </div> -->
   <div class="container">
     <div class="row">
-      <div class="col s3">
+      <div class="col s4">
         <h4>Bestanden</h4>
-        <ul class="js-sortable-copy" aria-dropeffect="move">
-          <li class="p1 mb1 yellow bg-maroon item" style="position: relative; z-index: 10" draggable="true" role="option" aria-grabbed="false">Item 1</li>
-          <li class="p1 mb1 yellow bg-maroon item" style="position: relative; z-index: 10" draggable="true" role="option" aria-grabbed="false">Item 2</li>
-          <li class="p1 mb1 yellow bg-maroon item" style="position: relative; z-index: 10" draggable="true" role="option" aria-grabbed="false">Item 3</li>
-          <li class="p1 mb1 yellow bg-maroon item" style="position: relative; z-index: 10" draggable="true" role="option" aria-grabbed="false">Item 4</li>
-          <li class="p1 mb1 yellow bg-maroon item" style="position: relative; z-index: 10" draggable="true" role="option" aria-grabbed="false">Item 5</li>
-          <li class="p1 mb1 yellow bg-maroon item" style="position: relative; z-index: 10" draggable="true" role="option" aria-grabbed="false">Item 6</li>
-        </ul>
+        <?php foreach ($files as $key => $college): ?>
+          <ul class="collapsible expandable" data-collapsible="accordion">
+          	<li class="collapsible-expand">
+          		<div class="collapsible-header">
+          			<div class="collapsible-header-text"><?=$key?></div>
+              </div>
+          		<div class="collapsible-body no-border-bot">
+          			<div class="row">
+          				<div class="col s12 m12">
+          					<ul class="collapsible expandable" data-collapsible="accordion">
+                      <?php foreach ($college as $key => $course): ?>
+                        <li class="collapsible-expand">
+                          <div class="collapsible-header">
+                            <div class="collapsible-header-text"><?=$key?></div>
+                          </div>
+                          <div class="collapsible-body">
+                            <ul class="js-sortable-copy" aria-dropeffect="move">
+                              <?php foreach ($course as $key => $file): ?>
+                                <li data-name="<?=$file['sourcefile_name']?>" data-ext="<?=$file['extension']?>" class="p1 mb1 item file" draggable="true" role="option" aria-grabbed="false">
+                                  <div class="card card--file">
+                                    <div class="card-content card-content-nopad">
+                                      <span class="card-title file__title">
+                                        <i class="material-icons">insert_drive_file</i>
+                                        <span class="file__name"><?=$file['sourcefile_name']?></span>
+                                      </span>
+                                      <div class="input-field inline file__pagenrs">
+                                        <input id="pagenrs" type="text" class="validate">
+                                        <label for="pagenrs">Pagina's</label>
+                                      </div>
+                                    </div>
+                                    <div class="card-action file__links">
+                                      <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                      </a>
+                                      <!-- Dropdown Structure -->
+                                      <ul id='dropdown1' class='dropdown-content'>
+                                      </ul>
+                                      <a class="btn js-delete-file" href="#">
+                                        <i class="material-icons">delete</i>
+                                      </a>
+                                    </div>
+                                  </div>
+                                </li>
+                              <?php endforeach; ?>
+                            </ul>
+                          </div>
+                        </li>
+                      <?php endforeach; ?>
+          					</ul>
+          				</div>
+          			</div>
+          		</div>
+          	</li>
+          </ul>
+        <?php endforeach; ?>
       </div>
-      <div class="col-s4">
-
+      <div class="col s4">
+        <ul class="js-sortable-copy-target" style="min-height: 100px;" aria-dropeffect="move">
+    		</ul>
+      </div>
+      <div class="col s4">
+        <iframe class="js-frm preview" src="" width="" height=""></iframe>
       </div>
     </div>
   </div>

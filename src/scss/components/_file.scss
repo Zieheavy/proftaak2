@@ -1,0 +1,38 @@
+.fuuuuuck{
+  // background-color: red;
+}
+.file{
+  transition: .2s ease;
+  cursor: pointer;
+  &__placeholder{
+    margin:  2px 0px;
+    border: 2px dashed blue;
+  }
+  & .file__title{
+    font-size: 15px;
+  }
+  & .file__pagenrs{
+    display: none;
+  }
+  & .file__links{
+    display: none;
+  }
+  & .card--file{
+    box-shadow: none;
+    border: 0;
+  }
+  &--dragged{
+    & .file__pagenrs{
+      display: inline-block;
+    }
+    & .file__links{
+      display: block;
+    }
+    & .card{
+      padding: 10px;
+    }
+  }
+}
+.card-content-nopad{
+  padding: 0px !important;
+}
