@@ -51,7 +51,7 @@ foreach ($files as $key => $file) {
   array_push($newfiles[$file['colleges_name']][$file['courses_name']], $file);
 }
 $files = $newfiles;
-dump($files);
+dump($files, "");
 ?>
 <html>
 <head>
@@ -67,7 +67,7 @@ dump($files);
         <h4>Bestanden</h4>
         <?php foreach ($files as $key => $college): ?>
           <ul class="collapsible expandable" data-collapsible="accordion">
-          	<li class="collapsible-expand">
+          	<li class="collapsible-expand active">
           		<div class="collapsible-header">
           			<div class="collapsible-header-text"><?=$key?></div>
               </div>
@@ -76,14 +76,14 @@ dump($files);
           				<div class="col s12 m12">
           					<ul class="collapsible expandable" data-collapsible="accordion">
                       <?php foreach ($college as $key => $course): ?>
-                        <li class="collapsible-expand">
+                        <li class="collapsible-expand active">
                           <div class="collapsible-header">
                             <div class="collapsible-header-text"><?=$key?></div>
                           </div>
                           <div class="collapsible-body">
                             <ul class="js-sortable-copy" aria-dropeffect="move">
                               <?php foreach ($course as $key => $file): ?>
-                                <li data-name="<?=$file['sourcefile_name']?>" data-ext="<?=$file['extension']?>" class="p1 mb1 item file" draggable="true" role="option" aria-grabbed="false">
+                                <li data-name="<?=$file['sourcefile_name']?>" data-ext="<?=$file['extension']?>" class="p1 mb1 item file active" draggable="true" role="option" aria-grabbed="false">
                                   <div class="card card--file">
                                     <div class="card-content card-content-nopad">
                                       <span class="card-title file__title">
