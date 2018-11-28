@@ -11,7 +11,7 @@ $(document).ready(function(){
     container.find(".js-download").attr("href", source);
   });
 
-  var data = [];
+  var data = []; 
   $(".card").each(function(){
     var name = $(this).find(".card-title").html();
     data[name] = null;

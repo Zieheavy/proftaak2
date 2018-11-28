@@ -23,9 +23,9 @@ switch ($currentPage) {
     <a href="#!" class="brand-logo right"><img class="logo" src="img/logo-trans.png"></a>
     <?php if($active != -1){ ?>
       <ul class="hide-on-med-and-down">
-        <li class="<?php if($active == 1) echo "active"; ?>"><a href="">Home</a></li>
+        <li class="<?php if($active == 1) echo "active"; ?>"><a href="home.php">Home</a></li>
         <li class="<?php if($active == 2) echo "active"; ?>"><a href="">Bronteksten</a></li>
-        <li class="<?php if($active == 3) echo "active"; ?>"><a href="">Nieuw Document</a></li>
+        <li class="<?php if($active == 3) echo "active"; ?>"><a href="nieuw-document.php">Nieuw Document</a></li>
       </ul>
     <a href="#!" class="btn waves-effect waves-light right">Loguot </a>
     <?php } ?>
