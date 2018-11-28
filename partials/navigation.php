@@ -6,8 +6,11 @@ switch ($currentPage) {
   case 'home.php':
   $active = 1;
     break;
+  case '#':
+    $active = 2;
+    break;
   case 'nieuw-document.php':
-    $active = 1;
+    $active = 3;
     break;
   default:
   $active = -1;
@@ -21,9 +24,10 @@ switch ($currentPage) {
     <?php if($active != -1){ ?>
       <ul class="hide-on-med-and-down">
         <li class="<?php if($active == 1) echo "active"; ?>"><a href="">Home</a></li>
-        <li class="<?php if($active == 2) echo "active"; ?>"><a href="">Components</a></li>
-        <li class="<?php if($active == 3) echo "active"; ?>"><a href="">JavaScript</a></li>
+        <li class="<?php if($active == 2) echo "active"; ?>"><a href="">Bronteksten</a></li>
+        <li class="<?php if($active == 3) echo "active"; ?>"><a href="">Nieuw Document</a></li>
       </ul>
+    <a href="#!" class="btn waves-effect waves-light right">Loguot </a>
     <?php } ?>
   </div>
 </nav>

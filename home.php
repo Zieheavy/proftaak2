@@ -74,6 +74,17 @@ for($i = 0; $i < count($itemArrays); $i++){
   <?php include 'partials/navigation.php'; ?>
 
   <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">textsms</i>
+            <input class="js-merge" type="text" id="autocomplete-input" class="autocomplete">
+            <label for="autocomplete-input">Search</label>
+          </div>
+        </div>
+      </div>
+    </div>
     <?php foreach($itemArrays as $item){ ?>
       <div class="home-card col m10 offset-m1">
         <div class="card horizontal">

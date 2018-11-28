@@ -1,0 +1,14 @@
+.toast{
+  &.error{
+    background-color: red;
+  }
+  &.succes{
+    background-color: green;
+  }
+  &.warning{
+    background-color: yellow;
+  }
+  &.alert{
+    background-color: blue;
+  }
+}
