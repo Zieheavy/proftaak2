@@ -11,16 +11,22 @@ sortable('.js-sortable-copy-target', {
 });
 $(sortable('.js-sortable-copy')).each(function(index, el) {
   sortable('.js-sortable-copy')[index].addEventListener('sortstop', function(e) {
-    console.log("hello");
     var i = e.detail.item;
     $(i).addClass('file--dragged');
     $(i).find('.card--file').removeClass('card--file');
     M.updateTextFields();
+    var dropdown = $(i).find('.dropdown-trigger');
+    $(dropdown).addClass('drp');
+    var rnd = randomString2(10)
+    $(dropdown).attr('data-target', "dropdown" + rnd);
+    $(dropdown).data('target', "dropdown" + rnd);
+    $(i).find('#dropdown').attr('id', "dropdown" +  rnd);
+    $('.drp').dropdown();
   });
+
 });
 $(document).ready(function(){
   $('.collapsible.expandable').collapsible({accordion: false});
-  $('.dropdown-trigger').dropdown();
 });
 
 $('body').on('click', '.file__title', function(){
@@ -30,3 +36,36 @@ $('body').on('click', '.file__title', function(){
 $('body').on('click', '.js-delete-file', function(){
   $(this).closest('.file').remove();
 });
+
+function randomString2(len, beforestr = '', arraytocheck = null) {
+    // Charset, every character in this string is an optional one it can use as a random character.
+    var charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    var randomString = '';
+    for (var i = 0; i < len; i++) {
+        // creates a random number between 0 and the charSet length. Rounds it down to a whole number
+        var randomPoz = Math.floor(Math.random() * charSet.length);
+        randomString += charSet.substring(randomPoz, randomPoz + 1);
+    }
+    // If an array is given it will check the array, and if the generated string exists in it it will create a new one until a unique one is found *WATCH OUT. If all available options are used it will cause a loop it cannot break out*
+    if (arraytocheck == null) {
+        return beforestr + randomString;
+    } else {
+        var isIn = $.inArray(beforestr + randomString, arraytocheck); // checks if the string is in the array, returns a position
+        if (isIn > -1) {
+            // if the position is not -1 (meaning, it is not in the array) it will start doing a loop
+            var count = 0;
+            do {
+                randomString = '';
+                for (var i = 0; i < len; i++) {
+                    var randomPoz = Math.floor(Math.random() * charSet.length);
+                    randomString += charSet.substring(randomPoz, randomPoz + 1);
+                }
+                isIn = $.inArray(beforestr + randomString, arraytocheck);
+                count++;
+            } while (isIn > -1);
+            return beforestr + randomString;
+        } else {
+            return beforestr + randomString;
+        }
+    }
+}
