@@ -26,6 +26,7 @@ switch ($currentPage) {
         <li class="<?php if($active == 1) echo "active"; ?>"><a href="home.php">Home</a></li>
         <li class="<?php if($active == 2) echo "active"; ?>"><a href="bronteksten.php">Bronteksten</a></li>
         <li class="<?php if($active == 3) echo "active"; ?>"><a href="nieuw-document.php">Nieuw Document</a></li>
+        <li class="js-delete-merged <?php if($active == 3) echo "active"; ?>"><a href="#">DeleteMerged</a></li>
       </ul>
     <a href="#!" class="btn waves-effect waves-light right js-logout">Loguot </a>
     <?php } ?>
