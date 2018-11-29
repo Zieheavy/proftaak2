@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2018 at 12:11 PM
+-- Generation Time: Nov 29, 2018 at 10:33 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -33,12 +33,36 @@ USE `proftaak2`;
 CREATE TABLE IF NOT EXISTS `attached-files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pages` varchar(400) DEFAULT NULL,
-  `mergedfiles_id` int(11) NOT NULL,
   `sourcefiles_id` int(11) NOT NULL,
+  `versions_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_attached-files_mergedfiles1_idx` (`mergedfiles_id`),
-  KEY `fk_attached-files_sourcefiles1_idx` (`sourcefiles_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fk_attached-files_sourcefiles1_idx` (`sourcefiles_id`),
+  KEY `fk_attached-files_versions1_idx` (`versions_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `attached-files`
+--
+
+INSERT INTO `attached-files` (`id`, `pages`, `sourcefiles_id`, `versions_id`) VALUES
+(90, 'all', 4, 89),
+(91, 'all', 10, 89),
+(92, 'all', 5, 89),
+(93, 'all', 6, 90),
+(94, 'all', 11, 90),
+(95, 'all', 7, 91),
+(96, 'all', 11, 91),
+(97, 'all', 9, 91),
+(98, 'all', 11, 91),
+(99, 'all', 8, 91),
+(100, 'all', 11, 92),
+(101, 'all', 10, 92),
+(102, 'all', 4, 93),
+(103, 'all', 5, 93),
+(104, 'all', 6, 93),
+(105, 'all', 7, 93),
+(106, 'all', 8, 93),
+(107, 'all', 9, 93);
 
 -- --------------------------------------------------------
 
@@ -99,17 +123,18 @@ CREATE TABLE IF NOT EXISTS `mergedfiles` (
   PRIMARY KEY (`id`),
   KEY `fk_mergedfiles_users1_idx` (`users_id`),
   KEY `fk_mergedfiles_courses1_idx` (`courses_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `mergedfiles`
 --
 
 INSERT INTO `mergedfiles` (`id`, `name`, `users_id`, `courses_id`) VALUES
-(5, 'merged1', 2, 1),
-(6, 'merged2', 2, 2),
-(7, 'merged3', 3, 3),
-(8, 'merged4', 3, 4);
+(38, 'BouwGids1', 2, 1),
+(39, 'ApplicatieGids1', 2, 1),
+(40, 'Beheer1', 2, 1),
+(41, 'AllExcel1', 2, 1),
+(42, 'AllWord1', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -212,21 +237,18 @@ CREATE TABLE IF NOT EXISTS `versions` (
   PRIMARY KEY (`id`),
   KEY `fk_versions_mergedfiles1_idx` (`mergedfiles_id`),
   KEY `fk_versions_sourcefiles1_idx` (`sourcefiles_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `versions`
 --
 
 INSERT INTO `versions` (`id`, `version`, `filedate`, `mergedfiles_id`, `sourcefiles_id`) VALUES
-(17, 0, '23-11-2018 12:18:09', 5, NULL),
-(18, 1, '13-11-2018 12:18:09', 5, NULL),
-(19, 2, '23-12-2018 12:18:09', 5, NULL),
-(20, 3, '23-01-2018 12:18:09', 5, NULL),
-(21, 4, '23-11-2017 12:18:09', 5, NULL),
-(22, 0, '23-11-2018 12:18:45', 6, NULL),
-(23, 0, '23-11-2018 12:12:09', 7, NULL),
-(24, 0, '01-11-2018 12:18:09', 8, NULL);
+(89, 0, '29-11-2018 09:05:21', 38, NULL),
+(90, 0, '29-11-2018 09:05:41', 39, NULL),
+(91, 0, '29-11-2018 09:06:12', 40, NULL),
+(92, 0, '29-11-2018 09:06:28', 41, NULL),
+(93, 0, '29-11-2018 09:06:55', 42, NULL);
 
 --
 -- Constraints for dumped tables
@@ -236,8 +258,8 @@ INSERT INTO `versions` (`id`, `version`, `filedate`, `mergedfiles_id`, `sourcefi
 -- Constraints for table `attached-files`
 --
 ALTER TABLE `attached-files`
-  ADD CONSTRAINT `fk_attached-files_mergedfiles1` FOREIGN KEY (`mergedfiles_id`) REFERENCES `mergedfiles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_attached-files_sourcefiles1` FOREIGN KEY (`sourcefiles_id`) REFERENCES `sourcefiles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_attached-files_sourcefiles1` FOREIGN KEY (`sourcefiles_id`) REFERENCES `sourcefiles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_attached-files_versions1` FOREIGN KEY (`versions_id`) REFERENCES `versions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `courses`

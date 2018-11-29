@@ -66,3 +66,12 @@ function mustache(origin, location, information, append){
       $(location).append(renderTemplate);
     }
 }
+
+function filter(string, type){
+  switch(type){
+    case 1:
+      string = string.replace(/[^A-Za-z0-9\s_:]/g,'');
+    break;
+  }
+  return string;
+}

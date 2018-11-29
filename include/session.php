@@ -50,11 +50,13 @@ function resetSession(){
     $_SESSION['confirm'] = 0;
     $_SESSION['newcollege'] = 0;
     $_SESSION['verified'] = 0;
+    $_SESSION['collegeId'] = -1;
+    $_SESSION['courseId'] = -1;
     header("Location: index.php");
 }
 
 // Setting session vars
-function setSession($id, $usn, $pass, $confirm, $newcollege, $verified, $collegeid){
+function setSession($id, $usn, $pass, $confirm, $newcollege, $verified, $collegeid, $courseId){
     $_SESSION['loggedIn'] = 1;
     $_SESSION['userId'] = $id;
     $_SESSION['username'] = $usn;
@@ -63,6 +65,7 @@ function setSession($id, $usn, $pass, $confirm, $newcollege, $verified, $college
     $_SESSION['verified'] = $verified;
     $_SESSION['newcollege'] = $newcollege;
     $_SESSION['collegeId'] = $collegeid;
+    $_SESSION['courseId'] = $courseId;
 }
 
 // Debug reset

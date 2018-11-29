@@ -11,7 +11,7 @@ $(document).ready(function(){
     container.find(".js-download").attr("href", source);
   });
 
-  var data = []; 
+  var data = [];
   $(".card").each(function(){
     var name = $(this).find(".card-title").html();
     data[name] = null;
@@ -22,10 +22,12 @@ $(document).ready(function(){
   });
 
   $(".js-merge").on("change paste keyup", function(){
-    var search = $(this).val();
+    var search = $(this).val().toLowerCase();
+    search = filter(search, 1);
+    $(this).val(search);
 
     $(".home-card").each(function(){
-      var name = $(this).find(".card-title").html();
+      var name = $(this).find(".card-title").html().toLowerCase();
       if(name.indexOf(search) == -1){
         $(this).hide();
       }else{

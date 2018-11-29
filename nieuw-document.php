@@ -91,7 +91,7 @@ dump($files, "");
                                         <span class="file__name"><?=$file['sourcefile_name']?></span>
                                       </span>
                                       <div class="input-field inline file__pagenrs">
-                                        <input id="pagenrs" type="text" class="validate">
+                                        <input id="pagenrs" type="text" class="validate js-pages">
                                         <label for="pagenrs">Pagina's</label>
                                       </div>
                                     </div>
@@ -132,6 +132,11 @@ dump($files, "");
       </div>
       <div class="col s4">
         <iframe class="js-frm preview" src="" width="" height=""></iframe>
+        <div class="input-field col s6">
+          <input placeholder="Merged name" id="merged_name" type="text" class="validate js-mergedName">
+          <label for="merged_name">First Name</label>
+        </div>
+        <div class="btn waves-effect waves-light w100 js-merge">Merge</div>
       </div>
     </div>
   </div>

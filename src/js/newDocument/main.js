@@ -37,6 +37,43 @@ $('body').on('click', '.js-delete-file', function(){
   $(this).closest('.file').remove();
 });
 
+$('body').on("change paste keyup", ".js-mergedName" , function(){
+  var search = $(this).val().toLowerCase();
+  search = filter(search, 1);
+  $(this).val(search);
+})
+$('body').on('click', '.js-merge', function(){
+  var fileNames = [];
+  var pageNumbers = [];
+  var pageExtension = [];
+  var mergeName = $(".js-mergedName").val();
+  $('.file--dragged').each(function(){
+    fileNames.push($(this).data("name"));
+    pageExtension.push($(this).data("ext"));
+    var pageVal = $(this).find(".js-pages").val();
+    if(pageVal == ""){
+      pageVal = "all";
+    }
+    pageNumbers.push(pageVal);
+  })
+  console.log(fileNames)
+  console.log(pageNumbers)
+
+  $.post("include/pdf/pdfMerge.php",{
+    files: fileNames,
+    pages: pageNumbers,
+    mergeName: mergeName,
+    pageExt: pageExtension
+  },function(response,status){
+    console.log(response);
+    if(response == ""){
+      M.toast({html: 'Succes', classes: 'succes'})
+    }else if(response == "noUser"){
+      window.location = 'index.php';
+    }
+  })
+})
+
 function randomString2(len, beforestr = '', arraytocheck = null) {
     // Charset, every character in this string is an optional one it can use as a random character.
     var charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';

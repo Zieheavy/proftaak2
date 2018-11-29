@@ -27,7 +27,7 @@ switch ($currentPage) {
         <li class="<?php if($active == 2) echo "active"; ?>"><a href="">Bronteksten</a></li>
         <li class="<?php if($active == 3) echo "active"; ?>"><a href="nieuw-document.php">Nieuw Document</a></li>
       </ul>
-    <a href="#!" class="btn waves-effect waves-light right">Loguot </a>
+    <a href="#!" class="btn waves-effect waves-light right js-logout">Loguot </a>
     <?php } ?>
   </div>
 </nav>

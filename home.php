@@ -61,7 +61,7 @@ for($i = 0; $i < count($itemArrays); $i++){
   $itemArrays[$i]["versions"] = $tempVersionArray;
 }
 
-// dump($itemArrays);
+dump($itemArrays, "");
 ?>
 <html>
 <head>
@@ -94,6 +94,11 @@ for($i = 0; $i < count($itemArrays); $i++){
                 $fileName .= $item["name"] . "_";
                 $selectedVersion = $item["versions"][count($item["versions"]) - 1];
                 $fileName .= $selectedVersion["version"];
+                if($selectedVersion["version"] > 5){
+                  $tempName = $fileName;
+                  $fileName = $item["name"] . "/" . $tempName;
+                }
+                // dump($fileName);
               ?>
               <iframe class="iframe" src="_completed\<?php echo $fileName ?>.pdf"></iframe>
           </div>
