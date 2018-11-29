@@ -1,6 +1,6 @@
-<?php include 'include/functions.php';
-session_start();
-  // dump($_SESSION)
+<?php
+  include 'include/functions.php';
+  session_start();
  ?>
 <html>
 <head>
@@ -8,13 +8,11 @@ session_start();
   <?php include 'partials/head.html'; ?>
 </head>
 <body>
-  <div class="flash-message-container"> </div>
-
   <?php include 'partials/navigation.php'; ?>
 
   <div class="row login js-login login--active">
     <form class="col s12" method="post" action="include/logIn.php">
-      <div class="card login-card">
+      <div class="card login__card">
         <div class="card-title">Login</div>
         <div class="row">
           <div class="input-field col s12">
@@ -28,9 +26,9 @@ session_start();
             <label class="active" for="password">Wachtwoord</label>
           </div>
         </div>
-        <div class="row btn-row">
+        <div class="row login__btn-row">
           <div class="input-field col s12">
-            <button class="btn waves-effect waves-light login-btn" type="submit" name="loginSub">Login</button>
+            <button class="btn waves-effect waves-light login__btn" type="submit" name="loginSub">Login</button>
           </div>
         </div>
         <div class="card-action">

@@ -1,7 +1,11 @@
+// Styling of the collapsibles on nieuw-document page.
 .collapsible.expandable{
+  margin-top: 0px;
+  margin-bottom: 0px;
   box-shadow: none;
   border: 0;
   &>.collapsible-expand{
+    // If the active class is added it has "-" prefixed, else it has "+" prefixed
     &>.collapsible-header>.collapsible-header-text:before
     {
       content: "+";

@@ -138,21 +138,6 @@ if ($conn->query($sql) === TRUE) {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
-$versionId = getVersion($mVersion, $mergeId, $conn);
-
-// $sql = "INSERT INTO `versions`(`version`, `filedate`, `mergedfiles_id`) VALUES (?,?,?)";
-// if (false === ($stmt = $conn->prepare($sql))) {
-//     echo 'error preparing statement: ' . $conn->error;
-// }
-// elseif (!$stmt->bind_param('isi', $mergeVersion, $dateLong, $mergeId)) {
-//     echo 'error binding params: ' . $stmt->error;
-// }
-// elseif (!$stmt->execute()) {
-//     echo 'error executing statement: ' . $stmt->error;
-// }
-// $result = $stmt->get_result();
-// $stmt->close();
-
 //for all source files loop
 for ($i=0; $i < count($files); $i++) {
   $page = $pages[$i];
