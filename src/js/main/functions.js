@@ -24,10 +24,12 @@ function addUrlParameter(indentifer,key,indentifer2,key2,indentifer3,key3){
 }
 
 function removeUrlParameter(key){
+  // Gets everything behind the ? in the url
   var sPageURL = decodeURIComponent(window.location.search.substring(1)),
       sURLVariables = sPageURL.split('&'),
       sParameterName,
       i;
+  // Makes an object array splitting the keys and vals
   var obj = {
     keys: [],
     vals: []
@@ -37,11 +39,13 @@ function removeUrlParameter(key){
     obj.keys.push(spl[0]);
     obj.vals.push(spl[1]);
   }
+  // if the given key is in the url, it removes it from the obj
   var index = obj.keys.getIndex(key);
   if (index != -1) {
     obj.keys = obj.keys.removeIndex(index);
     obj.vals = obj.vals.removeIndex(index);
   }
+  // creates new string
   var newStr = "";
   for (var i = 0; i < obj.keys.length; i++) {
     if (i > 0) {
@@ -49,6 +53,7 @@ function removeUrlParameter(key){
     }
     newStr += obj.keys[i] + "=" + obj.vals[i];
   }
+  // Sets the url
   window.history.pushState(null, null, "?" + newStr);
 }
 
@@ -103,16 +108,6 @@ function filter(string, type){
     break;
   }
   return string;
-}
-
-Array.prototype.contains = function(obj) {
-    var i = this.length;
-    while (i--) {
-        if (this[i] == obj) {
-            return true;
-        }
-    }
-    return false;
 }
 
 Array.prototype.getIndex = function(obj) {
