@@ -13,20 +13,55 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-function addUrlParameter(indentifer,key,indentifer2,key2,indentifer3,key3){
-  if(indentifer3 != undefined){
-    window.history.pushState(null, null, "?" + indentifer + "="+key+"&"+indentifer2+"="+key2+"&"+indentifer3+"="+key3);
-  }else if(indentifer2 != undefined){
-    window.history.pushState(null, null, "?" + indentifer + "="+key+"&"+indentifer2+"="+key2);
-  }else{
-    window.history.pushState(null, null, "?" + indentifer + "="+key);
+function addUrlParameter(keys, values){
+  var sPageURL = decodeURIComponent(window.location.search.substring(1));
+  var sURLVariables = sPageURL.split('&');
+  var newString = "";
+  var sParamaters = [];
+
+  newString += "?";
+
+  for (var i = 0; i < sURLVariables.length; i++) {
+    newString += sURLVariables[i];
+    sParamaters.push(sURLVariables[i].split('=')[0]);
+    if(i != sURLVariables.length -1){
+      newString += "&";
+    }
   }
+
+  if(keys != undefined && values != undefined){
+    if(keys.length == values.length){
+      if(sURLVariables.length > 1 ){
+        newString += "&";
+      }
+      for (var i = 0; i < keys.length; i++) {
+        if (sParamaters.indexOf(keys[i]) == -1) {
+          newString += keys[i] + "=" + values[i];
+          if(i != keys.length -1){
+            newString += "&";
+          }
+        }else{
+          // console.log(keys[i])
+          var array = newString.split(keys[i]);
+          var end = array[1].substring(array[1].indexOf("&"));
+          var begin = array[0] + keys[i] + "=" + values[i];
+          if(i == keys.length -1){
+            end = "";;
+          }
+          console.log(begin+end)
+          newString = begin+end;
+        }
+      }
+    }
+  }
+
+  window.history.pushState(null, null, newString);
 }
 function removeUrlParameter(key){
-  var url = document.url;
-  console.log(document.URL);
-  var vals = url.substring(url.indexOf("?") + 1);
-  console.log(vals);
+  // var url = document.url;
+  // console.log(document.URL);
+  // var vals = url.substring(url.indexOf("?") + 1);
+  // console.log(vals);
   // window.history.replaceState({}, document.title, "/" + "my-new-url.html");
 }
 

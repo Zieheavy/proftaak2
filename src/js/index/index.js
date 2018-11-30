@@ -6,6 +6,6 @@ $(document).ready(function(){
   if(getUrlParameter("s") == 2){
     M.toast({html: 'U bent succesvol uitgelogd', classes: "toast--succes", displayLength: 2000});
   }
-  addUrlParameter("hallo", "12");
-  removeUrlParameter("hal");
+  addUrlParameter(["th"],["1000000000"]);
+  // removeUrlParameter("hal");
 });
