@@ -118,25 +118,23 @@ $mVersion = $mergeVersion - 1;
 //check if the file is already in the database
 if(getMergedFiles($mergeName,$userId,$courseId, $conn) == -1){
   $sql = "INSERT INTO `mergedfiles`(`name`, `users_id`, `courses_id`) VALUES (?,?,?)";
-  $stmt = $conn->prepare($sql);
+  $stmt = $con->prepare($sql);
   $stmt->bind_param('sii', $mergeName,$userId,$courseId);
   $stmt->execute();
-  $result = $stmt->get_result();
+  $mergeId = $stmt->insert_id;
   $stmt->close();
 
-  $mergeId = getMergedFiles($mergeName,$userId,$courseId, $conn);
 }else{
   $mergeId = getMergedFiles($mergeName,$userId,$courseId, $conn);
 }
 
-//inserst a new version into the database
 $sql = "INSERT INTO versions (version, filedate, mergedfiles_id)
-VALUES ('$mVersion', '$dateLong', '$mergeId')";
-if ($conn->query($sql) === TRUE) {
-    // echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-}
+VALUES (?,?,?)";
+$stmt = $con->prepare($sql);
+$stmt->bind_param("isi", $mVersion, $dateLong, $mergeId);
+$stmt->execute();
+$versionId = $stmt->insert_id;
+$stmt->close();
 
 //for all source files loop
 for ($i=0; $i < count($files); $i++) {
@@ -179,27 +177,6 @@ function getMergedFiles($mergeName,$userId,$courseId, $conn){
   $sql = "SELECT * FROM `mergedfiles` WHERE name = ? AND users_id = ? AND courses_id = ?";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param('sii', $mergeName,$userId,$courseId);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  while ($row = $result->fetch_array(MYSQLI_ASSOC))
-  {
-      $tempArray[] = $row;
-  }
-  $stmt->close();
-
-  if(count($tempArray) <= 0){
-    return -1;
-  }else{
-    return $tempArray[0]["id"];
-  }
-}
-
-//function to get the id of a version
-function getVersion($mVersion, $mergeId, $conn){
-  $tempArray = [];
-  $sql = "SELECT * FROM `versions` WHERE version = ? AND mergedfiles_id = ?";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param('ii', $mVersion,$mergeId);
   $stmt->execute();
   $result = $stmt->get_result();
   while ($row = $result->fetch_array(MYSQLI_ASSOC))

@@ -62,18 +62,16 @@ for($i = 0; $i < count($itemArrays); $i++){
 }
 
 
-
-  $colleges = [];
-  $sql = "SELECT * FROM `colleges`";
-  $stmt = $conn->prepare($sql);
-  // $stmt->bind_param();
-  $stmt->execute();
-  $result = $stmt->get_result();
-  while ($row = $result->fetch_array(MYSQLI_ASSOC))
-  {
-      $colleges[] = $row;
-  }
-  $stmt->close();
+$colleges = [];
+$sql = "SELECT * FROM colleges";
+$stmt = $con->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_array(MYSQLI_ASSOC))
+{
+  $colleges[] = $row;
+}
+$stmt->close();
 
 dump($colleges);
 ?>
