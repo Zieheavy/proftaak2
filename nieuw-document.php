@@ -26,6 +26,57 @@ $stmt->close();
 $newfiles = [];
 foreach ($files as $key => $file) {
   $ext = $file['extension'];
+  $file['folder'] = getFolder($ext);
+  if (!isset($newfiles[$file['colleges_name']])) {
+    $newfiles[$file['colleges_name']] = [];
+  }
+  if (!isset($newfiles[$file['colleges_name']][$file['courses_name']])) {
+    $newfiles[$file['colleges_name']][$file['courses_name']] = [];
+  }
+  array_push($newfiles[$file['colleges_name']][$file['courses_name']], $file);
+}
+$files = $newfiles;
+
+if(isset($_GET["v"])){
+  $mergeId = $_GET["v"];
+
+  $itemArrays = [];
+  $sql = "SELECT a.pages,
+                  s.name,
+                  s.extension,
+                  m.name as mergedName
+                  FROM  `attached-files` a,
+                        sourcefiles s,
+                        versions v,
+                        mergedfiles m
+                  WHERE a.versions_id = ?
+                        AND a.sourcefiles_id = s.id
+                        AND v.id = a.versions_id
+                        AND v.mergedfiles_id = m.id";
+
+  if (false === ($stmt = $conn->prepare($sql))) {
+      echo 'error preparing statement: ' . $conn->error;
+  }
+  elseif (!$stmt->bind_param("i", $mergeId)) {
+      echo 'error binding params: ' . $stmt->error;
+  }
+  elseif (!$stmt->execute()) {
+      echo 'error executing statement: ' . $stmt->error;
+  }
+  $itemName = -1;
+  $result = $stmt->get_result();
+  while ($row = $result->fetch_array(MYSQLI_ASSOC))
+  {
+    $itemName = $row["mergedName"];
+    $i = count($itemArrays);
+    $itemArrays[] = $row;
+    $itemArrays[$i]["folder"] = getFolder($row["extension"]);
+  }
+  $stmt->close();
+  // dump($itemArrays ,"");
+}
+
+function getFolder($ext){
   $folder = "";
   switch ($ext) {
     case 'docx':
@@ -41,17 +92,10 @@ foreach ($files as $key => $file) {
       $folder = "_pdf";
       break;
   }
-  $file['folder'] = $folder;
-  if (!isset($newfiles[$file['colleges_name']])) {
-    $newfiles[$file['colleges_name']] = [];
-  }
-  if (!isset($newfiles[$file['colleges_name']][$file['courses_name']])) {
-    $newfiles[$file['colleges_name']][$file['courses_name']] = [];
-  }
-  array_push($newfiles[$file['colleges_name']][$file['courses_name']], $file);
+  return $folder;
 }
-$files = $newfiles;
-dump($files, "");
+
+// dump($files, "");
 ?>
 <html>
 <head>
@@ -128,12 +172,48 @@ dump($files, "");
       </div>
       <div class="col s4">
         <ul class="js-sortable-copy-target copy-target col-min-500" style="min-height: 200px"aria-dropeffect="move">
+          <?php if(isset($itemArrays)){ foreach ($itemArrays as $key => $file): ?>
+          <li data-name="<?=$file['name']?>" data-ext="<?=$file['extension']?>" class="p1 mb1 item file active file--dragged" draggable="true" role="option" aria-grabbed="false">
+            <div class="card">
+              <div class="card-content card-content-nopad">
+                <span class="card-title file__title">
+                  <i class="material-icons">insert_drive_file</i>
+                  <span class="file__name"><?=$file['name']?></span>
+                </span>
+                <div class="input-field inline file__pagenrs">
+                  <input id="pagenrs" type="text" class="validate js-pages" value="<?=$file["pages"]?>">
+                  <label for="pagenrs">Pagina's</label>
+                </div>
+              </div>
+              <div class="card-action file__links">
+                <a class='dropdown-trigger btn' href='#' data-target='dropdown<?=$file['sourcefiles_id']?>'>
+                  <i class="fa fa-download" aria-hidden="true"></i>
+                </a>
+                <ul id='dropdown' class='dropdown-content'>//random id
+                  <li>
+                    <a href="_pdf/<?=$file['name']?>.pdf" download>pdf</a>
+                  </li>
+                  <li>
+                    <a href="<?=$file['folder']?>/<?=$file['name']?>.<?=$file['extension']?>" download><?=$file['extension']?></a>
+                  </li>
+                </ul>
+                <a class="btn js-delete-file" href="#">
+                  <i class="material-icons">delete</i>
+                </a>
+              </div>
+            </div>
+          </li>
+          <?php endforeach; } ?>
     		</ul>
       </div>
       <div class="col s4">
         <iframe class="js-frm preview" src="" width="" height=""></iframe>
         <div class="input-field col s6">
-          <input placeholder="Merged name" id="merged_name" type="text" class="validate js-mergedName">
+          <?php if(!isset($itemName)){?>
+            <input placeholder="Merged name" id="merged_name" type="text" class="validate js-mergedName">
+          <?php }else{ ?>
+            <input placeholder="Merged name" id="merged_name" type="text" class="validate js-mergedName" value="<?=$itemName?>">
+          <?php } ?>
           <label for="merged_name">First Name</label>
         </div>
         <div class="btn waves-effect waves-light w100 js-merge">Merge</div>

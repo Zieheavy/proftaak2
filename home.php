@@ -61,7 +61,7 @@ for($i = 0; $i < count($itemArrays); $i++){
   $itemArrays[$i]["versions"] = $tempVersionArray;
 }
 
-dump($itemArrays, "");
+// dump($itemArrays, "");
 ?>
 <html>
 <head>
@@ -69,13 +69,36 @@ dump($itemArrays, "");
   <?php include 'partials/head.html'; ?>
 </head>
 <body>
-  <div class="flash-message-container"> </div>
 
   <?php include 'partials/navigation.php'; ?>
 
   <div class="container">
     <div class="row">
-      <div class="col s12">
+
+        <div class="col s4">
+          <h4>Bestanden</h4>
+            <ul class="collapsible expandable" data-collapsible="accordion">
+            	<li class="collapsible-expand active">
+            		<div class="collapsible-header">
+            			<div class="collapsible-header-text">item</div>
+                </div>
+            		<div class="collapsible-body no-border-bot">
+            			<div class="row">
+            				<div class="col s12 m12">
+            					<ul class="collapsible expandable" data-collapsible="accordion">
+                          <li class="collapsible-expand active">
+                            <div class="collapsible-header">
+                              <div class="collapsible-header-text">item</div>
+                            </div>
+                          </li>
+            					</ul>
+            				</div>
+            			</div>
+            		</div>
+            	</li>
+            </ul>
+        </div>
+      <div class="col s8">
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix">textsms</i>
@@ -112,7 +135,7 @@ dump($itemArrays, "");
             </div>
             <div class="card-action home-card-action">
               <?php if($_SESSION["collegeId"] == $item["colleges_id"] && $item["edit"] == 1){ ?>
-                <a href="#">Edit</a>
+                <a href="nieuw-document.php?v=<?php echo $selectedVersion["id"]; ?>">Edit</a>
               <?php } ?>
               <a href="_completed\<?php echo $fileName ?>.pdf" class="js-download" download>Download</a>
               <div class="input-field">
