@@ -1,14 +1,18 @@
 .toast{
-  &.error{
-    background-color: red;
+  &--error{
+    background-color: #dc3545;
+    color:white;
   }
-  &.succes{
-    background-color: green;
+  &--succes{
+    background-color: #28a745;
+    color:white;
   }
-  &.warning{
-    background-color: yellow;
+  &--warning{
+    background-color: #ffc107;
+    color:white;
   }
-  &.alert{
-    background-color: blue;
+  &--info{
+    background-color: #17a2b8;
+    color:white;
   }
 }

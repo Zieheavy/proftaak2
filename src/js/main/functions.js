@@ -22,6 +22,13 @@ function addUrlParameter(indentifer,key,indentifer2,key2,indentifer3,key3){
     window.history.pushState(null, null, "?" + indentifer + "="+key);
   }
 }
+function removeUrlParameter(key){
+  var url = document.url;
+  console.log(document.URL);
+  var vals = url.substring(url.indexOf("?") + 1);
+  console.log(vals);
+  // window.history.replaceState({}, document.title, "/" + "my-new-url.html");
+}
 
 function uppercase(str){
   var array1 = str.split(' ');

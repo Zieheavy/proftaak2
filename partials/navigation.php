@@ -28,7 +28,9 @@ switch ($currentPage) {
         <li class="<?php if($active == 3) echo "active"; ?>"><a href="nieuw-document.php">Nieuw Document</a></li>
         <li class="js-delete-merged <?php if($active == 3) echo "active"; ?>"><a href="#">DeleteMerged</a></li>
       </ul>
-    <a href="#!" class="btn waves-effect waves-light right js-logout">Loguot </a>
+      <form class="" action="include/login.php" method="post">
+        <button type="submit" name="logoutSub" class="btn waves-effect waves-light right js-logout">Logout</button>
+      </form>
     <?php } ?>
   </div>
 </nav>
