@@ -1,0 +1,30 @@
+.login{
+  transition: .2s ease;
+  opacity: 0;
+  display: none;
+  &__card{
+    width: 25%;
+    margin: auto;
+    padding: 10px;
+    margin-top: 50px;
+  }
+  &__btn{
+    width: 100%;
+    &-row{
+      margin: 0;
+    }
+  }
+  &--inline{
+    display:inline;
+  }
+  &--appear{
+    opacity: 1;
+  }
+  &--active{
+    display:inline;
+    opacity: 1;
+  }
+  &--disappear{
+    opacity: 0;
+  }
+}

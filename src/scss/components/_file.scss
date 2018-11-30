@@ -1,25 +1,29 @@
-.fuuuuuck{
-  // background-color: red;
-}
+// the class that the LI element has, just some minor changes
 .file{
   transition: .2s ease;
   cursor: pointer;
+  // The placeholder class is added when the element is dragged
   &__placeholder{
     margin:  2px 0px;
     border: 2px dashed blue;
   }
+  // Changes to the font size of the title, making it a bit smaller
   & .file__title{
     font-size: 15px;
   }
+  // pagenrs and links are hidden until the &--dragged class is added
   & .file__pagenrs{
     display: none;
   }
   & .file__links{
     display: none;
   }
-  & .card--file{
-    box-shadow: none;
-    border: 0;
+  // if the file--dragged class is not yet present the box shadow and border should be hidden, if the class is added it will automatically add the materializeCSS box shadow and border
+  &:not(.file--dragged){
+    & .card--file{
+      box-shadow: none;
+      border: 0;
+    }
   }
   &--dragged{
     & .file__pagenrs{

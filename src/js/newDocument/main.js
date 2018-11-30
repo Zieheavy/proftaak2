@@ -13,7 +13,6 @@ $(sortable('.js-sortable-copy')).each(function(index, el) {
   sortable('.js-sortable-copy')[index].addEventListener('sortstop', function(e) {
     var i = e.detail.item;
     $(i).addClass('file--dragged');
-    $(i).find('.card--file').removeClass('card--file');
     M.updateTextFields();
     var dropdown = $(i).find('.dropdown-trigger');
     $(dropdown).addClass('drp');
