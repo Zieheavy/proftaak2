@@ -57,12 +57,39 @@ function addUrlParameter(keys, values){
 
   window.history.pushState(null, null, newString);
 }
+
 function removeUrlParameter(key){
-  // var url = document.url;
-  // console.log(document.URL);
-  // var vals = url.substring(url.indexOf("?") + 1);
-  // console.log(vals);
-  // window.history.replaceState({}, document.title, "/" + "my-new-url.html");
+  // Gets everything behind the ? in the url
+  var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+      sURLVariables = sPageURL.split('&'),
+      sParameterName,
+      i;
+  // Makes an object array splitting the keys and vals
+  var obj = {
+    keys: [],
+    vals: []
+  };
+  for (var i = 0; i < sURLVariables.length; i++) {
+    var spl = sURLVariables[i].split("=");
+    obj.keys.push(spl[0]);
+    obj.vals.push(spl[1]);
+  }
+  // if the given key is in the url, it removes it from the obj
+  var index = obj.keys.getIndex(key);
+  if (index != -1) {
+    obj.keys = obj.keys.removeIndex(index);
+    obj.vals = obj.vals.removeIndex(index);
+  }
+  // creates new string
+  var newStr = "";
+  for (var i = 0; i < obj.keys.length; i++) {
+    if (i > 0) {
+      newStr += "&";
+    }
+    newStr += obj.keys[i] + "=" + obj.vals[i];
+  }
+  // Sets the url
+  window.history.pushState(null, null, "?" + newStr);
 }
 
 function uppercase(str){
@@ -117,3 +144,24 @@ function filter(string, type){
   }
   return string;
 }
+
+Array.prototype.getIndex = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] == obj) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+Array.prototype.removeIndex = function(n) {
+    var t = [];
+    var l = this.length;
+    for (var i = 0; i < l; i++) {
+        if (i != n) {
+            t.push(this[i]);
+        }
+    }
+    return t;
+};
