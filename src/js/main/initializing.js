@@ -3,4 +3,4 @@ $(document).ready(function() {
   });
   $(document).ready(function(){
     $('.collapsible.expandable').collapsible({accordion: false});
-  });
+  });  
