@@ -22,12 +22,34 @@ function addUrlParameter(indentifer,key,indentifer2,key2,indentifer3,key3){
     window.history.pushState(null, null, "?" + indentifer + "="+key);
   }
 }
+
 function removeUrlParameter(key){
-  var url = document.url;
-  console.log(document.URL);
-  var vals = url.substring(url.indexOf("?") + 1);
-  console.log(vals);
-  // window.history.replaceState({}, document.title, "/" + "my-new-url.html");
+  var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+      sURLVariables = sPageURL.split('&'),
+      sParameterName,
+      i;
+  var obj = {
+    keys: [],
+    vals: []
+  };
+  for (var i = 0; i < sURLVariables.length; i++) {
+    var spl = sURLVariables[i].split("=");
+    obj.keys.push(spl[0]);
+    obj.vals.push(spl[1]);
+  }
+  var index = obj.keys.getIndex(key);
+  if (index != -1) {
+    obj.keys = obj.keys.removeIndex(index);
+    obj.vals = obj.vals.removeIndex(index);
+  }
+  var newStr = "";
+  for (var i = 0; i < obj.keys.length; i++) {
+    if (i > 0) {
+      newStr += "&";
+    }
+    newStr += obj.keys[i] + "=" + obj.vals[i];
+  }
+  window.history.pushState(null, null, "?" + newStr);
 }
 
 function uppercase(str){
@@ -82,3 +104,34 @@ function filter(string, type){
   }
   return string;
 }
+
+Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] == obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
+Array.prototype.getIndex = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] == obj) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+Array.prototype.removeIndex = function(n) {
+    var t = [];
+    var l = this.length;
+    for (var i = 0; i < l; i++) {
+        if (i != n) {
+            t.push(this[i]);
+        }
+    }
+    return t;
+};
