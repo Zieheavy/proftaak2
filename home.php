@@ -61,7 +61,21 @@ for($i = 0; $i < count($itemArrays); $i++){
   $itemArrays[$i]["versions"] = $tempVersionArray;
 }
 
-// dump($itemArrays, "");
+
+
+  $colleges = [];
+  $sql = "SELECT * FROM `colleges`";
+  $stmt = $conn->prepare($sql);
+  // $stmt->bind_param();
+  $stmt->execute();
+  $result = $stmt->get_result();
+  while ($row = $result->fetch_array(MYSQLI_ASSOC))
+  {
+      $colleges[] = $row;
+  }
+  $stmt->close();
+
+dump($colleges);
 ?>
 <html>
 <head>
