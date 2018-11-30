@@ -76,27 +76,31 @@ for($i = 0; $i < count($itemArrays); $i++){
     <div class="row">
 
         <div class="col s4">
-          <h4>Bestanden</h4>
-            <ul class="collapsible expandable" data-collapsible="accordion">
-            	<li class="collapsible-expand active">
-            		<div class="collapsible-header">
-            			<div class="collapsible-header-text">item</div>
-                </div>
-            		<div class="collapsible-body no-border-bot">
-            			<div class="row">
-            				<div class="col s12 m12">
-            					<ul class="collapsible expandable" data-collapsible="accordion">
-                          <li class="collapsible-expand active">
-                            <div class="collapsible-header">
-                              <div class="collapsible-header-text">item</div>
-                            </div>
-                          </li>
-            					</ul>
-            				</div>
-            			</div>
-            		</div>
-            	</li>
-            </ul>
+          <ul class="collapsible expandable">
+            <li>
+              <div class="collapsible-header">First</div>
+              <div class="collapsible-body">
+                <ul class="collection">
+                  <li class="collection-item active">item</li>
+                  <li class="collection-item">item</li>
+                  <li class="collection-item ">item</li>
+                  <li class="collection-item ">item</li>
+                  <li class="collection-item ">item</li>
+                  <li class="collection-item ">item</li>
+                  <li class="collection-item ">item</li>
+                  <li class="collection-item ">item</li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+            <li>
+              <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
+              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+          </ul>
         </div>
       <div class="col s8">
         <div class="row">
@@ -106,65 +110,63 @@ for($i = 0; $i < count($itemArrays); $i++){
             <label for="autocomplete-input">Search</label>
           </div>
         </div>
-      </div>
-    </div>
-    <?php foreach($itemArrays as $item){ ?>
-      <div class="home-card col m10 offset-m1">
-        <div class="card horizontal">
-          <div class="card-image">
-              <?php
-                $fileName = "";
-                $fileName .= $item["name"] . "_";
-                $selectedVersion = $item["versions"][count($item["versions"]) - 1];
-                $fileName .= $selectedVersion["version"];
-                if($selectedVersion["version"] > 5){
-                  $tempName = $fileName;
-                  $fileName = $item["name"] . "/" . $tempName;
-                }
-                // dump($fileName);
-              ?>
-              <iframe class="iframe" src="_completed\<?php echo $fileName ?>.pdf"></iframe>
-          </div>
-          <div class="card-stacked">
-            <span class="card-title center"><?php echo $item["name"] ?></span>
-            <div class="card-content">
-              <p>CreatorName: <?php echo $item["username"]; ?></p>
-              <p>Datum:       <?php echo $selectedVersion["version"]; ?></p>
-              <p>College:     <?php echo $item["collageName"]; ?></p>
-              <p>Opleiding:   <?php echo $item["courseName"]; ?></p>
-            </div>
-            <div class="card-action home-card-action">
-              <?php if($_SESSION["collegeId"] == $item["colleges_id"] && $item["edit"] == 1){ ?>
-                <a href="nieuw-document.php?v=<?php echo $selectedVersion["id"]; ?>">Edit</a>
-              <?php } ?>
-              <a href="_completed\<?php echo $fileName ?>.pdf" class="js-download" download>Download</a>
-              <div class="input-field">
-                <select class="js-versionSelect" data-name="<?php echo $item["name"] ?>">
+        <?php foreach($itemArrays as $item){ ?>
+          <div class="home-card col m12">
+            <div class="card horizontal">
+              <div class="card-image">
                   <?php
-                    $counter = 0;
-                    $echoVar = "";
-                    foreach ($item["versions"] as $version) {
-                      $counter++;
-                      $ver = $version["version"];
-                      $echoVar .= '<option value="' . $ver . '"';
-                      if($counter == count($item["versions"])){
-                        $echoVar .= " selected";
-                      }
-                      $echoVar.= '> ' . $ver . '</option>';
+                    $fileName = "";
+                    $fileName .= $item["name"] . "_";
+                    $selectedVersion = $item["versions"][count($item["versions"]) - 1];
+                    $fileName .= $selectedVersion["version"];
+                    if($selectedVersion["version"] > 5){
+                      $tempName = $fileName;
+                      $fileName = $item["name"] . "/" . $tempName;
                     }
-                    echo $echoVar;
+                    // dump($fileName);
                   ?>
-                </select>
-                <label>Versie</label>
+                  <iframe class="iframe" src="_completed\<?php echo $fileName ?>.pdf"></iframe>
+              </div>
+              <div class="card-stacked">
+                <span class="card-title center"><?php echo $item["name"] ?></span>
+                <div class="card-content">
+                  <p>CreatorName: <?php echo $item["username"]; ?></p>
+                  <p>Datum:       <?php echo $selectedVersion["version"]; ?></p>
+                  <p>College:     <?php echo $item["collageName"]; ?></p>
+                  <p>Opleiding:   <?php echo $item["courseName"]; ?></p>
+                </div>
+                <div class="card-action home-card-action">
+                  <?php if($_SESSION["collegeId"] == $item["colleges_id"] && $item["edit"] == 1){ ?>
+                    <a href="nieuw-document.php?v=<?php echo $selectedVersion["id"]; ?>">Edit</a>
+                  <?php } ?>
+                  <a href="_completed\<?php echo $fileName ?>.pdf" class="js-download" download>Download</a>
+                  <div class="input-field">
+                    <select class="js-versionSelect" data-name="<?php echo $item["name"] ?>">
+                      <?php
+                        $counter = 0;
+                        $echoVar = "";
+                        foreach ($item["versions"] as $version) {
+                          $counter++;
+                          $ver = $version["version"];
+                          $echoVar .= '<option value="' . $ver . '"';
+                          if($counter == count($item["versions"])){
+                            $echoVar .= " selected";
+                          }
+                          $echoVar.= '> ' . $ver . '</option>';
+                        }
+                        echo $echoVar;
+                      ?>
+                    </select>
+                    <label>Versie</label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        <?php } ?>
       </div>
-    <?php } ?>
+    </div>
   </div>
-
-
 
   <?php include 'partials/templates.html'; ?>
   <?php include 'partials/modals.html'; ?>

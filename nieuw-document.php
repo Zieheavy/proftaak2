@@ -110,7 +110,7 @@ function getFolder($ext){
       <div class="col s4">
         <h4>Bestanden</h4>
         <?php foreach ($files as $key => $college): ?>
-          <ul class="collapsible expandable" data-collapsible="accordion">
+          <ul class="collapsible expandable noMargin" data-collapsible="accordion">
           	<li class="collapsible-expand active">
           		<div class="collapsible-header">
           			<div class="collapsible-header-text"><?=$key?></div>
@@ -118,7 +118,7 @@ function getFolder($ext){
           		<div class="collapsible-body no-border-bot">
           			<div class="row">
           				<div class="col s12 m12">
-          					<ul class="collapsible expandable" data-collapsible="accordion">
+          					<ul class="collapsible expandable noMargin" data-collapsible="accordion">
                       <?php foreach ($college as $key => $course): ?>
                         <li class="collapsible-expand active">
                           <div class="collapsible-header">
