@@ -73,7 +73,21 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
 }
 $stmt->close();
 
-dump($colleges);
+for ($i=0; $i < count($colleges); $i++) {
+  $colleges[$i]["courses"] = [];
+  $sql = "SELECT * FROM courses WHERE colleges_id = ?";
+  $stmt = $con->prepare($sql);
+  $stmt->bind_param("i", $colleges[$i]["id"]);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  while ($row = $result->fetch_array(MYSQLI_ASSOC))
+  {
+    $colleges[$i]["courses"][] = $row;
+  }
+  $stmt->close();
+}
+
+// dump($colleges ,"");
 ?>
 <html>
 <head>
@@ -89,29 +103,18 @@ dump($colleges);
 
         <div class="col s4">
           <ul class="collapsible expandable">
-            <li>
-              <div class="collapsible-header">First</div>
-              <div class="collapsible-body">
-                <ul class="collection">
-                  <li class="collection-item active">item</li>
-                  <li class="collection-item">item</li>
-                  <li class="collection-item ">item</li>
-                  <li class="collection-item ">item</li>
-                  <li class="collection-item ">item</li>
-                  <li class="collection-item ">item</li>
-                  <li class="collection-item ">item</li>
-                  <li class="collection-item ">item</li>
-                </ul>
-              </div>
-            </li>
-            <li>
-              <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
-              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-            </li>
-            <li>
-              <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-            </li>
+            <?php foreach ($colleges as $key => $college): if($college["name"] != "none"){?>
+              <li class="active">
+                <div class="collapsible-header"><?= $college["name"] ?></div>
+                <div class="collapsible-body">
+                  <ul class="collection">
+                    <?php foreach ($college["courses"] as $key => $course): ?>
+                      <li data-college="<?= $college["name"] ?>" data-course="<?= $course["name"] ?>" class="collection-item js-sortableItem"><?= $course["name"] ?></li>
+                    <?php endforeach; ?>
+                  </ul>
+                </div>
+              </li>
+            <?php } endforeach; ?>
           </ul>
         </div>
       <div class="col s8">
@@ -123,7 +126,7 @@ dump($colleges);
           </div>
         </div>
         <?php foreach($itemArrays as $item){ ?>
-          <div class="home-card col m12">
+          <div class="home-card col m12" data-college="<?= $item["collageName"] ?>" data-course="<?= $item["courseName"] ?>" data-name="<?= $item["name"] ?>">
             <div class="card horizontal">
               <div class="card-image">
                   <?php
