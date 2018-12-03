@@ -103,7 +103,8 @@ function getFolder($ext){
   <?php include 'partials/head.html'; ?>
 </head>
 <body>
-  <div class="flash-message-container"> </div>
+  <div id="dragScrolTop" class="scroll scroll--top"></div>
+  <div id="dragScrolBot" class="scroll scroll--bot"></div>
   <?php include 'partials/navigation.php'; ?>
   <div class="container">
     <div class="row">
@@ -125,7 +126,7 @@ function getFolder($ext){
                             <div class="collapsible-header-text"><?=$key?></div>
                           </div>
                           <div class="collapsible-body">
-                            <ul class="js-sortable-copy" aria-dropeffect="move">
+                            <ul class="js-sortable-copy" aria-dropeffect="move" ondrag="isDragging()">
                               <?php foreach ($course as $key => $file): ?>
                                 <li data-name="<?=$file['sourcefile_name']?>" data-ext="<?=$file['extension']?>" class="p1 mb1 item file active" draggable="true" role="option" aria-grabbed="false">
                                   <div class="card card--file">

@@ -1,0 +1,23 @@
+.scroll{
+  position: fixed;
+  width: 100%;
+  z-index: -10;
+  height: 100px;
+  display: none;
+  transition: .2s ease;
+  &--top{
+    top: 0px;
+    left: 0px;
+  }
+  &--bot{
+    bottom: 0px;
+    left: 0px;
+  }
+  &--show{
+    display: block;
+  }
+}
+body{
+  position: relative;
+  overflow: auto;
+}

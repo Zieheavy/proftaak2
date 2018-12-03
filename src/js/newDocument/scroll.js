@@ -10,17 +10,12 @@ sortable('.js-sortable-copy-target', {
   placeholderClass: 'file__placeholder',
 });
 
-$(window).bind('mousewheel', function(event) {
-  console.log('Scroll up');
-    if (event.originalEvent.wheelDelta >= 0) {
-    }
-    else {
-        console.log('Scroll down');
-    }
-});
-
 $(sortable('.js-sortable-copy')).each(function(index, el) {
+  sortable('.js-sortable-copy')[index].addEventListener('sortstart', function(e) {
+    $('.scroll').addClass('scroll--show');
+  });
   sortable('.js-sortable-copy')[index].addEventListener('sortstop', function(e) {
+    $('.scroll').removeClass('scroll--show');
     var i = e.detail.item;
     $(i).addClass('file--dragged');
     M.updateTextFields();
@@ -32,16 +27,31 @@ $(sortable('.js-sortable-copy')).each(function(index, el) {
     $(i).find('#dropdown').attr('id', "dropdown" +  rnd);
     $('.drp').dropdown();
   });
+});
 
-});
-$(document).ready(function(){
-  $('.collapsible.expandable').collapsible({accordion: false});
-});
+function isDragging(){
+  var y = event.clientY;
+  var yBot = $('#dragScrolBot').position().top;
+  var yTopElem = $('#dragScrolTop');
+  var yTop = yTopElem.position().top + yTopElem.outerHeight(true);
+  console.log("y: ", y, "ytop", yTop);
+  if (y >= yBot) {
+    console.log("to bot");
+    var y2 = $(window).scrollTop();  //your current y position on the page
+    $(window).scrollTop(y2+10);
+  }
+  else if (y <= yTop) {
+    console.log("to top");
+    var y2 = $(window).scrollTop();  //your current y position on the page
+    $(window).scrollTop(y2-10);
+  }
+}
 
 $('body').on('click', '.file__title', function(){
   var file = $(this).closest('.file').data('name');
   $('.js-frm').attr('src', '_pdf/' + file + ".pdf");
 });
+
 $('body').on('click', '.js-delete-file', function(){
   $(this).closest('.file').remove();
 });
@@ -51,6 +61,7 @@ $('body').on("change paste keyup", ".js-mergedName" , function(){
   search = filter(search, 1);
   $(this).val(search);
 })
+
 $('body').on('click', '.js-merge', function(){
   var fileNames = [];
   var pageNumbers = [];
