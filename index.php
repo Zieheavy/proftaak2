@@ -43,26 +43,26 @@
         <div class="card-title">Register</div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="email" type="text" class="validate" name="username">
-            <label for="email">Gebruikersnaam</label>
+            <input id="name" type="text" class="validate" name="username">
+            <label for="name">Gebruikersnaam</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="password" type="password" class="validate" name="password">
-            <label class="active" for="password">Wachtwoord</label>
+            <input id="mail" type="password" class="validate" name="password">
+            <label class="active" for="mail">email</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="password" type="password" class="validate" name="password">
-            <label class="active" for="password">Wachtwoord</label>
+            <input id="pass" type="password" class="validate" name="password">
+            <label class="active" for="pass">Wachtwoord</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="password" type="password" class="validate" name="password">
-            <label class="active" for="password">Wachtwoord</label>
+            <input id="repeatPass" type="password" class="validate" name="password">
+            <label class="active" for="repeatPass">Heraal wachtwoord</label>
           </div>
         </div>
         <div class="row btn-row">
