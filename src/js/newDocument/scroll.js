@@ -28,13 +28,21 @@ $(sortable('.js-sortable-copy')).each(function(index, el) {
     $('.drp').dropdown();
   });
 });
+$(sortable('.js-sortable-copy-target')).each(function(index, el) {
+  sortable('.js-sortable-copy-target')[index].addEventListener('sortstart', function(e) {
+    $('.scroll').addClass('scroll--show');
+  });
+  sortable('.js-sortable-copy-target')[index].addEventListener('sortstop', function(e) {
+    $('.scroll').removeClass('scroll--show');
+  });
+});
 
 function isDragging(){
   var y = event.clientY;
   var yBot = $('#dragScrolBot').position().top;
   var yTopElem = $('#dragScrolTop');
   var yTop = yTopElem.position().top + yTopElem.outerHeight(true);
-  console.log("y: ", y, "ytop", yTop);
+  console.log("y:", y, "yBot:", yBot, "ytop:", yTop);
   if (y >= yBot) {
     console.log("to bot");
     var y2 = $(window).scrollTop();  //your current y position on the page

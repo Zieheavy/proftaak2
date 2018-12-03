@@ -16,7 +16,7 @@
     display: none;
   }
   & .file__links{
-    display: none; 
+    display: none;
   }
   // if the file--dragged class is not yet present the box shadow and border should be hidden, if the class is added it will automatically add the materializeCSS box shadow and border
   &:not(.file--dragged){
