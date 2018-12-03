@@ -126,9 +126,9 @@ function getFolder($ext){
                             <div class="collapsible-header-text"><?=$key?></div>
                           </div>
                           <div class="collapsible-body">
-                            <ul class="js-sortable-copy" aria-dropeffect="move" ondrag="isDragging()">
+                            <ul class="js-sortable-copy" aria-dropeffect="move">
                               <?php foreach ($course as $key => $file): ?>
-                                <li data-name="<?=$file['sourcefile_name']?>" data-ext="<?=$file['extension']?>" class="p1 mb1 item file active" draggable="true" role="option" aria-grabbed="false">
+                                <li data-name="<?=$file['sourcefile_name']?>" data-ext="<?=$file['extension']?>" class="p1 mb1 item file active" draggable="true" role="option" aria-grabbed="false" ondrag="isDragging()">
                                   <div class="card card--file">
                                     <div class="card-content card-content-nopad">
                                       <span class="card-title file__title">
