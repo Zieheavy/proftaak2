@@ -141,6 +141,9 @@ function filter(string, type){
     case 1:
       string = string.replace(/[^A-Za-z0-9\s_:]/g,'');
     break;
+    case 2:
+      string = string.replace(/[^A-Za-z0-9\s]/g,'');
+    break;
   }
   return string;
 }

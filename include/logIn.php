@@ -14,8 +14,12 @@ if (isset($_POST['loginSub'])) {
 }
 
 if (isset($_POST['registerSub'])) {
-  $name = $_POST['username'];
-  $pass = $_POST['password'];
+  echo "register";
+  dump($_POST);
+  $name = $_POST['name'];
+  $pass = $_POST['mail'];
+  $pass = $_POST['pass'];
+
   $passE = encrypt($_POST['password']);
   $sql = "SELECT * FROM users WHERE username = ?";
   $stmt = $conn->prepare($sql);
@@ -34,6 +38,7 @@ if (isset($_POST['registerSub'])) {
   }
   else{
     echo "userExists";
+    header("Location: ../index.php?s=3");
   }
 }
 function logout(){

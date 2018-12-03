@@ -1,11 +1,25 @@
 $(document).ready(function(){
-  console.log("index loaded2");
-  if(getUrlParameter("s") == 1){
-    M.toast({html: 'Gebruikernaam of Wachtwoord is incorrect', classes: "toast--error", displayLength: 2000});
-    removeUrlParameter("s");
-  }
-  if(getUrlParameter("s") == 2){
-    M.toast({html: 'U bent succesvol uitgelogd', classes: "toast--succes", displayLength: 2000});
+  var message = "";
+  var type = "";
+
+  var param = getUrlParameter("s")
+  if(param >= 0){
+    switch (param) {
+      case "1":
+        message = 'Gebruikernaam of Wachtwoord is incorrect';
+        type = 'toast--error';
+      break;
+      case "2":
+        console.log("2 2 2")
+        message = 'U bent succesvol uitgelogd';
+        type = 'toast--succes';
+      break;
+      case "3":
+        message = 'Gebruiker bestaat al';
+        type = 'toast--succes';
+      break;
+    }
+    M.toast({html: message, classes: type, displayLength: 2000});
     removeUrlParameter("s");
   }
 });
