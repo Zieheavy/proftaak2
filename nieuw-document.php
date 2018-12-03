@@ -1,6 +1,7 @@
 <?php
 include 'include/database.php';
 include 'include/functions.php';
+// This query gets every sourceFile
 $files = [];
 $sql = "SELECT s.id as sourcefiles_id,
               s.name as sourcefile_name,
