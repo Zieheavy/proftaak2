@@ -3,8 +3,8 @@
   opacity: 0;
   display: none;
   &__card{
-    width: 25%;
-    margin: auto;
+    // width: 25%;
+    // margin: auto;
     padding: 10px;
     margin-top: 50px;
   }
@@ -13,6 +13,10 @@
     &-row{
       margin: 0;
     }
+  }
+  &__card-register{
+    padding: 10px;
+    margin-top: 25px;
   }
   &--inline{
     display:inline;
@@ -27,4 +31,7 @@
   &--disappear{
     opacity: 0;
   }
+}
+.indexPage{
+  overflow:hidden;
 }
