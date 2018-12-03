@@ -7,7 +7,7 @@
   <title>Proftaak</title>
   <?php include 'partials/head.html'; ?>
 </head>
-<body>
+<body class="indexPage">
   <?php include 'partials/navigation.php'; ?>
 
   <div class="row login js-login login--active">
@@ -39,12 +39,24 @@
   </div>
   <div class="row login js-register">
     <form class="col s12 m8 l6 offset-l3 offset-m2" method="post" action="include/logIn.php">
-      <div class="card login__card">
+      <div class="card login__card-register">
         <div class="card-title">Register</div>
         <div class="row">
           <div class="input-field col s12">
             <input id="email" type="text" class="validate" name="username">
             <label for="email">Gebruikersnaam</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" type="password" class="validate" name="password">
+            <label class="active" for="password">Wachtwoord</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" type="password" class="validate" name="password">
+            <label class="active" for="password">Wachtwoord</label>
           </div>
         </div>
         <div class="row">
