@@ -17,10 +17,10 @@ if (isset($_POST['registerSub'])) {
   echo "register";
   dump($_POST);
   $name = $_POST['name'];
-  $pass = $_POST['mail'];
+  $mail = $_POST['mail'];
   $pass = $_POST['pass'];
 
-  $passE = encrypt($_POST['password']);
+  $passE = encrypt($pass);
   $sql = "SELECT * FROM users WHERE username = ?";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param('s', $name);
