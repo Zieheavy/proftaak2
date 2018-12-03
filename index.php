@@ -38,7 +38,7 @@
     </form>
   </div>
   <div class="row login js-register">
-    <div class="col s12 m8 l6 offset-l3 offset-m2" method="post" action="include/logIn.php">
+    <form class="col s12 m8 l6 offset-l3 offset-m2" method="post" action="include/logIn.php">
       <div class="card login__card-register">
         <div class="card-title">Register</div>
         <div class="row">
@@ -49,7 +49,7 @@
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="mail" type="text" class="validate js-mail" name="mail">
+            <input id="mail" type="email" class="validate js-mail" name="mail">
             <label class="active" for="mail">email</label>
           </div>
         </div>
@@ -74,7 +74,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 
   <?php include 'partials/templates.html'; ?>
