@@ -49,7 +49,17 @@ function logout(){
 
 function login($name, $pass){
   include 'database.php';
-  $sql = 'SELECT u.id, u.password, u.confirm, u.newcollege, u.verified, u.colleges_id, c.id as courseId FROM users u, courses c WHERE username = ? AND u.colleges_id = c.colleges_id';
+  $sql = 'SELECT  u.id,
+                  u.password,
+                  u.confirm,
+                  u.newcollege,
+                  u.verified,
+                  u.colleges_id,
+                  c.id as courseId
+                  FROM  users u,
+                        courses c
+                  WHERE username = ?
+                        AND u.colleges_id = c.colleges_id';
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s", $name);
 
@@ -65,11 +75,13 @@ function login($name, $pass){
     }
     else{
       echo "Username or password is wrong1";
+      die();
       header("Location: ../index.php?s=1");
     }
   }
   else{
     echo "Username or password is wrong2";
+    die();
     header("Location: ../index.php?s=1");
     $loggedIn = false;
   }
