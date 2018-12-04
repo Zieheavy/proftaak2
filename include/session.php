@@ -13,8 +13,6 @@ $shouldBeInSession = [
   'verified' => 0,
   'collegeId' => -1,
 ];
-resetSession();
-dump($_SESSION);
 
 // Checks if all session variables exist, if not it resets the session to the default values
 foreach ($shouldBeInSession as $key => $value) {
