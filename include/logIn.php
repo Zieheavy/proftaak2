@@ -57,15 +57,7 @@ function login($name, $pass){
                   u.colleges_id
                   FROM  users u
                   WHERE username = ?';
-  // $stmt = $con->prepare($sql);
-  // $stmt->bind_param('s',$name );
-  // $stmt->execute();
-  // $result = $stmt->get_result();
-  // while ($row = $result->fetch_array(MYSQLI_ASSOC))
-  // {
-  //   $resultArray[] = $row;
-  // }
-  // $stmt->close();
+  
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s", $name);
 
@@ -81,20 +73,16 @@ function login($name, $pass){
     }
     else{
       echo "Username or password is wrong1";
-      die();
       header("Location: ../index.php?s=1");
     }
   }
   else{
     echo "Username or password is wrong2";
-    die();
     header("Location: ../index.php?s=1");
     $loggedIn = false;
   }
   $stmt->close();
 }
-
-die();
 
 function encrypt($str){
     return password_hash($str, PASSWORD_BCRYPT);
