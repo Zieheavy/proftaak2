@@ -57,7 +57,7 @@ function login($name, $pass){
                   u.colleges_id
                   FROM  users u
                   WHERE username = ?';
-  
+
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s", $name);
 
@@ -66,7 +66,7 @@ function login($name, $pass){
   $stmt->bind_result($idResult, $hash, $confirm, $newcollege, $verified, $collegeid);
   if($stmt->fetch()) {
     if (password_verify($pass, $hash)) {
-      setSession($idResult, $name, $hash, $confirm, $newcollege, $verified, $collegeid);
+      setSession_revised($idResult, $name, $hash, $confirm, $newcollege, $verified, $collegeid);
       $loggedIn = true;
       echo "succes";
       header("Location: ../home.php");

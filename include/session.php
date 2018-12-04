@@ -1,13 +1,26 @@
 <?php
 session_start();
-
-// session_destory();
 include 'database.php'; // Should create a var $conn
 include 'functions.php';
 
-// dump($_SESSION);
-if (!isset($_SESSION['loggedIn'])) { // If this variable doesn't exist, it creates all the session vars
+$shouldBeInSession = [
+  'loggedIn' => 0,
+  'userId' => -1,
+  'username' => '',
+  'password' => '',
+  'confirm' => 0,
+  'newcollege' => 0,
+  'verified' => 0,
+  'collegeId' => -1,
+];
+resetSession();
+dump($_SESSION);
+
+// Checks if all session variables exist, if not it resets the session to the default values
+foreach ($shouldBeInSession as $key => $value) {
+  if (!array_key_exists($key, $_SESSION)) {
     resetSession();
+  }
 }
 
 if(isset($_POST["return"])){
@@ -39,38 +52,64 @@ if ($loggedIn) {
 
     unset($userinfo, $smtp, $sql);
 }
-
 // The reset
 function resetSession(){
+  global $shouldBeInSession;
     $_SESSION = [];
-    $_SESSION['loggedIn'] = 0;
-    $_SESSION['userId'] = -1;
-    $_SESSION['username'] = '';
-    $_SESSION['password'] = '';
-    $_SESSION['confirm'] = 0;
-    $_SESSION['newcollege'] = 0;
-    $_SESSION['verified'] = 0;
-    $_SESSION['collegeId'] = -1;
-    header("Location: index.php");
+    foreach ($shouldBeInSession as $key => $value) {
+      $_SESSION[$key] = $value;
+    }
+    // header("Location: index.php");
+}
+
+function setSession_revised(...$params){
+  global $shouldBeInSession;
+  if (!is_array($params[0])) {
+    $shouldCount = count($shouldBeInSession);
+    $paramCount = count($params);
+    if ($paramCount == $shouldCount) {
+      $_SESSION = [];
+      $keys = array_keys($shouldBeInSession);
+      $newAr = array_combine($keys, $params);
+      $_SESSION = $newAr;
+    }
+    else if ($paramCount < $shouldCount){
+      $_SESSION = [];
+      $numerical = array_values($shouldBeInSession);
+      $keys = array_keys($shouldBeInSession);
+      $values = [];
+      for ($i=0; $i < $shouldCount; $i++) {
+        if (isset($params[$i])) {
+          array_push($values, $params[$i]);
+        }
+        else {
+          array_push($values, $numerical[$i]);
+        }
+      }
+      $newAr = array_combine($keys, $values);
+      $_SESSION = $newAr;
+    }
+    else{
+      return "too many params";
+    }
+  }
+  else{
+    $params = $params[0];
+    foreach ($params as $key => $value) {
+      $_SESSION[$key] = $value;
+    }
+  }
 }
 
 // Setting session vars
-function setSession($id, $usn, $pass, $confirm, $newcollege, $verified, $collegeid){
-    $_SESSION['loggedIn'] = 1;
-    $_SESSION['userId'] = $id;
-    $_SESSION['username'] = $usn;
-    $_SESSION['password'] = $pass;
-    $_SESSION['confirm'] = $confirm;
-    $_SESSION['verified'] = $verified;
-    $_SESSION['newcollege'] = $newcollege;
-    $_SESSION['collegeId'] = $collegeid;
-}
-
-// Debug reset
-function resetSessionDebug(){
-    $_SESSION['loggedIn'] = 1;
-    $_SESSION['userId'] = 1;
-    $_SESSION['username'] = 'dylanbos';
-    $_SESSION['password'] = 'hallo';
-}
+// function setSession($id, $usn, $pass, $confirm, $newcollege, $verified, $collegeid){
+//     $_SESSION['loggedIn'] = 1;
+//     $_SESSION['userId'] = $id;
+//     $_SESSION['username'] = $usn;
+//     $_SESSION['password'] = $pass;
+//     $_SESSION['confirm'] = $confirm;
+//     $_SESSION['verified'] = $verified;
+//     $_SESSION['newcollege'] = $newcollege;
+//     $_SESSION['collegeId'] = $collegeid;
+// }
 ?>

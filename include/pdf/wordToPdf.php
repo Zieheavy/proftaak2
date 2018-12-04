@@ -7,7 +7,7 @@ $extension = $_POST['extension'];
 
 $word = new COM("Word.Application") or die ("Could not initialise Object.");
 // set it to 1 to see the MS Word window (the actual opening of the document)
-$word->Visible = 0;
+$word->Visible = 1;
 // recommend to set to 0, disables alerts like "Do you want MS Word to be the default .. etc"
 $word->DisplayAlerts = 0;
 // open the word 2007-2013 document
@@ -15,7 +15,8 @@ if($extension == "docx"){
   $word->Documents->Open($directory . '_docs\\' . $fileName . '.docx');
 
   // save it as word 2003
-  $word->ActiveDocument->SaveAs('newdocument.doc');
+  $rndString = randomString(20);
+  $word->ActiveDocument->SaveAs($rndString . '.doc');
 }else{
   $word->Documents->Open($directory . '_docs\\' . $fileName . '.doc');
 }
@@ -28,5 +29,13 @@ $word->Quit(false);
 unset($word);
 
 echo "succes";
-
+function randomString($length = 10) {
+    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
  ?>

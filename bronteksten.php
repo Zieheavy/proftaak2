@@ -12,9 +12,24 @@ include 'include/functions.php';
   <?php include 'partials/navigation.php'; ?>
   <?php include 'partials/templates.html'; ?>
   <?php include 'partials/modals.html'; ?>
+  <div class="container">
+    <div class = "row">
+      <label>Materialize Multi File Input</label>
+      <div class = "file-field input-field">
+        <div class = "btn">
+          <span>Browse</span>
+          <input type="file" id="uploadFiles" multiple />
+        </div>
+        <div class = "file-path-wrapper">
+          <input class = "file-path validate" type = "text"
+          placeholder = "Upload multiple files" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <button class="js-ok">Upload</button>
+    </div>
+  </div>
   <?php include 'partials/scripts.html'; ?>
-
-  <script src="dest/js/html5sortable.min.js" charset="utf-8"></script>
-  <script src="dest/js/newDocument.js" charset="utf-8"></script>
 </body>
 </html>
