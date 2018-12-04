@@ -24,6 +24,8 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
   $files[] = $row;
 }
 $stmt->close();
+
+// REstructures the array into a multi-dimensional array, where the keys are the colleges and courses
 $newfiles = [];
 foreach ($files as $key => $file) {
   $ext = $file['extension'];

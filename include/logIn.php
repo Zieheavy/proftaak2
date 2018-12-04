@@ -54,21 +54,27 @@ function login($name, $pass){
                   u.confirm,
                   u.newcollege,
                   u.verified,
-                  u.colleges_id,
-                  c.id as courseId
-                  FROM  users u,
-                        courses c
-                  WHERE username = ?
-                        AND u.colleges_id = c.colleges_id';
+                  u.colleges_id
+                  FROM  users u
+                  WHERE username = ?';
+  // $stmt = $con->prepare($sql);
+  // $stmt->bind_param('s',$name );
+  // $stmt->execute();
+  // $result = $stmt->get_result();
+  // while ($row = $result->fetch_array(MYSQLI_ASSOC))
+  // {
+  //   $resultArray[] = $row;
+  // }
+  // $stmt->close();
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s", $name);
 
   $stmt->execute();
   $stmt->store_result();
-  $stmt->bind_result($idResult, $hash, $confirm, $newcollege, $verified, $collegeid, $courseId);
+  $stmt->bind_result($idResult, $hash, $confirm, $newcollege, $verified, $collegeid);
   if($stmt->fetch()) {
     if (password_verify($pass, $hash)) {
-      setSession($idResult, $name, $hash, $confirm, $newcollege, $verified, $collegeid, $courseId);
+      setSession($idResult, $name, $hash, $confirm, $newcollege, $verified, $collegeid);
       $loggedIn = true;
       echo "succes";
       header("Location: ../home.php");

@@ -104,12 +104,16 @@ for ($i=0; $i < count($colleges); $i++) {
         <div class="col s4">
           <ul class="collapsible expandable">
             <?php foreach ($colleges as $key => $college): if($college["name"] != "none"){?>
-              <li class="active">
-                <div class="collapsible-header"><?= $college["name"] ?></div>
+              <li class="collapsible-expand active">
+                <div class="collapsible-header">
+                  <div class="collapsible-header-text">
+                    <?= $college["name"] ?>
+                  </div>
+                </div>
                 <div class="collapsible-body">
                   <ul class="collection">
                     <?php foreach ($college["courses"] as $key => $course): ?>
-                      <li data-college="<?= $college["name"] ?>" data-course="<?= $course["name"] ?>" class="collection-item js-sortableItem"><?= $course["name"] ?></li>
+                      <li data-college="<?= $college["name"] ?>" data-course="<?= $course["name"] ?>" class="collection-item item-cursor js-sortableItem"><?= $course["name"] ?></li>
                     <?php endforeach; ?>
                   </ul>
                 </div>
