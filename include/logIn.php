@@ -15,7 +15,6 @@ if (isset($_POST['loginSub'])) {
 
 if (isset($_POST['registerSub'])) {
   echo "register";
-  dump($_POST);
   $name = $_POST['name'];
   $mail = $_POST['mail'];
   $pass = $_POST['pass'];
@@ -66,7 +65,7 @@ function login($name, $pass){
   $stmt->bind_result($idResult, $hash, $confirm, $newcollege, $verified, $collegeid);
   if($stmt->fetch()) {
     if (password_verify($pass, $hash)) {
-      setSession_revised($idResult, $name, $hash, $confirm, $newcollege, $verified, $collegeid);
+      setSession_revised(1, $idResult, $name, $hash, $confirm, $newcollege, $verified, $collegeid);
       $loggedIn = true;
       echo "succes";
       header("Location: ../home.php");

@@ -1,6 +1,7 @@
 <?php
 include 'include/session.php';
 include 'include/database.php';
+dump($_SESSION);
 $id = $_SESSION['userId'];
 
 $itemArrays = [];

@@ -1,6 +1,7 @@
 <?php
-  include 'include/functions.php';
-  session_start();
+  include 'include/session.php';
+  // session_start();
+  dump($_SESSION);
  ?>
 <html>
 <head>
