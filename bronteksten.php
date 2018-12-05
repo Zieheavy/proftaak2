@@ -13,6 +13,11 @@ include 'include/functions.php';
   <?php include 'partials/templates.html'; ?>
   <?php include 'partials/modals.html'; ?>
   <div class="container">
+    <div class="row">
+      <div class="col s4">
+        <?php include 'partials/courseList.php'; ?>
+      </div>
+    </div>
     <div class = "row">
       <label>Materialize Multi File Input</label>
       <div class = "file-field input-field">

@@ -59,34 +59,6 @@ for($i = 0; $i < count($itemArrays); $i++){
   $stmt->close();
   $itemArrays[$i]["versions"] = $tempVersionArray;
 }
-
-
-$colleges = [];
-$sql = "SELECT * FROM colleges";
-$stmt = $con->prepare($sql);
-$stmt->execute();
-$result = $stmt->get_result();
-while ($row = $result->fetch_array(MYSQLI_ASSOC))
-{
-  $colleges[] = $row;
-}
-$stmt->close();
-
-for ($i=0; $i < count($colleges); $i++) {
-  $colleges[$i]["courses"] = [];
-  $sql = "SELECT * FROM courses WHERE colleges_id = ?";
-  $stmt = $con->prepare($sql);
-  $stmt->bind_param("i", $colleges[$i]["id"]);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  while ($row = $result->fetch_array(MYSQLI_ASSOC))
-  {
-    $colleges[$i]["courses"][] = $row;
-  }
-  $stmt->close();
-}
-
-// dump($colleges ,"");
 ?>
 <html>
 <head>
@@ -101,24 +73,7 @@ for ($i=0; $i < count($colleges); $i++) {
     <div class="row">
 
         <div class="col s4">
-          <ul class="collapsible expandable">
-            <?php foreach ($colleges as $key => $college): if($college["name"] != "none"){?>
-              <li class="collapsible-expand active">
-                <div class="collapsible-header">
-                  <div class="collapsible-header-text">
-                    <?= $college["name"] ?>
-                  </div>
-                </div>
-                <div class="collapsible-body">
-                  <ul class="collection">
-                    <?php foreach ($college["courses"] as $key => $course): ?>
-                      <li data-college="<?= $college["name"] ?>" data-course="<?= $course["name"] ?>" class="collection-item item-cursor js-sortableItem"><?= $course["name"] ?></li>
-                    <?php endforeach; ?>
-                  </ul>
-                </div>
-              </li>
-            <?php } endforeach; ?>
-          </ul>
+          <?php include 'partials/courseList.php'; ?>
         </div>
       <div class="col s8">
         <div class="row">
@@ -188,9 +143,6 @@ for ($i=0; $i < count($colleges); $i++) {
 
   <?php include 'partials/templates.html'; ?>
   <?php include 'partials/modals.html'; ?>
-
-  <div class="container"></div>
-
   <?php include 'partials/scripts.html'; ?>
   <script src="dest/js/home.js" charset="utf-8"></script>
 </body>
