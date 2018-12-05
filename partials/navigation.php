@@ -10,23 +10,26 @@ if($_SESSION["newcollege"] == 1 || $_SESSION["confirm"] == 1){
   $admin = 1;
 }
 
-if($verified <= 0){
-  // header("Location: index.php");
+if($verified <= 0 && $_SESSION["loggedIn"] == 1){
+  header("Location: no.php");
 }
 
 switch ($currentPage) {
   case 'home.php':
-  $active = 1;
-  break;
+    $active = 1;
+    break;
   case 'bronteksten.php':
-  $active = 2;
-  break;
+    $active = 2;
+    break;
   case 'nieuw-document.php':
-  $active = 3;
-  break;
+    $active = 3;
+    break;
+  case 'manage.php':
+    $active = 4;
+    break;
   default:
-  $active = -1;
-  break;
+    $active = -1;
+    break;
 }
 ?>
 
@@ -39,7 +42,7 @@ switch ($currentPage) {
         <li class="<?php if($active == 2) echo "active"; ?>"><a href="bronteksten.php">Bronteksten</a></li>
         <li class="<?php if($active == 3) echo "active"; ?>"><a href="nieuw-document.php">Nieuw Document</a></li>
         <?php if ($admin == 1) { ?>
-          <li class="<?php if($active == 4) echo "active"; ?>"><a href="nieuw-document.php">Manage</a></li>
+          <li class="<?php if($active == 4) echo "active"; ?>"><a href="manage.php">Manage</a></li>
         <?php } ?>
         <li class="js-delete-merged"><a href="#">DeleteMerged</a></li>
       </ul>

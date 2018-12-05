@@ -7,3 +7,6 @@ $(document).ready(function(){
 $(document).ready(function(){
   $('.collapsible:not(.expandable)').collapsible();
 });
+$(document).ready(function(){
+  $('select').formSelect();
+});
