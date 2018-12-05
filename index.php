@@ -1,7 +1,5 @@
 <?php
   include 'include/session.php';
-  // session_start();
-  dump($_SESSION);
  ?>
 <html>
 <head>
