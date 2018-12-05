@@ -98,16 +98,4 @@ function setSession_revised(...$params){
     }
   }
 }
-
-// Setting session vars
-// function setSession($id, $usn, $pass, $confirm, $newcollege, $verified, $collegeid){
-//     $_SESSION['loggedIn'] = 1;
-//     $_SESSION['userId'] = $id;
-//     $_SESSION['username'] = $usn;
-//     $_SESSION['password'] = $pass;
-//     $_SESSION['confirm'] = $confirm;
-//     $_SESSION['verified'] = $verified;
-//     $_SESSION['newcollege'] = $newcollege;
-//     $_SESSION['collegeId'] = $collegeid;
-// }
 ?>
