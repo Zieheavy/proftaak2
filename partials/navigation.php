@@ -1,6 +1,18 @@
 <?php
 $currentPage = explode("/",$_SERVER['PHP_SELF'])[2];
 $active = -1;
+$admin = -1;
+$verified = $_SESSION["verified"];
+
+dump($_SESSION, "");
+
+if($_SESSION["newcollege"] == 1 || $_SESSION["confirm"] == 1){
+  $admin = 1;
+}
+
+if($verified <= 0){
+// header("Location: index.php");
+}
 
 switch ($currentPage) {
   case 'home.php':
@@ -26,7 +38,10 @@ switch ($currentPage) {
         <li class="<?php if($active == 1) echo "active"; ?>"><a href="home.php">Home</a></li>
         <li class="<?php if($active == 2) echo "active"; ?>"><a href="bronteksten.php">Bronteksten</a></li>
         <li class="<?php if($active == 3) echo "active"; ?>"><a href="nieuw-document.php">Nieuw Document</a></li>
-        <li class="js-delete-merged <?php if($active == 3) echo "active"; ?>"><a href="#">DeleteMerged</a></li>
+        <?php if ($admin == 1) { ?>
+          <li class="<?php if($active == 4) echo "active"; ?>"><a href="nieuw-document.php">Manage</a></li>
+        <?php } ?>
+        <li class="js-delete-merged"><a href="#">DeleteMerged</a></li>
       </ul>
       <form class="" action="include/login.php" method="post">
         <button type="submit" name="logoutSub" class="btn waves-effect waves-light right js-logout">Logout</button>
