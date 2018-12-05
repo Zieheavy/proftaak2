@@ -68,7 +68,7 @@ $('body').on("change paste keyup", ".js-mergedName" , function(){
   var search = $(this).val().toLowerCase();
   search = filter(search, 1);
   $(this).val(search);
-})
+});
 
 $('body').on('click', '.js-merge', function(){
   var fileNames = [];
@@ -83,7 +83,7 @@ $('body').on('click', '.js-merge', function(){
       pageVal = "all";
     }
     pageNumbers.push(pageVal);
-  })
+  });
   console.log(fileNames)
   console.log(pageNumbers)
 
@@ -99,5 +99,5 @@ $('body').on('click', '.js-merge', function(){
     }else if(response == "noUser"){
       window.location = 'index.php';
     }
-  })
-})
+  });
+});

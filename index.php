@@ -1,6 +1,6 @@
 <?php
-  include 'include/session.php';
- ?>
+include 'include/session.php';
+?>
 <html>
 <head>
   <title>Proftaak</title>
@@ -78,8 +78,6 @@
 
   <?php include 'partials/templates.html'; ?>
   <?php include 'partials/modals.html'; ?>
-
-  <?php include 'partials/scripts.html'; ?>
-  <script src="dest/js/index.js" charset="utf-8"></script>
+  <?php include 'partials/scripts.php'; ?>
 </body>
 </html>

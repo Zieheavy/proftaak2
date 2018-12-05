@@ -1,16 +1,16 @@
 var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
+  var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+  sURLVariables = sPageURL.split('&'),
+  sParameterName,
+  i;
 
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
+  for (i = 0; i < sURLVariables.length; i++) {
+    sParameterName = sURLVariables[i].split('=');
 
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
+    if (sParameterName[0] === sParam) {
+      return sParameterName[1] === undefined ? true : sParameterName[1];
     }
+  }
 };
 
 function addUrlParameter(keys, values){
@@ -61,9 +61,9 @@ function addUrlParameter(keys, values){
 function removeUrlParameter(key){
   // Gets everything behind the ? in the url
   var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-      sURLVariables = sPageURL.split('&'),
-      sParameterName,
-      i;
+  sURLVariables = sPageURL.split('&'),
+  sParameterName,
+  i;
   // Makes an object array splitting the keys and vals
   var obj = {
     keys: [],
@@ -97,7 +97,7 @@ function uppercase(str){
   var newarray1 = [];
 
   for(var x = 0; x < array1.length; x++){
-      newarray1.push(array1[x].charAt(0).toUpperCase()+array1[x].slice(1));
+    newarray1.push(array1[x].charAt(0).toUpperCase()+array1[x].slice(1));
   }
   return newarray1.join(' ');
 }
@@ -122,82 +122,82 @@ function shuffle(array) {
 }
 
 function mustache(origin, location, information, append){
-    if(append == undefined){
-      append = false;
-    }
-    var template = $(origin).html();
-    console.log(origin)
-    var renderTemplate = Mustache.render(template, information);
+  if(append == undefined){
+    append = false;
+  }
+  var template = $(origin).html();
+  console.log(origin)
+  var renderTemplate = Mustache.render(template, information);
 
-    if(append == false){
-      $(location).html(renderTemplate);
-    }else{
-      $(location).append(renderTemplate);
-    }
+  if(append == false){
+    $(location).html(renderTemplate);
+  }else{
+    $(location).append(renderTemplate);
+  }
 }
 
 function filter(string, type){
   switch(type){
     case 1:
-      string = string.replace(/[^A-Za-z0-9\s_:]/g,'');
+    string = string.replace(/[^A-Za-z0-9\s_:]/g,'');
     break;
     case 2:
-      string = string.replace(/[^A-Za-z0-9\s]/g,'');
+    string = string.replace(/[^A-Za-z0-9\s]/g,'');
     break;
   }
   return string;
 }
 
 function randomString2(len, beforestr = '', arraytocheck = null) {
-    // Charset, every character in this string is an optional one it can use as a random character.
-    var charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    var randomString = '';
-    for (var i = 0; i < len; i++) {
-        // creates a random number between 0 and the charSet length. Rounds it down to a whole number
-        var randomPoz = Math.floor(Math.random() * charSet.length);
-        randomString += charSet.substring(randomPoz, randomPoz + 1);
-    }
-    // If an array is given it will check the array, and if the generated string exists in it it will create a new one until a unique one is found *WATCH OUT. If all available options are used it will cause a loop it cannot break out*
-    if (arraytocheck == null) {
-        return beforestr + randomString;
-    } else {
-        var isIn = $.inArray(beforestr + randomString, arraytocheck); // checks if the string is in the array, returns a position
-        if (isIn > -1) {
-            // if the position is not -1 (meaning, it is not in the array) it will start doing a loop
-            var count = 0;
-            do {
-                randomString = '';
-                for (var i = 0; i < len; i++) {
-                    var randomPoz = Math.floor(Math.random() * charSet.length);
-                    randomString += charSet.substring(randomPoz, randomPoz + 1);
-                }
-                isIn = $.inArray(beforestr + randomString, arraytocheck);
-                count++;
-            } while (isIn > -1);
-            return beforestr + randomString;
-        } else {
-            return beforestr + randomString;
+  // Charset, every character in this string is an optional one it can use as a random character.
+  var charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  var randomString = '';
+  for (var i = 0; i < len; i++) {
+    // creates a random number between 0 and the charSet length. Rounds it down to a whole number
+    var randomPoz = Math.floor(Math.random() * charSet.length);
+    randomString += charSet.substring(randomPoz, randomPoz + 1);
+  }
+  // If an array is given it will check the array, and if the generated string exists in it it will create a new one until a unique one is found *WATCH OUT. If all available options are used it will cause a loop it cannot break out*
+  if (arraytocheck == null) {
+    return beforestr + randomString;
+  } else {
+    var isIn = $.inArray(beforestr + randomString, arraytocheck); // checks if the string is in the array, returns a position
+    if (isIn > -1) {
+      // if the position is not -1 (meaning, it is not in the array) it will start doing a loop
+      var count = 0;
+      do {
+        randomString = '';
+        for (var i = 0; i < len; i++) {
+          var randomPoz = Math.floor(Math.random() * charSet.length);
+          randomString += charSet.substring(randomPoz, randomPoz + 1);
         }
+        isIn = $.inArray(beforestr + randomString, arraytocheck);
+        count++;
+      } while (isIn > -1);
+      return beforestr + randomString;
+    } else {
+      return beforestr + randomString;
     }
+  }
 }
 
 Array.prototype.getIndex = function(obj) {
-    var i = this.length;
-    while (i--) {
-        if (this[i] == obj) {
-            return i;
-        }
+  var i = this.length;
+  while (i--) {
+    if (this[i] == obj) {
+      return i;
     }
-    return -1;
+  }
+  return -1;
 }
 
 Array.prototype.removeIndex = function(n) {
-    var t = [];
-    var l = this.length;
-    for (var i = 0; i < l; i++) {
-        if (i != n) {
-            t.push(this[i]);
-        }
+  var t = [];
+  var l = this.length;
+  for (var i = 0; i < l; i++) {
+    if (i != n) {
+      t.push(this[i]);
     }
-    return t;
+  }
+  return t;
 };

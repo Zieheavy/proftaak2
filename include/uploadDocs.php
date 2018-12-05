@@ -2,7 +2,7 @@
 include 'functions.php';
 $id = $_POST['name'];
 $oldFileAr = [
-    "id" =>$id,
+  "id" =>$id,
 ];
 
 $img = getImage($oldFileAr, "../");
@@ -19,24 +19,24 @@ if ($_FILES['file']['error'] != 0){
 
 //checks if the image already exist if so it will delete the image
 function getImage($ar, $map = ""){
-    $name = $ar["id"];
-    $folder = "";
-    if(strrpos($name, ".xlsx") != -1 || strrpos($name, ".xls")  != -1 || strrpos($name, ".xlsm")  != -1){
-      $folder = "_excel/";
-    }else if(strrpos($name, ".docx") != -1 || strrpos($name, ".doc")  != -1){
-      $folder = "_docs/";
-    }else if(strrpos($name, ".pdf") != -1){
-      $folder = "_pdf/";
-    }
+  $name = $ar["id"];
+  $folder = "";
+  if(strrpos($name, ".xlsx") != -1 || strrpos($name, ".xls")  != -1 || strrpos($name, ".xlsm")  != -1){
+    $folder = "_excel/";
+  }else if(strrpos($name, ".docx") != -1 || strrpos($name, ".doc")  != -1){
+    $folder = "_docs/";
+  }else if(strrpos($name, ".pdf") != -1){
+    $folder = "_pdf/";
+  }
 
-    $img = $map . $folder . $ar['id'] ;
+  $img = $map . $folder . $ar['id'] ;
 
-    if (file_exists($img)) {
-      unlink($img);
-    }else{
-      $img = "";
-    }
-    return $img;
+  if (file_exists($img)) {
+    unlink($img);
+  }else{
+    $img = "";
+  }
+  return $img;
 }
 
 //function used to get the correct folder for the selected file

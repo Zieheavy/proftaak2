@@ -1,6 +1,6 @@
 <?php
 include 'include/database.php';
-include 'include/functions.php';
+include 'include/session.php';
 
 ?>
 <html>
@@ -35,6 +35,6 @@ include 'include/functions.php';
       <button class="js-ok">Upload</button>
     </div>
   </div>
-  <?php include 'partials/scripts.html'; ?>
+  <?php include 'partials/scripts.php'; ?>
 </body>
 </html>

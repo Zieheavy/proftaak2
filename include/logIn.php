@@ -1,4 +1,4 @@
-  <?php
+<?php
 include 'database.php';
 include 'session.php';
 
@@ -49,13 +49,13 @@ function logout(){
 function login($name, $pass){
   include 'database.php';
   $sql = 'SELECT  u.id,
-                  u.password,
-                  u.confirm,
-                  u.newcollege,
-                  u.verified,
-                  u.colleges_id
-                  FROM  users u
-                  WHERE username = ?';
+  u.password,
+  u.confirm,
+  u.newcollege,
+  u.verified,
+  u.colleges_id
+  FROM  users u
+  WHERE username = ?';
 
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s", $name);
@@ -84,6 +84,6 @@ function login($name, $pass){
 }
 
 function encrypt($str){
-    return password_hash($str, PASSWORD_BCRYPT);
+  return password_hash($str, PASSWORD_BCRYPT);
 }
 ?>

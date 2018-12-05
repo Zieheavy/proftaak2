@@ -11,22 +11,22 @@ if($_SESSION["newcollege"] == 1 || $_SESSION["confirm"] == 1){
 }
 
 if($verified <= 0){
-// header("Location: index.php");
+  // header("Location: index.php");
 }
 
 switch ($currentPage) {
   case 'home.php':
   $active = 1;
-    break;
+  break;
   case 'bronteksten.php':
-    $active = 2;
-    break;
+  $active = 2;
+  break;
   case 'nieuw-document.php':
-    $active = 3;
-    break;
+  $active = 3;
+  break;
   default:
   $active = -1;
-    break;
+  break;
 }
 ?>
 

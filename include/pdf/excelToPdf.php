@@ -41,4 +41,4 @@ foreach($folder as $file){ // iterate files
 }
 
 die("succes");
- ?>
+?>

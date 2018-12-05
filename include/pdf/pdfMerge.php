@@ -150,7 +150,7 @@ for ($i=0; $i < count($files); $i++) {
   $result = $stmt->get_result();
   while ($row = $result->fetch_array(MYSQLI_ASSOC))
   {
-      $sourceFiles[] = $row;
+    $sourceFiles[] = $row;
   }
   $stmt->close();
 
@@ -159,13 +159,13 @@ for ($i=0; $i < count($files); $i++) {
   //insert new attached file with selected source file id
   $sql = "INSERT INTO `attached-files`(`pages`, `versions_id`, `sourcefiles_id`) VALUES (?,?,?)";
   if (false === ($stmt = $conn->prepare($sql))) {
-      echo 'error preparing statement: ' . $conn->error;
+    echo 'error preparing statement: ' . $conn->error;
   }
   elseif (!$stmt->bind_param('sii', $page,$versionId,$sourceId)) {
-      echo 'error binding params: ' . $stmt->error;
+    echo 'error binding params: ' . $stmt->error;
   }
   elseif (!$stmt->execute()) {
-      echo 'error executing statement: ' . $stmt->error;
+    echo 'error executing statement: ' . $stmt->error;
   }
   $result = $stmt->get_result();
   $stmt->close();
@@ -181,7 +181,7 @@ function getMergedFiles($mergeName,$userId,$courseId, $conn){
   $result = $stmt->get_result();
   while ($row = $result->fetch_array(MYSQLI_ASSOC))
   {
-      $tempArray[] = $row;
+    $tempArray[] = $row;
   }
   $stmt->close();
 
@@ -197,27 +197,27 @@ function split_pdf($filename, $directory, $split_directory)
 {
   $filename = $filename . ".pdf";
 
-	$pdf = new FPDI();
+  $pdf = new FPDI();
   $pdf->AddPage();
-	$pagecount = $pdf->setSourceFile( APPLICATION_PATH . $directory . "/" . $filename); // How many pages?
+  $pagecount = $pdf->setSourceFile( APPLICATION_PATH . $directory . "/" . $filename); // How many pages?
 
-	// Split each page into a new PDF
-	for ($i = 1; $i <= $pagecount; $i++) {
-		$new_pdf = new FPDI();
+  // Split each page into a new PDF
+  for ($i = 1; $i <= $pagecount; $i++) {
+    $new_pdf = new FPDI();
     $size = $pdf->getTemplateSize($pdf->importPage($i));
     $orientation = $size['w'] > $size['h'] ? 'L' : 'P';
-		$new_pdf->AddPage($orientation);
-		$new_pdf->setSourceFile(APPLICATION_PATH . $directory . "/" . $filename);
-		$new_pdf->useTemplate($new_pdf->importPage($i));
+    $new_pdf->AddPage($orientation);
+    $new_pdf->setSourceFile(APPLICATION_PATH . $directory . "/" . $filename);
+    $new_pdf->useTemplate($new_pdf->importPage($i));
 
-		try {
-			$new_filename = str_replace('.pdf', '', $filename).'_'.$i.".pdf";
+    try {
+      $new_filename = str_replace('.pdf', '', $filename).'_'.$i.".pdf";
       // echo $new_filename;
-			$new_pdf->Output(APPLICATION_PATH . $split_directory . "/" . $new_filename, "F");
-			// echo "Page ".$i." split into ".$new_filename."<br />\n";
-		} catch (Exception $e) {
-			echo 'Caught exception: ',  $e->getMessage(), "\n";
-		}
-	}
+      $new_pdf->Output(APPLICATION_PATH . $split_directory . "/" . $new_filename, "F");
+      // echo "Page ".$i." split into ".$new_filename."<br />\n";
+    } catch (Exception $e) {
+      echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
+  }
 }
 ?>
