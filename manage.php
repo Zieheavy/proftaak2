@@ -85,7 +85,7 @@ include 'include/get/getColleges.php';
       <div class="col s12">
         <?php foreach ($users as $key => $user): ?>
           <?php if ($_SESSION["userId"] != $user["id"]) { ?>
-            <div class="card col s6">
+            <div class="card col s6" data-id="<?= $user["id"] ?>">
               <div class="card-content" style="padding-bottom: 60px">
                 <span class="card-title"><?= $user["username"] ?></span>
                 <?php if($user["colleges_id"] == $_SESSION["collegeId"] || $permAdmin == 1){ ?>
@@ -143,7 +143,7 @@ include 'include/get/getColleges.php';
               <?php if($user["verified"] == 0 && $permConfirm == 1){ ?>
                 <div class="card-action" style="height:100px">
                   <div class="input-field col s4">
-                    <select>
+                    <select class="js-college-select">
                       <?php foreach ($colleges as $key => $college): ?>
                         <option value="<?= $college["id"] ?>"><?= $college["name"] ?></option>
                       <?php endforeach; ?>
@@ -151,15 +151,15 @@ include 'include/get/getColleges.php';
                     <label>College</label>
                   </div>
                   <div class="input-field col s4">
-                    <select>
-                      <option value="" selected>none</option>
+                    <select class="js-courseContainer-<?= $user["id"] ?>">
+                      <option value="-1" selected>none</option>
                       <?php foreach ($colleges[0]["courses"] as $key => $course): ?>
                         <option value="<?= $course["id"] ?>"><?= $course["name"] ?></option>
                       <?php endforeach; ?>
                     </select>
                     <label>Opleiding</label>
                   </div>
-                  <a class="waves-effect waves-light btn col s4">VERIFIY</a>
+                  <a class="waves-effect waves-light btn col s4 js-btn-verifiy">VERIFIY</a>
                 </div>
               <?php } ?>
             </div>

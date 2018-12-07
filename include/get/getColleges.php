@@ -1,5 +1,9 @@
 <?php
 
+if(isset($_POST["ajax"])){
+  include '../database.php';
+}
+
 $colleges = [];
 $sql = "SELECT * FROM `colleges`";
 $stmt = $conn->prepare($sql);

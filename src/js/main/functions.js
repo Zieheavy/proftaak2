@@ -126,7 +126,6 @@ function mustache(origin, location, information, append){
     append = false;
   }
   var template = $(origin).html();
-  console.log(origin)
   var renderTemplate = Mustache.render(template, information);
 
   if(append == false){
