@@ -24,22 +24,17 @@ Upload.prototype.getName = function() {
   return this.file.name;
 };
 Upload.prototype.doUpload = function () {
-  var that = this;
   var formData = new FormData();
 
   // add assoc key values, this will be posts values
   formData.append("file", this.file, this.getName());
   formData.append("upload_file", true);
-  formData.append('name', that.getName());
 
   $.ajax({
     type: "POST",
     url: "include/uploadDocs.php",
     xhr: function () {
       var myXhr = $.ajaxSettings.xhr();
-      if (myXhr.upload) {
-        // myXhr.upload.addEventListener('progress', that.progressHandling, false);
-      }
       return myXhr;
     },
     success: function (data) {

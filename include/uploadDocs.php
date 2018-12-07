@@ -1,52 +1,53 @@
 <?php
 include 'functions.php';
-$id = $_POST['name'];
-$oldFileAr = [
-  "id" =>$id,
-];
+include 'database.php';
 
-$img = getImage($oldFileAr, "../");
-
-$temp = explode(".", $_FILES["file"]["name"]);
-$folder = getFolder($temp);
-$newfilename = $id;
+// If there is something wrong with the uploading of a file it just fucking dies
 if ($_FILES['file']['error'] != 0){
   echo "Something whent Wrong";
-}else{
-  move_uploaded_file($_FILES["file"]["tmp_name"], "../" . $folder . $newfilename);
-  echo $newfilename;
+  die();
 }
 
-//checks if the image already exist if so it will delete the image
-function getImage($ar, $map = ""){
-  $name = $ar["id"];
-  $folder = "";
-  if(strrpos($name, ".xlsx") != -1 || strrpos($name, ".xls")  != -1 || strrpos($name, ".xlsm")  != -1){
-    $folder = "_excel/";
-  }else if(strrpos($name, ".docx") != -1 || strrpos($name, ".doc")  != -1){
-    $folder = "_docs/";
-  }else if(strrpos($name, ".pdf") != -1){
-    $folder = "_pdf/";
-  }
+// Gets the filename and extension in array
+$temp = explode(".", $_FILES["file"]["name"]);
+$filename = $temp[0];
+$extension = $temp[1];
+unset($temp);
 
-  $img = $map . $folder . $ar['id'] ;
+$folder = getFolder($extension);
 
-  if (file_exists($img)) {
-    unlink($img);
-  }else{
-    $img = "";
+// Loop to determine which version is used
+$version = 0;
+$stopWhile = false;
+do {
+  $exists = file_exists("../" . $folder . $filename . "_" . $version . "." . $extension);
+  if (!$exists) {
+    $stopWhile = true;
   }
-  return $img;
-}
+  else {
+    $version++;
+  }
+} while (!$stopWhile);
+
+$newfilename = $filename . "_" . $version . "." . $extension;
+
+// Moves file to new destination :)
+move_uploaded_file($_FILES["file"]["tmp_name"], "../" . $folder . $newfilename);
+
+// Inserts database data
+
+
+echo $newfilename;
+
 
 //function used to get the correct folder for the selected file
-function getFolder($arr){
+function getFolder($extension){
   $folder = "";
-  if($arr[1] == "xlsx" || $arr[1] == "xls" || $arr[1]  == "xlsm"){
+  if($extension == "xlsx" || $extension == "xls" || $extension  == "xlsm"){
     $folder.= "_excel/";
-  }else if($arr[1] == "docx" || $arr[1] == "doc"){
+  }else if($extension == "docx" || $extension == "doc"){
     $folder .= "_docs/";
-  }else if($arr[1] == "pdf"){
+  }else if($extension == "pdf"){
     $folder .= "_pdf/";
   }
   return $folder;

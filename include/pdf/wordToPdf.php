@@ -12,7 +12,7 @@ $word->Visible = 1;
 $word->DisplayAlerts = 0;
 // open the word 2007-2013 document
 if($extension == "docx"){
-  $word->Documents->Open($directory . '_docs\\' . $fileName . '.docx');
+  $word->Documents->Open($directory . '_docs\\' . $fileName  . '.docx');
 
   // save it as word 2003
   $rndString = randomString(20);

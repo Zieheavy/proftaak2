@@ -13,6 +13,7 @@ $shouldBeInSession = [
   'newcollege' => 0,
   'verified' => 0,
   'collegeId' => -1,
+  'courseId' => -1
 ];
 
 // Checks if all session variables exist, if not it resets the session to the default values
