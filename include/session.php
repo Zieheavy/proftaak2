@@ -9,6 +9,7 @@ $shouldBeInSession = [
   'username' => '',
   'password' => '',
   'confirm' => 0,
+  'admin' => 0,
   'newcollege' => 0,
   'verified' => 0,
   'collegeId' => -1,

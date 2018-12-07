@@ -53,7 +53,8 @@ function login($name, $pass){
   u.confirm,
   u.newcollege,
   u.verified,
-  u.colleges_id
+  u.colleges_id,
+  u.admin
   FROM  users u
   WHERE username = ?';
 
@@ -62,10 +63,10 @@ function login($name, $pass){
 
   $stmt->execute();
   $stmt->store_result();
-  $stmt->bind_result($idResult, $hash, $confirm, $newcollege, $verified, $collegeid);
+  $stmt->bind_result($idResult, $hash, $confirm, $newcollege, $verified, $collegeid, $admin);
   if($stmt->fetch()) {
     if (password_verify($pass, $hash)) {
-      setSession_revised(1, $idResult, $name, $hash, $confirm, $newcollege, $verified, $collegeid);
+      setSession_revised(1, $idResult, $name, $hash, $confirm, $admin, $newcollege, $verified, $collegeid);
       $loggedIn = true;
       echo "succes";
       header("Location: ../home.php");
