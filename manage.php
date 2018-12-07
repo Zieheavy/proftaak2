@@ -118,23 +118,25 @@ include 'include/get/getColleges.php';
                   </thead>
                   <tbody>
                     <?php foreach ($user["colleges"] as $key => $college): ?>
-                      <tr>
-                        <form>
-                          <td><?= $college["collegeName"] ?></td>
-                          <td>
-                            <label>
-                              <input type="checkbox" <?php if(isset($college["read"]) && $college["read"] == 1) echo "checked=\"checked\""; ?> />
-                              <span></span>
-                            </label>
-                          </td>
-                          <td>
-                            <label>
-                              <input type="checkbox" <?php if(isset($college["edit"]) && $college["edit"] == 1) echo "checked=\"checked\""; ?> />
-                              <span></span>
-                            </label>
-                          </td>
-                        </form>
-                      </tr>
+                      <?php if($college["collegeId"] != 1){ ?>
+                        <tr>
+                          <form>
+                            <td><?= $college["collegeName"] ?></td>
+                            <td>
+                              <label>
+                                <input type="checkbox" <?php if(isset($college["read"]) && $college["read"] == 1) echo "checked=\"checked\""; ?> />
+                                <span></span>
+                              </label>
+                            </td>
+                            <td>
+                              <label>
+                                <input type="checkbox" <?php if(isset($college["edit"]) && $college["edit"] == 1) echo "checked=\"checked\""; ?> />
+                                <span></span>
+                              </label>
+                            </td>
+                          </form>
+                        </tr>
+                      <?php } ?>
                     <?php endforeach; ?>
                   </tbody>
                 </table>
@@ -152,7 +154,6 @@ include 'include/get/getColleges.php';
                   </div>
                   <div class="input-field col s4">
                     <select class="js-courseContainer-<?= $user["id"] ?>">
-                      <option value="-1" selected>none</option>
                       <?php foreach ($colleges[0]["courses"] as $key => $course): ?>
                         <option value="<?= $course["id"] ?>"><?= $course["name"] ?></option>
                       <?php endforeach; ?>

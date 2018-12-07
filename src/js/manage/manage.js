@@ -32,5 +32,18 @@ $(document).ready(function(){
     var courses = container.find(".js-courseContainer-"+usersId).val();
 
     console.log("col " + colleges + " cour " + courses);
+
+
+    $.post("include/update/updateUser.php",{
+      id: usersId,
+      college: colleges,
+      course: courses
+    }, function(response,status){
+      console.log(response)
+      if(response == "succes"){
+      M.toast({html: "Gebruiker is succesvol geverifierd", classes: "toast--succes"});
+        container.find(".card-action").remove();
+      }
+    });
   })
 });
