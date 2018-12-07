@@ -11,6 +11,7 @@ if($_SESSION["newcollege"] == 1 || $_SESSION["confirm"] == 1){
 }
 
 if($verified <= 0 && $_SESSION["loggedIn"] == 1){
+  resetSession(); 
   header("Location: no.php");
 }
 
