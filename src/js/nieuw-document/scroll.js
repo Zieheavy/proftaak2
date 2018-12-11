@@ -42,14 +42,11 @@ function isDragging(){
   var yBot = $('#dragScrolBot').position().top;
   var yTopElem = $('#dragScrolTop');
   var yTop = yTopElem.position().top + yTopElem.outerHeight(true);
-  console.log("y:", y, "yBot:", yBot, "ytop:", yTop);
   if (y >= yBot) {
-    console.log("to bot");
     var y2 = $(window).scrollTop();  //your current y position on the page
     $(window).scrollTop(y2+10);
   }
   else if (y <= yTop) {
-    console.log("to top");
     var y2 = $(window).scrollTop();  //your current y position on the page
     $(window).scrollTop(y2-10);
   }
@@ -74,26 +71,30 @@ $('body').on("change paste keyup", ".js-mergedName" , function(){
 
 $('body').on('click', '.js-merge', function(){
   var fileNames = [];
+  var fileExtensions = [];
+  var fileVersions = [];
   var pageNumbers = [];
-  var pageExtension = [];
   var mergeName = $(".js-mergedName").val();
   $('.file--dragged').each(function(){
     fileNames.push($(this).data("name"));
-    pageExtension.push($(this).data("ext"));
+    fileExtensions.push($(this).data("ext"));
+    fileVersions.push($(this).data("version"));
     var pageVal = $(this).find(".js-pages").val();
     if(pageVal == ""){
       pageVal = "all";
     }
     pageNumbers.push(pageVal);
   });
-  console.log(fileNames)
-  console.log(pageNumbers)
+  console.log("fileNames: ", fileNames);
+  console.log("fileVersions: ", fileVersions);
+  console.log("pageNumbers: ", pageNumbers);
 
   $.post("include/pdf/pdfMerge.php",{
     files: fileNames,
     pages: pageNumbers,
     mergeName: mergeName,
-    pageExt: pageExtension
+    pageExt: fileExtensions,
+    fileVersions: fileVersions
   },function(response,status){
     console.log(response);
     if(response == ""){

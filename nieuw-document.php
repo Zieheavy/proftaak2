@@ -58,6 +58,7 @@ if(isset($_GET["v"])){
   $itemArrays = [];
   $sql = "SELECT a.pages,
   s.name,
+  s.id as sourcefiles_id,
   s.extension,
   m.name as mergedName
   FROM  `attached-files` a,
@@ -82,6 +83,16 @@ if(isset($_GET["v"])){
   $result = $stmt->get_result();
   while ($row = $result->fetch_array(MYSQLI_ASSOC))
   {
+    $sql2 = "SELECT * FROM versions WHERE sourcefiles_id = ? ORDER BY version";
+    $stmt2 = $con->prepare($sql2);
+    $stmt2->bind_param('i', $row['sourcefiles_id']);
+    $stmt2->execute();
+    $result2 = $stmt2->get_result();
+    while ($row2 = $result2->fetch_array(MYSQLI_ASSOC))
+    {
+      $row["versions"][] = $row2;
+    }
+    $stmt2->close();
     $itemName = $row["mergedName"];
     $i = count($itemArrays);
     $itemArrays[] = $row;
@@ -90,6 +101,7 @@ if(isset($_GET["v"])){
   $stmt->close();
   // dump($itemArrays ,"");
 }
+dump($itemArrays);
 
 function getFolder($ext){
   $folder = "";

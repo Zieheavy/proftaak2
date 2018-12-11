@@ -13,6 +13,7 @@ $files = $_POST["files"];
 $pages = $_POST["pages"];
 $pageExt = $_POST["pageExt"];
 $mergeName = $_POST["mergeName"];
+$fileVersions = $_POST["fileVersions"];
 $userId = $_SESSION["userId"];
 $courseId = $_SESSION["courseId"];
 $dateShort = date("zHis");
@@ -38,7 +39,7 @@ for($i = 0; $i < count($files); $i++){
       $mergeOrder[] = "../../_pdf-split/" . $files[$i] . "_" . $numbers[$j] . ".pdf";
     }
   }else{
-    $mergeOrder[] = "../../_pdf/" . $files[$i] . ".pdf";
+    $mergeOrder[] = "../../_pdf/" . $files[$i] . "_" . $fileVersions[$i] . ".pdf";
   }
 }
 
