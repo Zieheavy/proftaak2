@@ -85,25 +85,25 @@ include 'include/get/getColleges.php';
       <div class="col s12">
         <?php foreach ($users as $key => $user): ?>
           <?php if ($_SESSION["userId"] != $user["id"]) { ?>
-            <div class="card col s6" data-id="<?= $user["id"] ?>">
+            <div class="card col s6" data-id="<?= $user["id"] ?>" data-name="<?= $user["username"] ?>">
               <div class="card-content" style="padding-bottom: 60px">
                 <span class="card-title"><?= $user["username"] ?></span>
                 <?php if($user["colleges_id"] == $_SESSION["collegeId"] || $permAdmin == 1){ ?>
                   <?php if(strpos($permStat, '1') !== false){ ?>
                     <label class="col s<?= $permCollums ?>">
-                      <input type="checkbox" <?php if($user["newcollege"] == 1) echo "checked=\"checked\""; ?>/>
+                      <input class="js-new" type="checkbox" <?php if($user["newcollege"] == 1) echo "checked=\"checked\""; ?>/>
                       <span>new college</span>
                     </label>
                   <?php } ?>
                   <?php if(strpos($permStat, '2') !== false){ ?>
                     <label class="col s<?= $permCollums ?>">
-                      <input type="checkbox" <?php if($user["confirm"] == 1) echo "checked=\"checked\""; ?>/>
+                      <input class="js-confirm" type="checkbox" <?php if($user["confirm"] == 1) echo "checked=\"checked\""; ?>/>
                       <span>verify user</span>
                     </label>
                   <?php } ?>
                   <?php if(strpos($permStat, '3') !== false){ ?>
                     <label class="col s<?= $permCollums ?>">
-                      <input type="checkbox" <?php if($user["admin"] == 1) echo "checked=\"checked\""; ?>/>
+                      <input class="js-admin" type="checkbox" <?php if($user["admin"] == 1) echo "checked=\"checked\""; ?>/>
                       <span>admin</span>
                     </label>
                   <?php } ?>
@@ -116,31 +116,32 @@ include 'include/get/getColleges.php';
                         <th>Edit</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody class="js-perm-container">
                     <?php foreach ($user["colleges"] as $key => $college): ?>
-                      <?php if($college["collegeId"] != 1){ ?>
-                        <tr>
+                      <?php if($college["collegeId"] != 1){
+                        if($college["collegeId"] == $_SESSION["collegeId"] || $permAdmin == 1){?>
+                        <tr class="js-perm-rows" data-collegeid="<?=$college["collegeId"]?>">
                           <form>
                             <td><?= $college["collegeName"] ?></td>
                             <td>
                               <label>
-                                <input type="checkbox" <?php if(isset($college["read"]) && $college["read"] == 1) echo "checked=\"checked\""; ?> />
+                                <input class="read" type="checkbox" <?php if(isset($college["read"]) && $college["read"] == 1) echo "checked=\"checked\""; ?> />
                                 <span></span>
                               </label>
                             </td>
                             <td>
                               <label>
-                                <input type="checkbox" <?php if(isset($college["edit"]) && $college["edit"] == 1) echo "checked=\"checked\""; ?> />
+                                <input class="edit" type="checkbox" <?php if(isset($college["edit"]) && $college["edit"] == 1) echo "checked=\"checked\""; ?> />
                                 <span></span>
                               </label>
                             </td>
                           </form>
                         </tr>
-                      <?php } ?>
+                      <?php }} ?>
                     <?php endforeach; ?>
                   </tbody>
                 </table>
-                <a class="waves-effect waves-light btn col s12">SAVE</a>
+                <a class="waves-effect waves-light btn col s12 js-perm-update">SAVE</a>
               </div>
               <?php if($user["verified"] == 0 && $permConfirm == 1){ ?>
                 <div class="card-action" style="height:100px">
