@@ -4,26 +4,38 @@ include 'include/session.php';
 // This query gets every sourceFile
 $files = [];
 $sql = "SELECT s.id as sourcefiles_id,
-s.name as sourcefile_name,
-s.extension,
-u.id as users_id,
-u.username as users_name,
-c.id as colleges_id,
-c.name as colleges_name,
-co.id as courses_id,
-co.name as courses_name
-FROM sourcefiles s
-INNER JOIN users u ON s.users_id = u.id
-INNER JOIN colleges c ON s.colleges_id = c.id
-INNER JOIN courses co ON s.courses_id = co.id";
+        s.name as sourcefile_name,
+        s.extension,
+        u.id as users_id,
+        u.username as users_name,
+        c.id as colleges_id,
+        c.name as colleges_name,
+        co.id as courses_id,
+        co.name as courses_name
+        FROM sourcefiles s
+        INNER JOIN users u ON s.users_id = u.id
+        INNER JOIN colleges c ON s.colleges_id = c.id
+        INNER JOIN courses co ON s.courses_id = co.id";
 $stmt = $con->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_array(MYSQLI_ASSOC))
 {
+  $sql2 = "SELECT * FROM versions WHERE sourcefiles_id = ? ORDER BY version";
+  $stmt2 = $con->prepare($sql2);
+  $stmt2->bind_param('i', $row['sourcefiles_id']);
+  $stmt2->execute();
+  $result2 = $stmt2->get_result();
+  while ($row2 = $result2->fetch_array(MYSQLI_ASSOC))
+  {
+    $row["versions"][] = $row2;
+  }
+  $stmt2->close();
   $files[] = $row;
 }
 $stmt->close();
+dump($files, "");
+// die();
 
 // REstructures the array into a multi-dimensional array, where the keys are the colleges and courses
 $newfiles = [];
@@ -131,7 +143,7 @@ function getFolder($ext){
                           <div class="collapsible-body">
                             <ul class="js-sortable-copy" aria-dropeffect="move">
                               <?php foreach ($course as $key => $file): ?>
-                                <li data-name="<?=$file['sourcefile_name']?>" data-ext="<?=$file['extension']?>" class="p1 mb1 item file active" draggable="true" role="option" aria-grabbed="false" ondrag="isDragging()">
+                                <li data-name="<?=$file['sourcefile_name']?>" data-ext="<?=$file['extension']?>" data-version="<?=$file['versions'][count($file['versions']) - 1]['version']?>" class="p1 mb1 item file active" draggable="true" role="option" aria-grabbed="false" ondrag="isDragging()">
                                   <div class="card card--file">
                                     <div class="card-content card-content-nopad">
                                       <span class="card-title file__title">

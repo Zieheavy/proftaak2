@@ -56,8 +56,10 @@ function isDragging(){
 }
 
 $('body').on('click', '.file__title', function(){
-  var file = $(this).closest('.file').data('name');
-  $('.js-frm').attr('src', '_pdf/' + file + ".pdf");
+  var elem = $(this).closest('.file');
+  var file = $(elem).data('name');
+  var version = $(elem).data('version');
+  $('.js-frm').attr('src', '_pdf/' + file + "_" + version + ".pdf");
 });
 
 $('body').on('click', '.js-delete-file', function(){

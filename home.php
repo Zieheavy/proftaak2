@@ -5,28 +5,28 @@ $id = $_SESSION['userId'];
 
 $itemArrays = [];
 $sql = "SELECT  m.id as mergedId,
-m.name,
-m.users_id as creatorId,
-m.courses_id,
-p.read,
-p.edit,
-u.username,
-c.name as collageName,
-z.name as courseName,
-z.colleges_id
-FROM  mergedfiles m,
-permissions p,
-users u,
-colleges c,
-courses z
-WHERE p.users_id = ?
-AND p.read = 1
-AND u.id = m.users_id
-AND z.id = m.courses_id
-AND c.id = z.colleges_id
-ORDER BY p.colleges_id ASC,
-m.courses_id ASC,
-m.name ASC";
+        m.name,
+        m.users_id as creatorId,
+        m.courses_id,
+        p.read,
+        p.edit,
+        u.username,
+        c.name as collageName,
+        z.name as courseName,
+        z.colleges_id
+        FROM  mergedfiles m,
+              permissions p,
+              users u,
+              colleges c,
+              courses z
+        WHERE p.users_id = ?
+              AND p.read = 1
+              AND u.id = m.users_id
+              AND z.id = m.courses_id
+              AND c.id = z.colleges_id
+        ORDER BY p.colleges_id ASC,
+              m.courses_id ASC,
+              m.name ASC";
 
 if (false === ($stmt = $conn->prepare($sql))) {
   echo 'error preparing statement: ' . $conn->error;
