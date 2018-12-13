@@ -24,6 +24,7 @@ $sql = "SELECT  m.id as mergedId,
               AND u.id = m.users_id
               AND z.id = m.courses_id
               AND c.id = z.colleges_id
+              AND p.colleges_id = c.id
         ORDER BY p.colleges_id ASC,
               m.courses_id ASC,
               m.name ASC";
@@ -43,6 +44,7 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
   $itemArrays[] = $row;
 }
 $stmt->close();
+dump($itemArrays);
 
 for($i = 0; $i < count($itemArrays); $i++){
   $tempVersionArray = [];

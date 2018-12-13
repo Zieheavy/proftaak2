@@ -14,6 +14,7 @@ $pages = $_POST["pages"];
 $pageExt = $_POST["pageExt"];
 $mergeName = $_POST["mergeName"];
 $fileVersions = $_POST["fileVersions"];
+$fileVersionIds = $_POST["fileVersionIds"];
 $userId = $_SESSION["userId"];
 $courseId = $_SESSION["courseId"];
 $dateShort = date("zHis");
@@ -129,7 +130,7 @@ if(getMergedFiles($mergeName,$userId,$courseId, $conn) == -1){
   $mergeId = getMergedFiles($mergeName,$userId,$courseId, $conn);
 }
 
-$sql = "INSERT INTO versions (version, filedate, mergedfiles_id)
+$sql = "INSERT INTO versions (`version`, `filedate`, `mergedfiles_id`)
 VALUES (?,?,?)";
 $stmt = $con->prepare($sql);
 $stmt->bind_param("isi", $mVersion, $dateLong, $mergeId);
@@ -155,10 +156,10 @@ for ($i=0; $i < count($files); $i++) {
   }
   $stmt->close();
 
-  $sourceId = $sourceFiles[0]["id"];
+  $sourceId = $fileVersionIds[$i];
 
   //insert new attached file with selected source file id
-  $sql = "INSERT INTO `attached-files`(`pages`, `versions_id`, `sourcefiles_id`) VALUES (?,?,?)";
+  $sql = "INSERT INTO `attached-files`(`pages`, `versions_id`, `sourcev_id`) VALUES (?,?,?)";
   if (false === ($stmt = $conn->prepare($sql))) {
     echo 'error preparing statement: ' . $conn->error;
   }

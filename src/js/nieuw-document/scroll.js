@@ -73,12 +73,14 @@ $('body').on('click', '.js-merge', function(){
   var fileNames = [];
   var fileExtensions = [];
   var fileVersions = [];
+  var fileVersionIds = [];
   var pageNumbers = [];
   var mergeName = $(".js-mergedName").val();
   $('.file--dragged').each(function(){
     fileNames.push($(this).data("name"));
     fileExtensions.push($(this).data("ext"));
     fileVersions.push($(this).data("version"));
+    fileVersionIds.push($(this).data("versionid"));
     var pageVal = $(this).find(".js-pages").val();
     if(pageVal == ""){
       pageVal = "all";
@@ -87,14 +89,17 @@ $('body').on('click', '.js-merge', function(){
   });
   console.log("fileNames: ", fileNames);
   console.log("fileVersions: ", fileVersions);
+  console.log("fileVersionIds: ", fileVersionIds);
   console.log("pageNumbers: ", pageNumbers);
+
 
   $.post("include/pdf/pdfMerge.php",{
     files: fileNames,
     pages: pageNumbers,
     mergeName: mergeName,
     pageExt: fileExtensions,
-    fileVersions: fileVersions
+    fileVersions: fileVersions,
+    fileVersionIds: fileVersionIds
   },function(response,status){
     console.log(response);
     if(response == ""){

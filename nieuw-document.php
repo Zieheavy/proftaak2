@@ -56,20 +56,29 @@ if(isset($_GET["v"])){
   $mergeId = $_GET["v"];
 
   $itemArrays = [];
-  $sql = "SELECT a.pages,
-  s.name,
-  s.id as sourcefiles_id,
-  s.extension,
-  m.name as mergedName
-  FROM  `attached-files` a,
-  sourcefiles s,
-  versions v,
-  mergedfiles m
-  WHERE a.versions_id = ?
-  AND a.sourcefiles_id = s.id
-  AND v.id = a.versions_id
-  AND v.mergedfiles_id = m.id";
-
+  // $sql = "SELECT a.pages,
+  // s.name,
+  // s.id as sourcefiles_id,
+  // s.extension,
+  // m.name as mergedName
+  // FROM  `attached-files` a,
+  // sourcefiles s,
+  // versions v,
+  // mergedfiles m
+  // WHERE a.versions_id = ?
+  // AND v.id = a.versions_id
+  // AND v.mergedfiles_id = m.id";
+  $sql = "SELECT  a.pages,
+                  v.id as merged_versionid, v.version as merged_version,
+                  m.id as mergedfile_id, m.name as mergedfile_name,
+                  vs.version as sourcefile_version, vs.id as sourcefile_versionid,
+                  s.name as sourcefile_name
+          FROM `attached-files` a
+          INNER JOIN versions v ON a.versions_id = v.id
+          INNER JOIN mergedfiles m ON m.id = v.mergedfiles_id
+          INNER JOIN versions vs ON a.sourcev_id = vs.id
+          INNER JOIN sourcefiles s ON vs.sourcefiles_id = s.id
+          WHERE a.versions_id = ?";
   if (false === ($stmt = $conn->prepare($sql))) {
     echo 'error preparing statement: ' . $conn->error;
   }
@@ -99,9 +108,8 @@ if(isset($_GET["v"])){
     $itemArrays[$i]["folder"] = getFolder($row["extension"]);
   }
   $stmt->close();
-  // dump($itemArrays ,"");
+  dump($itemArrays);
 }
-dump($itemArrays);
 
 function getFolder($ext){
   $folder = "";
@@ -121,8 +129,6 @@ function getFolder($ext){
   }
   return $folder;
 }
-
-// dump($files, "");
 ?>
 <html>
 <head>
@@ -155,7 +161,11 @@ function getFolder($ext){
                           <div class="collapsible-body">
                             <ul class="js-sortable-copy" aria-dropeffect="move">
                               <?php foreach ($course as $key => $file): ?>
-                                <li data-name="<?=$file['sourcefile_name']?>" data-ext="<?=$file['extension']?>" data-version="<?=$file['versions'][count($file['versions']) - 1]['version']?>" class="p1 mb1 item file active" draggable="true" role="option" aria-grabbed="false" ondrag="isDragging()">
+                                <li data-name="<?=$file['sourcefile_name']?>"
+                                  data-ext="<?=$file['extension']?>"
+                                  data-version="<?=$file['versions'][count($file['versions']) - 1]['version']?>"
+                                  data-versionid="<?=$file['versions'][count($file['versions']) - 1]['id']?>"
+                                  class="p1 mb1 item file active" draggable="true" role="option" aria-grabbed="false" ondrag="isDragging()">
                                   <div class="card card--file">
                                     <div class="card-content card-content-nopad">
                                       <span class="card-title file__title">
@@ -219,7 +229,7 @@ function getFolder($ext){
                   </a>
                   <ul id='dropdown' class='dropdown-content'>//random id
                     <li>
-                      <a href="_pdf/<?=$file['name']?>.pdf" download>pdf</a>
+                      <a href="_pdf/<?=$file['sourcefile_name']?>.pdf" download>pdf</a>
                     </li>
                     <li>
                       <a href="<?=$file['folder']?>/<?=$file['name']?>.<?=$file['extension']?>" download><?=$file['extension']?></a>
