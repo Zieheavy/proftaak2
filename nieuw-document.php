@@ -158,7 +158,6 @@ function getFolder($ext){
                                 <li data-name="<?=$file['sourcefile_name']?>"
                                   data-ext="<?=$file['extension']?>"
                                   data-version="<?=$file['versions'][count($file['versions']) - 1]['version']?>"
-                                  data-versionid="<?=$file['versions'][count($file['versions']) - 1]['id']?>"
                                   class="p1 mb1 item file active" draggable="true" role="option" aria-grabbed="false" ondrag="isDragging()">
                                   <div class="card card--file">
                                     <div class="card-content card-content-nopad">

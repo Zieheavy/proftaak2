@@ -14,7 +14,6 @@ $pages = $_POST["pages"];
 $pageExt = $_POST["pageExt"];
 $mergeName = $_POST["mergeName"];
 $fileVersions = $_POST["fileVersions"];
-$fileVersionIds = $_POST["fileVersionIds"];
 $userId = $_SESSION["userId"];
 $courseId = $_SESSION["courseId"];
 $dateShort = date("zHis");
