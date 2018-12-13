@@ -1,3 +1,6 @@
+$('.drp').dropdown();
+$('.version').formSelect();
+M.updateTextFields();
 sortable('.js-sortable-copy', {
   forcePlaceholderSize: true,
   copy: true,
@@ -18,14 +21,15 @@ $(sortable('.js-sortable-copy')).each(function(index, el) {
     $('.scroll').removeClass('scroll--show');
     var i = e.detail.item;
     $(i).addClass('file--dragged');
-    M.updateTextFields();
     var dropdown = $(i).find('.dropdown-trigger');
     $(dropdown).addClass('drp');
     var rnd = randomString2(10)
     $(dropdown).attr('data-target', "dropdown" + rnd);
     $(dropdown).data('target', "dropdown" + rnd);
     $(i).find('#dropdown').attr('id', "dropdown" +  rnd);
+    M.updateTextFields();
     $('.drp').dropdown();
+    $('.version').formSelect();
   });
 });
 $(sortable('.js-sortable-copy-target')).each(function(index, el) {

@@ -11,7 +11,7 @@ if($_SESSION["newcollege"] == 1 || $_SESSION["confirm"] == 1){
 }
 
 if($verified <= 0 && $_SESSION["loggedIn"] == 1){
-  resetSession(); 
+  resetSession();
   header("Location: no.php");
 }
 
@@ -27,6 +27,9 @@ switch ($currentPage) {
     break;
   case 'manage.php':
     $active = 4;
+    break;
+  case 'no.php':
+    $active = 99;
     break;
   default:
     $active = -1;

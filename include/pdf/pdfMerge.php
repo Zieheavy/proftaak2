@@ -142,7 +142,7 @@ for ($i=0; $i < count($files); $i++) {
   $page = $pages[$i];
   $sourceId = -1;
 
-  $sourceFiles = [];
+  $sourceFile = [];
   //select the correct source file;
   $sql = "SELECT * FROM `sourcefiles` WHERE name = ? AND extension = ?";
   $stmt = $conn->prepare($sql);
@@ -151,14 +151,24 @@ for ($i=0; $i < count($files); $i++) {
   $result = $stmt->get_result();
   while ($row = $result->fetch_array(MYSQLI_ASSOC))
   {
-    $sourceFiles[] = $row;
+    $sql2 = "SELECT * FROM `versions` WHERE sourcefiles_id = ? ORDER BY version DESC";
+    $stmt2 = $conn->prepare($sql2);
+    $stmt2->bind_param('i', $row["id"]);
+    $stmt2->execute();
+    $result2 = $stmt2->get_result();
+    while ($row2 = $result2->fetch_array(MYSQLI_ASSOC))
+    {
+      $sourceFile[] = $row2;
+      if($row2["version"] == $fileVersions[$i]){
+        $sourceId = $row2["id"];
+      }
+    }
+    $stmt2->close();
   }
   $stmt->close();
 
-  $sourceId = $sourceFiles[0]["id"];
-
-  //insert new attached file with selected source file id
-  $sql = "INSERT INTO `attached-files`(`pages`, `versions_id`, `sourcefiles_id`) VALUES (?,?,?)";
+  // insert new attached file with selected source file id
+  $sql = "INSERT INTO `attached-files`(`pages`, `versions_id`, `sourcev_id`) VALUES (?,?,?)";
   if (false === ($stmt = $conn->prepare($sql))) {
     echo 'error preparing statement: ' . $conn->error;
   }

@@ -54,54 +54,56 @@ $files = $newfiles;
 
 if(isset($_GET["v"])){
   $mergeId = $_GET["v"];
-
   $itemArrays = [];
-  $sql = "SELECT a.pages,
-  s.name,
-  s.id as sourcefiles_id,
-  s.extension,
-  m.name as mergedName
-  FROM  `attached-files` a,
-  sourcefiles s,
-  versions v,
-  mergedfiles m
-  WHERE a.versions_id = ?
-  AND a.sourcefiles_id = s.id
-  AND v.id = a.versions_id
-  AND v.mergedfiles_id = m.id";
-
-  if (false === ($stmt = $conn->prepare($sql))) {
-    echo 'error preparing statement: ' . $conn->error;
-  }
-  elseif (!$stmt->bind_param("i", $mergeId)) {
-    echo 'error binding params: ' . $stmt->error;
-  }
-  elseif (!$stmt->execute()) {
-    echo 'error executing statement: ' . $stmt->error;
-  }
-  $itemName = -1;
+  $sql = "SELECT
+            v.version,
+            v.filedate,
+            v.id as versionId,
+            m.name
+          FROM
+            versions v,
+            mergedfiles m
+          WHERE v.id = ?
+            AND v.mergedfiles_id = m.id";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("i", $mergeId);
+  $stmt->execute();
   $result = $stmt->get_result();
   while ($row = $result->fetch_array(MYSQLI_ASSOC))
   {
-    $sql2 = "SELECT * FROM versions WHERE sourcefiles_id = ? ORDER BY version";
-    $stmt2 = $con->prepare($sql2);
-    $stmt2->bind_param('i', $row['sourcefiles_id']);
+    $temp = [];
+    $sql2 = "SELECT
+              a.pages,
+              v.version,
+              s.name,
+              s.extension,
+              s.id as sourceId
+            FROM
+              `attached-files` a,
+              `versions` v,
+              `sourcefiles` s
+            WHERE a.versions_id = ?
+              AND a.sourcev_id = v.id
+              AND v.sourcefiles_id = s.id";
+    if (false === ($stmt2 = $conn->prepare($sql2))) {
+      echo 'error preparing statement: ' . $conn->error;
+    }
+    $stmt2->bind_param("i", $row["versionId"]);
     $stmt2->execute();
     $result2 = $stmt2->get_result();
     while ($row2 = $result2->fetch_array(MYSQLI_ASSOC))
     {
-      $row["versions"][] = $row2;
+      $row2["folder"] = getFolder($row2["extension"]);
+      $temp[] = $row2;
     }
     $stmt2->close();
-    $itemName = $row["mergedName"];
-    $i = count($itemArrays);
-    $itemArrays[] = $row;
-    $itemArrays[$i]["folder"] = getFolder($row["extension"]);
+
+    $row["sources"] = $temp;
+    $itemArrays = $row;
   }
   $stmt->close();
-  // dump($itemArrays ,"");
 }
-dump($itemArrays);
+dump($itemArrays ,"");
 
 function getFolder($ext){
   $folder = "";
@@ -163,8 +165,8 @@ function getFolder($ext){
                                         <span class="file__name"><?=$file['sourcefile_name']?></span>
                                       </span>
                                       <div class="input-field inline file__pagenrs">
-                                        <input id="pagenrs" type="text" class="validate js-pages">
-                                        <label for="pagenrs">Pagina's</label>
+                                        <input id="pagenrs<?=$file['sourcefiles_id']?>" type="text" class="validate js-pages">
+                                        <label for="pagenrs<?=$file['sourcefiles_id']?>">Pagina's</label>
                                       </div>
                                     </div>
                                     <div class="card-action file__links">
@@ -173,10 +175,10 @@ function getFolder($ext){
                                       </a>
                                       <ul id='dropdown' class='dropdown-content'>
                                         <li>
-                                          <a href="_pdf/<?=$file['sourcefile_name']?>.pdf" download>pdf</a>
+                                          <a href="_pdf/<?=$file['sourcefile_name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.pdf" download>pdf</a>
                                         </li>
                                         <li>
-                                          <a href="<?=$file['folder']?>/<?=$file['sourcefile_name']?>.<?=$file['extension']?>" download><?=$file['extension']?></a>
+                                          <a href="<?=$file['folder']?>/<?=$file['sourcefile_name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.<?=$file['extension']?>" download><?=$file['extension']?></a>
                                         </li>
                                       </ul>
                                       <a class="btn js-delete-file" href="#">
@@ -200,29 +202,28 @@ function getFolder($ext){
       </div>
       <div class="col s4">
         <ul class="js-sortable-copy-target copy-target col-min-500" style="min-height: 200px"aria-dropeffect="move">
-          <?php if(isset($itemArrays)){ foreach ($itemArrays as $key => $file): ?>
-            <li data-name="<?=$file['name']?>" data-ext="<?=$file['extension']?>" class="p1 mb1 item file active file--dragged" draggable="true" role="option" aria-grabbed="false">
-              <div class="card">
+          <?php if(isset($itemArrays)){ foreach ($itemArrays["sources"] as $key => $file): ?>
+            <li data-name="<?=$file['name']?>" data-ext="<?=$file['extension']?>" data-version="<?=$file['version']?>" class="p1 mb1 item file active file--dragged" draggable="true" role="option" aria-grabbed="false" ondrag="isDragging()" aria-copied="true">
+              <div class="card card--file">
                 <div class="card-content card-content-nopad">
                   <span class="card-title file__title">
                     <i class="material-icons">insert_drive_file</i>
                     <span class="file__name"><?=$file['name']?></span>
                   </span>
                   <div class="input-field inline file__pagenrs">
-                    <input id="pagenrs" type="text" class="validate js-pages" value="<?=$file["pages"]?>">
-                    <label for="pagenrs">Pagina's</label>
+                    <input id="pagenrs<?=$file['sourceId']?>" type="text" class="validate js-pages" value=<?=$file['pages']?>>
+                    <label for="pagenrs<?=$file['sourceId']?>">Pagina's</label>
                   </div>
                 </div>
                 <div class="card-action file__links">
-                  <a class='dropdown-trigger btn' href='#' data-target='dropdown<?=$file['sourcefiles_id']?>'>
+                  <a class="dropdown-trigger btn drp" href="#" data-target="dropdown<?=$file['sourceId']?>">
                     <i class="fa fa-download" aria-hidden="true"></i>
-                  </a>
-                  <ul id='dropdown' class='dropdown-content'>//random id
-                    <li>
-                      <a href="_pdf/<?=$file['name']?>.pdf" download>pdf</a>
+                  </a><ul id="dropdown<?=$file['sourceId']?>" class="dropdown-content" tabindex="0" style="">
+                    <li tabindex="0">
+                      <a href="_pdf/<?=$file["name"]?>_<?=$file["version"]?>.pdf" download="">pdf</a>
                     </li>
-                    <li>
-                      <a href="<?=$file['folder']?>/<?=$file['name']?>.<?=$file['extension']?>" download><?=$file['extension']?></a>
+                    <li tabindex="0">
+                      <a href="<?=$file["folder"]?>/<?=$file["name"]?>_<?=$file["version"]?>.<?=$file["extension"]?>" download=""><?=$file["extension"]?></a>
                     </li>
                   </ul>
                   <a class="btn js-delete-file" href="#">
@@ -237,10 +238,10 @@ function getFolder($ext){
       <div class="col s4">
         <iframe class="js-frm preview" src="" width="" height=""></iframe>
         <div class="input-field col s6">
-          <?php if(!isset($itemName)){?>
+          <?php if(!isset($itemArrays["name"])){?>
             <input placeholder="Merged name" id="merged_name" type="text" class="validate js-mergedName">
           <?php }else{ ?>
-            <input placeholder="Merged name" id="merged_name" type="text" class="validate js-mergedName" value="<?=$itemName?>">
+            <input placeholder="Merged name" id="merged_name" type="text" class="validate js-mergedName" value="<?=$itemArrays["name"]?>">
           <?php } ?>
           <label for="merged_name">First Name</label>
         </div>
