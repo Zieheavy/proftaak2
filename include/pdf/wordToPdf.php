@@ -16,7 +16,7 @@ if($extension == "docx"){
 
   // save it as word 2003
   $rndString = randomString(20);
-  $word->ActiveDocument->SaveAs($rndString . '.doc');
+  $word->ActiveDocument->SaveAs($directory . '_doc\\' .$rndString . '.doc');
 }else{
   $word->Documents->Open($directory . '_docs\\' . $fileName . '.doc');
 }
@@ -27,6 +27,14 @@ $word->ActiveDocument->ExportAsFixedFormat($directory . '_pdf\\' . $fileName . '
 $word->Quit(false);
 // clean up
 unset($word);
+
+//emptys all the temporary doc files
+$folder = array_diff(scandir("../../_doc"), array('..', '.'));
+foreach($folder as $file){ // iterate files
+  if(is_file("../../_doc/" . $file)){
+    unlink("../../_doc/" . $file); // delete file
+  }
+}
 
 echo "succes";
 function randomString($length = 10) {

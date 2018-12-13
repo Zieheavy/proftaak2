@@ -2,7 +2,8 @@ $(document).ready(function(){
   var message = "";
   var type = "";
 
-  var param = getUrlParameter("s")
+  var param = getUrlParameter("s");
+  //gets the correct error message returned from include/login.php
   if(param >= 0){
     switch (param) {
       case "1":

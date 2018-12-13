@@ -14,7 +14,10 @@ $sql = "SELECT
           colleges c,
           courses co
         WHERE s.colleges_id = c.id
-          AND s.courses_id = co.id";
+          AND s.courses_id = co.id
+        ORDER BY  c.id ASC,
+                  co.id ASC,
+                  s.name ASC";
 if (false === ($stmt = $conn->prepare($sql))) {
   echo 'error preparing statement: ' . $conn->error;
 }
@@ -54,9 +57,21 @@ dump($sourceFiles,"");
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <?php foreach ($sourceFiles as $key => $file): ?>
-              <div class="js-source-files" data-course="<?=$file["courseName"]?>" data-name="<?=$file["name"]?>" data-id="<?=$file["id"]?>"><?=$file["name"]?></div>
-            <?php endforeach; ?>
+            <div class="row">
+              <?php foreach ($sourceFiles as $key => $file): ?>
+                <div class="col s12 m6 js-source-files" data-course="<?=$file["courseName"]?>" data-name="<?=$file["name"]?>" data-id="<?=$file["id"]?>">
+                  <div class="card">
+                    <div class="card-content">
+                      <span class="card-title"><?=$file["name"]?></span>
+                      <p></p>
+                    </div>
+                    <div class="card-action">
+                      <a href="#">This is a link</a>
+                    </div>
+                  </div>
+                </div>
+              <?php endforeach; ?>
+            </div>
           </div>
         </div>
       </div>
