@@ -44,6 +44,9 @@ dump($sourceFiles,"");
   <?php include 'partials/modals.html'; ?>
   <div class="container">
     <div class="row">
+      <a class="col s12 waves-effect waves-light btn modal-trigger" href="#uploadModal">button</a>
+    </div>
+    <div class="row">
       <div class="col s4">
         <?php include 'partials/courseList.php'; ?>
       </div>
@@ -59,14 +62,14 @@ dump($sourceFiles,"");
           <div class="input-field col s12">
             <div class="row">
               <?php foreach ($sourceFiles as $key => $file): ?>
-                <div class="col s12 m6 js-source-files" data-course="<?=$file["courseName"]?>" data-name="<?=$file["name"]?>" data-id="<?=$file["id"]?>">
+                <div class="col s12 m6 js-source-files" data-course="<?=$file["courseName"]?>" data-name="<?=$file["name"]?>" data-id="<?=$file["id"]?>" data-ext="<?=$file["extension"]?>">
                   <div class="card">
                     <div class="card-content">
                       <span class="card-title"><?=$file["name"]?></span>
                       <p></p>
                     </div>
                     <div class="card-action">
-                      <a class="modal-trigger" href="#modal1">edit</a>
+                      <a class="js-open-edit">edit</a>
                     </div>
                   </div>
                 </div>

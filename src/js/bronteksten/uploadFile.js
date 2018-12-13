@@ -1,11 +1,45 @@
-//if you press ok in the upload window upload the files to php
-$("body").on("click", ".js-ok", function(){
-  var file = $('#uploadFiles')[0].files;
+var fileToEdit = "";
+var existingFiles = [];
+$.post("include/get/getExistingFiles.php",{}, function(response,status){
+  existingFiles = JSON.parse(response);
+});
+//multiple file upload
+$("body").on("click", ".js-upload-multiple", function(){
+  var file = $('#uploadMultiple')[0].files;
   for(var i = 0; i < file.length; i++){
-    var upload = new Upload(file[i]);
-    upload.doUpload();
+    var filename = file[i].name.split(".")[0];
+    if(existingFiles.indexOf(filename) != -1){
+      console.log("file exists")
+      M.toast({html: filename + " bestaat al,<br> om het bestand aantepassen gebruik edit", classes: "toast--error"});
+    }else{
+       $('#uploadModal').modal('close');
+      var upload = new Upload(file[i]);
+      upload.doUpload();
+    }
   }
+});
+//single file upload
+$("body").on("click", ".js-upload", function(){
+  var file = $('#uploadSingle')[0].files;
+  console.log();
+  console.log(fileToEdit);
+  if(file[0].name != fileToEdit){
+
+  }else{
+    $('#editModal').modal('close');
+    for(var i = 0; i < file.length; i++){
+      var upload = new Upload(file[i]);
+      upload.doUpload();
+    }
+  }
+});
+
+$("body").on("click", ".js-open-edit", function(){
+   $('#editModal').modal('open');
+   var container = $(this).closest(".col")
+   fileToEdit = container.data("name") + "." + container.data("ext");
 })
+
 // //////////////////////////////
 // // default upload functions //
 // //////////////////////////////

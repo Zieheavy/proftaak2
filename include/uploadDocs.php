@@ -38,13 +38,30 @@ $newfilename = $filename . "_" . $version;
 // Moves file to new destination :)
 move_uploaded_file($_FILES["file"]["tmp_name"], "../" . $folder . $newfilename . "." . $extension);
 
-// Inserts into sourcefiles and versioncontrol
-$sql = "INSERT INTO `sourcefiles`(`name`, `extension`, `users_id`, `colleges_id`, `courses_id`) VALUES (?, ?, ?, ?, ?)";
-$stmt = $con->prepare($sql);
-$stmt->bind_param("ssiii", $filename, $extension, $userId, $collegeId, $courseId);
+$files = [];
+$sql = "SELECT * FROM `sourcefiles` WHERE `name` = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $filename);
 $stmt->execute();
-$insert_id = $stmt->insert_id;
+$result = $stmt->get_result();
+while ($row = $result->fetch_array(MYSQLI_ASSOC))
+{
+  $files[] = $row;
+}
 $stmt->close();
+
+if(count($files) >= 1){
+  $insert_id = $files[0]["id"];
+}else{
+  // Inserts into sourcefiles and versioncontrol
+  $sql = "INSERT INTO `sourcefiles`(`name`, `extension`, `users_id`, `colleges_id`, `courses_id`) VALUES (?, ?, ?, ?, ?)";
+  $stmt = $con->prepare($sql);
+  $stmt->bind_param("ssiii", $filename, $extension, $userId, $collegeId, $courseId);
+  $stmt->execute();
+  $insert_id = $stmt->insert_id;
+  $stmt->close();
+}
+
 
 $sql = "INSERT INTO `versions`(`version`, `filedate`, `sourcefiles_id`) VALUES (?, ?, ?)";
 $stmt = $con->prepare($sql);
