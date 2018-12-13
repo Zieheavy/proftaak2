@@ -7,7 +7,7 @@ $extension = $_POST['extension'];
 
 $word = new COM("Word.Application") or die ("Could not initialise Object.");
 // set it to 1 to see the MS Word window (the actual opening of the document)
-$word->Visible = 1;
+$word->Visible = 0;
 // recommend to set to 0, disables alerts like "Do you want MS Word to be the default .. etc"
 $word->DisplayAlerts = 0;
 // open the word 2007-2013 document
@@ -16,7 +16,7 @@ if($extension == "docx"){
 
   // save it as word 2003
   $rndString = randomString(20);
-  $word->ActiveDocument->SaveAs($rndString . '.doc');
+  $word->ActiveDocument->SaveAs($directory . '_doc\\' .$rndString . '.doc');
 }else{
   $word->Documents->Open($directory . '_docs\\' . $fileName . '.doc');
 }
@@ -27,6 +27,14 @@ $word->ActiveDocument->ExportAsFixedFormat($directory . '_pdf\\' . $fileName . '
 $word->Quit(false);
 // clean up
 unset($word);
+
+//emptys all the temporary doc files
+$folder = array_diff(scandir("../../_doc"), array('..', '.'));
+foreach($folder as $file){ // iterate files
+  if(is_file("../../_doc/" . $file)){
+    unlink("../../_doc/" . $file); // delete file
+  }
+}
 
 echo "succes";
 function randomString($length = 10) {

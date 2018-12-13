@@ -48,9 +48,10 @@ Upload.prototype.doUpload = function () {
             fileName: extension[0],
             extension: extension[1]
           }, function(response,status){
-            console.log(response)
             if(response == "succes"){
-              console.log("excel success");
+              M.toast({html: "Het excel bestand " + extension[0] + " is succes upgeload", classes: "toast--succes"});
+            }else{
+              M.toast({html: "Er is iets fout gegaan tijdens het uploaden van " + extension[0], classes: "toast--error"});
             }
           })
           //if the file is word file convert the word to pdf
@@ -60,15 +61,15 @@ Upload.prototype.doUpload = function () {
             fileName: extension[0],
             extension: extension[1]
           }, function(response,status){
-            console.log(response)
             if(response == "succes"){
-              console.log("word success");
+              M.toast({html: "Het word bestand " + extension[0] + " is succes upgeload", classes: "toast--succes"});
+            }else{
+              M.toast({html: "Er is iets fout gegaan tijdens het uploaden van " + extension[0], classes: "toast--error"});
             }
           })
         }
-
       }else{
-        console.log("pdf success");
+        M.toast({html: "Het pdf bestand " + extension[0] + " is succes upgeload", classes: "toast--succes"});
       }
 
     },

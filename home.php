@@ -3,38 +3,63 @@ include 'include/session.php';
 include 'include/database.php';
 $id = $_SESSION['userId'];
 
+$permissions = [];
+if($_SESSION["admin"] == 0){
+  $sql = "SELECT * FROM permissions WHERE users_id = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("i", $id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  while ($row = $result->fetch_array(MYSQLI_ASSOC))
+  {
+    $permissions[] = $row;
+  }
+  $stmt->close();
+
+  if(count($permissions) <= 0){
+    header("Location: no.php");
+  }
+}else{
+  $sql = "SELECT c.id as colleges_id  FROM `colleges` c";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  while ($row = $result->fetch_array(MYSQLI_ASSOC))
+  {
+    $row["read"] = 1;
+    $row["edit"] = 1;
+    $permissions[] = $row;
+  }
+  $stmt->close();
+}
+
+
 $itemArrays = [];
-$sql = "SELECT  m.id as mergedId,
-        m.name,
-        m.users_id as creatorId,
-        m.courses_id,
-        p.read,
-        p.edit,
-        u.username,
-        c.name as collageName,
-        z.name as courseName,
-        z.colleges_id
-        FROM  mergedfiles m,
-              permissions p,
-              users u,
-              colleges c,
-              courses z
-        WHERE p.users_id = ?
-              AND p.read = 1
-              AND u.id = m.users_id
-              AND z.id = m.courses_id
-              AND c.id = z.colleges_id
-              AND p.colleges_id = c.id
-        ORDER BY p.colleges_id ASC,
-              m.courses_id ASC,
-              m.name ASC";
+$sql = "SELECT
+          m.id as mergedId,
+          m.name,
+          c.name as courseName,
+          co.name as collegeName,
+          co.id as collegeId,
+          u.username
+        FROM
+          mergedfiles m,
+          courses c,
+          colleges co,
+          users u
+        WHERE m.courses_id = c.id
+          AND m.users_id = u.id
+          AND c.colleges_id = co.id
+        ORDER BY  co.name ASC,
+                  c.name ASC,
+                  m.name ASC";
 
 if (false === ($stmt = $conn->prepare($sql))) {
   echo 'error preparing statement: ' . $conn->error;
 }
-elseif (!$stmt->bind_param("i", $id)) {
-  echo 'error binding params: ' . $stmt->error;
-}
+// elseif (!$stmt->bind_param("i", $id)) {
+//   echo 'error binding params: ' . $stmt->error;
+// }
 elseif (!$stmt->execute()) {
   echo 'error executing statement: ' . $stmt->error;
 }
@@ -60,6 +85,9 @@ for($i = 0; $i < count($itemArrays); $i++){
   $stmt->close();
   $itemArrays[$i]["versions"] = $tempVersionArray;
 }
+
+
+dump($itemArrays, "");
 ?>
 <html>
 <head>
@@ -81,59 +109,64 @@ for($i = 0; $i < count($itemArrays); $i++){
             <label for="autocomplete-input">Search</label>
           </div>
         </div>
-        <?php foreach($itemArrays as $item){ ?>
-          <div class="home-card col m12" data-college="<?= $item["collageName"] ?>" data-course="<?= $item["courseName"] ?>" data-name="<?= $item["name"] ?>">
-            <div class="card horizontal">
-              <div class="card-image">
-                <?php
-                $fileName = "";
-                $fileName .= $item["name"] . "_";
-                $selectedVersion = $item["versions"][count($item["versions"]) - 1];
-                $fileName .= $selectedVersion["version"];
-                if($selectedVersion["version"] > 5){
-                  $tempName = $fileName;
-                  $fileName = $item["name"] . "/" . $tempName;
-                }
-                // dump($fileName);
-                ?>
-                <iframe class="iframe" src="_completed\<?php echo $fileName ?>.pdf"></iframe>
-              </div>
-              <div class="card-stacked">
-                <span class="card-title center"><?php echo $item["name"] ?></span>
-                <div class="card-content">
-                  <p>CreatorName: <?php echo $item["username"]; ?></p>
-                  <p>Datum:       <?php echo $selectedVersion["version"]; ?></p>
-                  <p>College:     <?php echo $item["collageName"]; ?></p>
-                  <p>Opleiding:   <?php echo $item["courseName"]; ?></p>
-                </div>
-                <div class="card-action home-card-action">
-                  <?php if($_SESSION["collegeId"] == $item["colleges_id"] && $item["edit"] == 1){ ?>
-                    <a href="nieuw-document.php?v=<?php echo $selectedVersion["id"]; ?>">Edit</a>
-                  <?php } ?>
-                  <a href="_completed\<?php echo $fileName ?>.pdf" class="js-download" download>Download</a>
-                  <div class="input-field">
-                    <select class="js-versionSelect" data-name="<?php echo $item["name"] ?>">
-                      <?php
-                      $counter = 0;
-                      $echoVar = "";
-                      foreach ($item["versions"] as $version) {
-                        $counter++;
-                        $ver = $version["version"];
-                        $echoVar .= '<option value="' . $ver . '"';
-                        if($counter == count($item["versions"])){
-                          $echoVar .= " selected";
-                        }
-                        $echoVar.= '> ' . $ver . '</option>';
-                      }
-                      echo $echoVar;
-                      ?>
-                    </select>
-                    <label>Versie</label>
+        <?php
+        foreach($itemArrays as $item){
+          foreach ($permissions as $key => $permission):
+            if($permission["colleges_id"] == $item["collegeId"] && $permission["read"] == 1){?>
+              <div class="home-card col m12" data-college="<?= $item["collegeName"] ?>" data-course="<?= $item["courseName"] ?>" data-name="<?= $item["name"] ?>">
+                <div class="card horizontal">
+                  <div class="card-image">
+                    <?php
+                    $fileName = "";
+                    $fileName .= $item["name"] . "_";
+                    $selectedVersion = $item["versions"][count($item["versions"]) - 1];
+                    $fileName .= $selectedVersion["version"];
+                    if($selectedVersion["version"] > 5){
+                      $tempName = $fileName;
+                      $fileName = $item["name"] . "/" . $tempName;
+                    }
+                    // dump($fileName);
+                    ?>
+                    <iframe class="iframe" src="_completed\<?= $fileName ?>.pdf"></iframe>
+                  </div>
+                  <div class="card-stacked">
+                    <span class="card-title center"><?= $item["name"] ?></span>
+                    <div class="card-content">
+                      <p>CreatorName: <?= $item["username"]; ?></p>
+                      <p>Datum:       <?= $selectedVersion["filedate"]; ?></p>
+                      <p>College:     <?= $item["collegeName"] ?></p>
+                      <p>Opleiding:   <?= $item["courseName"]; ?></p>
+                    </div>
+                    <div class="card-action home-card-action">
+                      <?php if($permission["edit"] == 1){ ?>
+                        <a href="nieuw-document.php?v=<?= $selectedVersion["id"]; ?>">Edit</a>
+                      <?php } ?>
+                      <a href="_completed\<?= $fileName ?>.pdf" class="js-download" download>Download</a>
+                      <div class="input-field">
+                        <select class="js-versionSelect" data-name="<?= $item["name"] ?>">
+                          <?php
+                          $counter = 0;
+                          $echoVar = "";
+                          foreach ($item["versions"] as $version) {
+                            $counter++;
+                            $ver = $version["version"];
+                            $echoVar .= '<option value="' . $ver . '"';
+                            if($counter == count($item["versions"])){
+                              $echoVar .= " selected";
+                            }
+                            $echoVar.= '> ' . $ver . '</option>';
+                          }
+                          echo $echoVar;
+                          ?>
+                        </select>
+                        <label>Versie</label>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            <?php } ?>
+          <?php endforeach; ?>
         <?php } ?>
       </div>
     </div>
