@@ -53,8 +53,8 @@ foreach ($files as $key => $file) {
 $files = $newfiles;
 
 if(isset($_GET["v"])){
-  $mergeId = $_GET["v"];
   $itemArrays = [];
+  $mergeId = $_GET["v"];
   $sql = "SELECT
             v.version,
             v.filedate,
@@ -102,8 +102,8 @@ if(isset($_GET["v"])){
     $itemArrays = $row;
   }
   $stmt->close();
+  dump($itemArrays ,"");
 }
-dump($itemArrays ,"");
 
 function getFolder($ext){
   $folder = "";
