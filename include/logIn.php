@@ -28,11 +28,13 @@ if (isset($_POST['registerSub'])) {
   $num = $stmt->num_rows;
   $stmt->close();
   if (!$num) {
+    echo "numpassed<br>";
     $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('ss', $name, $passE);
     $stmt->execute();
     $stmt->close();
+
     login($name, $pass);
   }
   else{

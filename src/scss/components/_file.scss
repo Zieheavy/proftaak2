@@ -30,12 +30,17 @@
       display: inline-block;
     }
     & .file__links{
-      display: block;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
     }
     & .card{
       padding: 10px;
     }
   }
+}
+.w30{
+  width: 30%;
 }
 .card-content-nopad{
   padding: 0px !important;

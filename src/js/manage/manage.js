@@ -1,4 +1,7 @@
 colleges = [];
+$(document).ready(function() {
+  $('select').formSelect();
+});
 $.post("include/get/getColleges.php",{
   ajax: true
 }, function(response,status){

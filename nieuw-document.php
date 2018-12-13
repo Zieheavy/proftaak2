@@ -171,20 +171,28 @@ function getFolder($ext){
                                       </div>
                                     </div>
                                     <div class="card-action file__links">
-                                      <a class='dropdown-trigger btn' href='#' data-target='dropdown<?=$file['sourcefiles_id']?>'>
+                                      <a class='dropdown-trigger btn w30' href='#' data-target=''>
                                         <i class="fa fa-download" aria-hidden="true"></i>
                                       </a>
-                                      <ul id='dropdown' class='dropdown-content'>
+                                      <ul class='dropdown-content'>
                                         <li>
-                                          <a href="_pdf/<?=$file['sourcefile_name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.pdf" download>pdf</a>
+                                          <a class="js-download-pdf" href="_pdf/<?=$file['sourcefile_name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.pdf" download>pdf</a>
                                         </li>
                                         <li>
-                                          <a href="<?=$file['folder']?>/<?=$file['sourcefile_name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.<?=$file['extension']?>" download><?=$file['extension']?></a>
+                                          <a class="js-download-doc" href="<?=$file['folder']?>/<?=$file['sourcefile_name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.<?=$file['extension']?>" download><?=$file['extension']?></a>
                                         </li>
                                       </ul>
-                                      <a class="btn js-delete-file" href="#">
+                                      <button class="btn js-delete-file w30">
                                         <i class="material-icons">delete</i>
-                                      </a>
+                                      </button>
+                                      <div class="input-field w30">
+                                        <select class="js-version-select">
+                                          <?php foreach ($file['versions'] as $key => $version): ?>
+                                            <option value="<?=$version['version']?>"><?=$version['version']?></option>
+                                          <?php endforeach; ?>
+                                        </select>
+                                        <label>Versie</label>
+                                      </div>
                                     </div>
                                   </div>
                                 </li>

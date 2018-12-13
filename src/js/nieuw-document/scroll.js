@@ -20,18 +20,29 @@ $(sortable('.js-sortable-copy')).each(function(index, el) {
   sortable('.js-sortable-copy')[index].addEventListener('sortstop', function(e) {
     $('.scroll').removeClass('scroll--show');
     var i = e.detail.item;
-    $(i).addClass('file--dragged');
-    var dropdown = $(i).find('.dropdown-trigger');
-    $(dropdown).addClass('drp');
     var rnd = randomString2(10)
-    $(dropdown).attr('data-target', "dropdown" + rnd);
-    $(dropdown).data('target', "dropdown" + rnd);
-    $(i).find('#dropdown').attr('id', "dropdown" +  rnd);
+    var dropdownTrigger = $(i).find('.dropdown-trigger');
+    var dropdownContent = $(i).find('.dropdown-content');
+    var versionSelect = $(i).find('.js-version-select');
+    $(i).addClass('file--dragged');
+    $(dropdownTrigger).addClass('drp');
+    $(dropdownTrigger).attr('data-target', "dropdown" + rnd);
+    $(dropdownTrigger).data('target', "dropdown" + rnd);
+    $(dropdownContent).attr('id', "dropdown" +  rnd);
+    $(dropdownTrigger).dropdown();
     M.updateTextFields();
-    $('.drp').dropdown();
-    $('.version').formSelect();
+    $(versionSelect).find('option:last-child()').attr('selected', '');
+    $(versionSelect).formSelect();
+    $(versionSelect).on('change', function(e) {
+      var newVersion = $(this).val();
+      console.log(newVersion);
+      $(this).closest('.file').data('version', newVersion);
+      $(this).closest('.file').attr('data-version', newVersion);
+      // TODO: DOWNLOAD BUTTON LINK FIX
+    });
   });
 });
+
 $(sortable('.js-sortable-copy-target')).each(function(index, el) {
   sortable('.js-sortable-copy-target')[index].addEventListener('sortstart', function(e) {
     $('.scroll').addClass('scroll--show');
