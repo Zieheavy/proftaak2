@@ -3,6 +3,7 @@ $(document).ready(function() {
   $('.collapsible.expandable').collapsible({accordion: false});
   $('.collapsible:not(.expandable)').collapsible();
   $('select').formSelect();
+  $('.modal').modal();
 });
 // $(document).ready(function(){
 //   $('.collapsible.expandable').collapsible({accordion: false});

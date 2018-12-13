@@ -66,7 +66,7 @@ dump($sourceFiles,"");
                       <p></p>
                     </div>
                     <div class="card-action">
-                      <a href="#">This is a link</a>
+                      <a class="modal-trigger" href="#modal1">edit</a>
                     </div>
                   </div>
                 </div>
@@ -76,7 +76,7 @@ dump($sourceFiles,"");
         </div>
       </div>
     </div>
-    <div class = "row">
+    <!-- <div class = "row">
       <label>Materialize Multi File Input</label>
       <div class = "file-field input-field">
         <div class = "btn">
@@ -88,10 +88,10 @@ dump($sourceFiles,"");
           placeholder = "Upload multiple files" />
         </div>
       </div>
-    </div>
-    <div class="row">
+    </div> -->
+    <!-- <div class="row">
       <button class="js-ok">Upload</button>
-    </div>
+    </div> -->
   </div>
   <?php include 'partials/scripts.php'; ?>
 </body>
