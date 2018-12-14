@@ -1,6 +1,6 @@
 var fileToEdit = "";
 var existingFiles = [];
-$.post("include/get/getExistingFiles.php",{}, function(response,status){
+$.post("include/get/getSourceFiles.php",{}, function(response,status){
   existingFiles = JSON.parse(response);
 });
 //multiple file upload

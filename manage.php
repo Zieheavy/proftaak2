@@ -63,7 +63,11 @@ if($permConfirm == 1){
   $permStat .= 2;
 }
 if($permAdmin == 1){
-  $permStat .= 3;
+  $permStat = 123;
+}
+
+if($permAdmin == 0){
+  array_shift($users);
 }
 
 if(strlen($permStat) == 3){ $permCollums = "4"; }
