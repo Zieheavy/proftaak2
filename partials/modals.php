@@ -42,7 +42,7 @@ dump($permitedColleges,"");
       <?php if($page == true){ ?>
         <div class="row">
           <div class="input-field col s6">
-            <select>
+            <select class="js-college-select">
               <?php foreach ($permitedColleges as $key => $pCollege): ?>
                 <option value="<?= $pCollege["id"] ?>"><?= $pCollege["name"] ?></option>
               <?php endforeach; ?>
@@ -50,7 +50,7 @@ dump($permitedColleges,"");
             <label>College</label>
           </div>
           <div class="input-field col s6">
-            <select>
+            <select class="js-courseContainer-<?= $user["id"] ?>">
               <?php foreach ($permitedColleges[0]["courses"] as $key => $pCourse): ?>
                 <option value="<?= $pCourse["id"] ?>"><?= $pCourse["name"] ?></option>
               <?php endforeach; ?>
