@@ -1,4 +1,5 @@
 <?php
+$currentPage = explode("/",$_SERVER['PHP_SELF'])[2];
 if(isset($_POST["ajax"])){
   include '../session.php';
 }
@@ -16,8 +17,8 @@ if($_SESSION["admin"] == 0){
   }
   $stmt->close();
 
-  if(count($permissions) <= 0){
-    header("Location: no.php");
+  if(count($permissions) <= 0 && $currentPage != "index.php"){
+    header("Location: include/noPermissions.php");
   }
 }else{
   $sql = "SELECT c.id as colleges_id  FROM `colleges` c";

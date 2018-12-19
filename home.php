@@ -56,7 +56,7 @@ for($i = 0; $i < count($itemArrays); $i++){
 }
 
 
-dump($itemArrays, "");
+// dump($itemArrays, "");
 ?>
 <html>
 <head>
@@ -142,7 +142,7 @@ dump($itemArrays, "");
   </div>
 
   <?php include 'partials/templates.html'; ?>
-  <?php include 'partials/modals.html'; ?>
+  <?php include 'partials/modals.php'; ?>
   <?php include 'partials/scripts.php'; ?>
 </body>
 </html>

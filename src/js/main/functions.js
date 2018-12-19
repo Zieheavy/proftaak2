@@ -13,6 +13,15 @@ var getUrlParameter = function getUrlParameter(sParam) {
   }
 };
 
+var hasScrollbar = window.innerWidth > document.documentElement.clientWidth;
+console.log(hasScrollbar);
+if(hasScrollbar == true){
+  $("body").css("margin-right", "-5px");
+}else{
+  $("body").css("margin-right", "0");
+}
+
+
 function addUrlParameter(keys, values){
   var sPageURL = decodeURIComponent(window.location.search.substring(1));
   var sURLVariables = sPageURL.split('&');

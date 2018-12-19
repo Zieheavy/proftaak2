@@ -7,18 +7,29 @@ $(document).ready(function(){
   if(param >= 0){
     switch (param) {
       case "1":
-      message = 'Gebruikernaam of Wachtwoord is incorrect';
-      type = 'toast--error';
-      break;
+        message = 'Gebruikernaam of Wachtwoord is incorrect';
+        type = 'toast--error';
+        break;
       case "2":
-      console.log("2 2 2")
-      message = 'U bent succesvol uitgelogd';
-      type = 'toast--succes';
-      break;
+        message = 'U bent succesvol uitgelogd';
+        type = 'toast--succes';
+        break;
       case "3":
-      message = 'Gebruiker bestaat al';
-      type = 'toast--succes';
-      break;
+        message = 'Gebruiker bestaat al';
+        type = 'toast--succes';
+        break;
+      case "4":
+        message = 'U heeft geen rechten voor de pagina die u probeert te bereiken <br> u bent uitgelogd';
+        type = 'toast--error';
+        break;
+      case "5":
+        message = 'U heeft geen rechten voor de pagina die u probeert te bereiken';
+        type = 'toast--error';
+        break;
+      default:
+        message = 'default message';
+        type = 'toast--info';
+        break;
     }
     M.toast({html: message, classes: type, displayLength: 2000});
     removeUrlParameter("s");

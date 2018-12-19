@@ -28,8 +28,8 @@ $('body').on('click', '.js-merge', function(){
   console.log("fileVersions: ", fileVersions);
   console.log("pageNumbers: ", pageNumbers);
 
-  $.post("include/get/getSession.php",{
-    ajax: true
+  $.post("include/session.php",{
+    return: true
   },function(response,status){
     session = JSON.parse(response);
     console.log(session);

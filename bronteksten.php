@@ -32,8 +32,8 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
 }
 $stmt->close();
 
-dump($sourceFiles,"");
-dump($permissions,"");
+// dump($sourceFiles,"");
+// dump($permissions,"");
 
 ?>
 <html>
@@ -44,7 +44,7 @@ dump($permissions,"");
 <body>
   <?php include 'partials/navigation.php'; ?>
   <?php include 'partials/templates.html'; ?>
-  <?php include 'partials/modals.html'; ?>
+  <?php include 'partials/modals.php'; ?>
   <div class="container">
     <div class="row">
       <a class="col s12 waves-effect waves-light btn modal-trigger" href="#uploadModal">button</a>

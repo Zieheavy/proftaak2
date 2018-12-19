@@ -11,7 +11,7 @@ $permStat = "";
 $permCollums = "12";
 
 if($permNew == 0 && $permConfirm == 0){
-    header("Location: no.php");
+    header("Location: include/noPermissions.php");
 }
 
 $users = [];
@@ -176,7 +176,7 @@ include 'include/get/getColleges.php';
   </div>
 
   <?php include 'partials/templates.html'; ?>
-  <?php include 'partials/modals.html'; ?>
+  <?php include 'partials/modals.php'; ?>
   <?php include 'partials/scripts.php'; ?>
 </body>
 </html>

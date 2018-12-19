@@ -1,4 +1,5 @@
 var fileToEdit = "";
+$('select').formSelect();
 var existingFiles = [];
 $.post("include/get/getSourceFiles.php",{}, function(response,status){
   existingFiles = JSON.parse(response);
