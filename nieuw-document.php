@@ -17,6 +17,9 @@ include 'include/session.php';
 // // clean up
 // unset($word);
 // // This query gets every sourceFile
+include 'include/get/getPermissions.php';
+
+// This query gets every sourceFile
 $files = [];
 $sql = "SELECT s.id as sourcefiles_id,
         s.name as sourcefile_name,
@@ -49,7 +52,7 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
   $files[] = $row;
 }
 $stmt->close();
-dump($files, "");
+// dump($files, "");
 // die();
 
 // REstructures the array into a multi-dimensional array, where the keys are the colleges and courses
@@ -117,7 +120,7 @@ if(isset($_GET["v"])){
     $itemArrays = $row;
   }
   $stmt->close();
-  dump($itemArrays ,"");
+  // dump($itemArrays ,"");
 }
 
 function getFolder($ext){
@@ -274,7 +277,7 @@ function getFolder($ext){
     </div>
   </div>
   <?php include 'partials/templates.html'; ?>
-  <?php include 'partials/modals.html'; ?>
+  <?php include 'partials/modals.php'; ?>
   <script src="dest/js/html5sortable.min.js" charset="utf-8"></script>
   <?php include 'partials/scripts.php'; ?>
 </body>

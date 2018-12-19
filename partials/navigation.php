@@ -4,7 +4,7 @@ $active = -1;
 $admin = -1;
 $verified = $_SESSION["verified"];
 
-dump($_SESSION, "");
+// dump($_SESSION, "");
 
 if($_SESSION["newcollege"] == 1 || $_SESSION["confirm"] == 1){
   $admin = 1;
@@ -12,7 +12,7 @@ if($_SESSION["newcollege"] == 1 || $_SESSION["confirm"] == 1){
 
 if($verified <= 0 && $_SESSION["loggedIn"] == 1){
   resetSession();
-  header("Location: no.php");
+  header("Location: include/noPermissions.php");
 }
 
 switch ($currentPage) {

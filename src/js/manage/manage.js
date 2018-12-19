@@ -23,4 +23,4 @@ $('body').on('change', '.js-college-select', function(){
       $('select').formSelect();
     }
   }
-})
+});

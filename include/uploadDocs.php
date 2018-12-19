@@ -54,6 +54,7 @@ if(count($files) >= 1){
   $insert_id = $files[0]["id"];
 }else{
   // Inserts into sourcefiles and versioncontrol
+
   $sql = "INSERT INTO `sourcefiles`(`name`, `extension`, `users_id`, `colleges_id`, `courses_id`) VALUES (?, ?, ?, ?, ?)";
   $stmt = $con->prepare($sql);
   $stmt->bind_param("ssiii", $filename, $extension, $userId, $collegeId, $courseId);
@@ -62,13 +63,11 @@ if(count($files) >= 1){
   $stmt->close();
 }
 
-
 $sql = "INSERT INTO `versions`(`version`, `filedate`, `sourcefiles_id`) VALUES (?, ?, ?)";
 $stmt = $con->prepare($sql);
 $stmt->bind_param('isi', $version, $dateLong, $insert_id);
 $stmt->execute();
 $stmt->close();
-
 
 echo $newfilename . "." . $extension;
 

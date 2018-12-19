@@ -11,7 +11,7 @@ $permStat = "";
 $permCollums = "12";
 
 if($permNew == 0 && $permConfirm == 0){
-    header("Location: no.php");
+    header("Location: include/noPermissions.php");
 }
 
 $users = [];
@@ -63,7 +63,11 @@ if($permConfirm == 1){
   $permStat .= 2;
 }
 if($permAdmin == 1){
-  $permStat .= 3;
+  $permStat = 123;
+}
+
+if($permAdmin == 0){
+  array_shift($users);
 }
 
 if(strlen($permStat) == 3){ $permCollums = "4"; }
@@ -172,7 +176,7 @@ include 'include/get/getColleges.php';
   </div>
 
   <?php include 'partials/templates.html'; ?>
-  <?php include 'partials/modals.html'; ?>
+  <?php include 'partials/modals.php'; ?>
   <?php include 'partials/scripts.php'; ?>
 </body>
 </html>

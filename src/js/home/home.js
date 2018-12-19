@@ -5,7 +5,7 @@ $(document).on('change', '.js-versionSelect', function() {
 
   source += "_completed/";
 
-  if($(this).find("option").last().val() > 5){
+  if($(this).find("option").last().val() >= 5){
     source += $(this).data("name") + "/";
   }
 

@@ -1,38 +1,8 @@
 <?php
 include 'include/session.php';
 include 'include/database.php';
+include 'include/get/getPermissions.php';
 $id = $_SESSION['userId'];
-
-$permissions = [];
-if($_SESSION["admin"] == 0){
-  $sql = "SELECT * FROM permissions WHERE users_id = ?";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("i", $id);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  while ($row = $result->fetch_array(MYSQLI_ASSOC))
-  {
-    $permissions[] = $row;
-  }
-  $stmt->close();
-
-  if(count($permissions) <= 0){
-    header("Location: no.php");
-  }
-}else{
-  $sql = "SELECT c.id as colleges_id  FROM `colleges` c";
-  $stmt = $conn->prepare($sql);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  while ($row = $result->fetch_array(MYSQLI_ASSOC))
-  {
-    $row["read"] = 1;
-    $row["edit"] = 1;
-    $permissions[] = $row;
-  }
-  $stmt->close();
-}
-
 
 $itemArrays = [];
 $sql = "SELECT
@@ -69,7 +39,6 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
   $itemArrays[] = $row;
 }
 $stmt->close();
-dump($itemArrays);
 
 for($i = 0; $i < count($itemArrays); $i++){
   $tempVersionArray = [];
@@ -87,7 +56,7 @@ for($i = 0; $i < count($itemArrays); $i++){
 }
 
 
-dump($itemArrays, "");
+// dump($itemArrays, "");
 ?>
 <html>
 <head>
@@ -121,7 +90,7 @@ dump($itemArrays, "");
                     $fileName .= $item["name"] . "_";
                     $selectedVersion = $item["versions"][count($item["versions"]) - 1];
                     $fileName .= $selectedVersion["version"];
-                    if($selectedVersion["version"] > 5){
+                    if($selectedVersion["version"] >= 5){
                       $tempName = $fileName;
                       $fileName = $item["name"] . "/" . $tempName;
                     }
@@ -173,7 +142,7 @@ dump($itemArrays, "");
   </div>
 
   <?php include 'partials/templates.html'; ?>
-  <?php include 'partials/modals.html'; ?>
+  <?php include 'partials/modals.php'; ?>
   <?php include 'partials/scripts.php'; ?>
 </body>
 </html>

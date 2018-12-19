@@ -77,7 +77,7 @@ include 'include/session.php';
   </div>
 
   <?php include 'partials/templates.html'; ?>
-  <?php include 'partials/modals.html'; ?>
+  <?php include 'partials/modals.php'; ?>
   <?php include 'partials/scripts.php'; ?>
 </body>
 </html>
