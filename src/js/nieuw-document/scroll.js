@@ -35,9 +35,21 @@ $(sortable('.js-sortable-copy')).each(function(index, el) {
     $(versionSelect).formSelect();
     $(versionSelect).on('change', function(e) {
       var newVersion = $(this).val();
+      var fileElem = $(this).closest('.file');
+      var ext = $(fileElem).data('ext');
       console.log(newVersion);
-      $(this).closest('.file').data('version', newVersion);
-      $(this).closest('.file').attr('data-version', newVersion);
+      $(fileElem).data('version', newVersion);
+      $(fileElem).attr('data-version', newVersion);
+      var pdfSrc = $(fileElem).find('.js-download-pdf').attr('href');
+      pdfSrc = pdfSrc.replace('.pdf', '');
+      pdfSrc = pdfSrc.slice(0, -1) + newVersion + ".pdf";
+      $(fileElem).find('.js-download-pdf').attr('href', pdfSrc);
+
+      var docSrc = $(fileElem).find('.js-download-doc').attr('href');
+      docSrc = docSrc.replace('.' + ext, '');
+      docSrc = docSrc.slice(0, -1) + newVersion + "." + ext;
+      $(fileElem).find('.js-download-doc').attr('href', docSrc);
+
       // TODO: DOWNLOAD BUTTON LINK FIX
     });
   });
