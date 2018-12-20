@@ -4,6 +4,7 @@
 <!-- Materialize JS -->
 <script type="text/javascript" src="dest/js/materialize.min.js"></script>
 <script type="text/javascript" src="dest/js/mustache.js"></script>
+<script type="text/javascript" src="dest/js/lazyload.js"></script>
 <script src="dest/js/main.js" charset="utf-8"></script>
 <?php
 $currentPage = explode("/",$_SERVER['PHP_SELF'])[2];
