@@ -11,11 +11,9 @@ $.post("include/get/getColleges.php",{
 });
 
 $('body').on('change', '.js-college-select', function(){
-  var courseContainer = ".js-courseContainer";
-
   for(var i = 0; i < colleges.length; i++){
     if(colleges[i].id == $(this).val()){
-      mustache(".courses-manage-template", courseContainer, colleges[i].courses);
+      mustache(".courses-manage-template", ".js-courseContainer", colleges[i].courses);
       $('select').formSelect();
     }
   }

@@ -1,7 +1,9 @@
 <?php
 include 'include/database.php';
 include 'include/session.php';
-include 'include/get/getPermissions.php';
+if(!isset($_POST["ajax"])){
+  include 'include/get/getPermissions.php';
+}
 
 $sourceFiles = [];
 $sql = "SELECT
@@ -32,8 +34,10 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
 }
 $stmt->close();
 
-// dump($sourceFiles,"");
-// dump($permissions,"");
+if(isset($_POST["ajax"])){
+  echo json_encode($sourceFiles);
+  die();
+}
 
 ?>
 <html>
@@ -47,7 +51,7 @@ $stmt->close();
   <?php include 'partials/modals.php'; ?>
   <div class="container">
     <div class="row">
-      <a class="col s12 waves-effect waves-light btn modal-trigger" href="#uploadModal">button</a>
+      <a class="col s12 waves-effect waves-light btn modal-trigger" href="#uploadModal">Nieuw bron bestand uploaden</a>
     </div>
     <div class="row">
       <div class="col s4">
@@ -63,7 +67,7 @@ $stmt->close();
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <div class="row">
+            <div class="row js-sourcefiles-container">
               <?php foreach ($sourceFiles as $key => $file): ?>
                 <?php foreach ($permissions as $key => $permission): ?>
                   <?php if($file["collegeId"] == $permission["colleges_id"] && $permission["read"] == 1){ ?>
@@ -89,22 +93,6 @@ $stmt->close();
         </div>
       </div>
     </div>
-    <!-- <div class = "row">
-      <label>Materialize Multi File Input</label>
-      <div class = "file-field input-field">
-        <div class = "btn">
-          <span>Browse</span>
-          <input type="file" id="uploadFiles" multiple />
-        </div>
-        <div class = "file-path-wrapper">
-          <input class = "file-path validate" type = "text"
-          placeholder = "Upload multiple files" />
-        </div>
-      </div>
-    </div> -->
-    <!-- <div class="row">
-      <button class="js-ok">Upload</button>
-    </div> -->
   </div>
   <?php include 'partials/scripts.php'; ?>
 </body>

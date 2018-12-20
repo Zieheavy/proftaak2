@@ -36,10 +36,21 @@ $("body").on("click", ".js-upload", function(){
 });
 
 $("body").on("click", ".js-open-edit", function(){
-   $('#editModal').modal('open');
+
+   // $('#editModal').modal('open');
    var container = $(this).closest(".col")
    fileToEdit = container.data("name") + "." + container.data("ext");
 })
+
+function reloadElements(){
+  $.post("bronteksten.php",{
+    ajax: true
+  }, function(response,status){
+    response = JSON.parse(response);
+    console.log(response);
+    mustache(".sourcefiles-template", ".js-sourcefiles-container", response);
+  });
+}
 
 // //////////////////////////////
 // // default upload functions //
@@ -62,6 +73,8 @@ Upload.prototype.doUpload = function () {
   var formData = new FormData();
 
   // add assoc key values, this will be posts values
+  formData.append("course", $(".js-source-course").val());
+  formData.append("college", $(".js-source-college").val());
   formData.append("file", this.file, this.getName());
   formData.append("upload_file", true);
 
@@ -85,6 +98,7 @@ Upload.prototype.doUpload = function () {
           }, function(response,status){
             if(response == "succes"){
               M.toast({html: "Het excel bestand " + extension[0] + " is succes upgeload", classes: "toast--succes"});
+              reloadElements();
             }else{
               M.toast({html: "Er is iets fout gegaan tijdens het uploaden van " + extension[0], classes: "toast--error"});
             }
@@ -98,6 +112,7 @@ Upload.prototype.doUpload = function () {
           }, function(response,status){
             if(response == "succes"){
               M.toast({html: "Het word bestand " + extension[0] + " is succes upgeload", classes: "toast--succes"});
+              reloadElements();
             }else{
               M.toast({html: "Er is iets fout gegaan tijdens het uploaden van " + extension[0], classes: "toast--error"});
             }
@@ -105,6 +120,7 @@ Upload.prototype.doUpload = function () {
         }
       }else{
         M.toast({html: "Het pdf bestand " + extension[0] + " is succes upgeload", classes: "toast--succes"});
+        reloadElements();
       }
 
     },

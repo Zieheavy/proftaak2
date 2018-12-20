@@ -10,8 +10,8 @@ unset($temp);
 $folder = getFolder($extension);
 
 $userId = $_SESSION['userId'];
-$collegeId = $_SESSION['collegeId'];
-$courseId = $_SESSION['courseId'];
+$collegeId = $_POST["college"];
+$courseId = $_POST["course"];
 $dateLong = date("d-m-Y H:i:s");
 
 // If there is something wrong with the uploading of a file it just fucking dies

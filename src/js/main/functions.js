@@ -209,3 +209,35 @@ Array.prototype.removeIndex = function(n) {
   }
   return t;
 };
+
+// confirmModal("confirm", "You will delete the complete contact are you sure", "deleteModal")
+var confirmClassOld = "";
+var deleteClassOld = "";
+function confirmModal(title, body, confirmClass, deleteClass, data){
+    if(deleteClass == undefined){
+        deleteClass = "close-confirm"
+    }
+    if(confirmClass != "" && deleteClassOld != ""){
+        $('.confirm-save-change').removeClass(confirmClassOld)
+        $('.confirm-delete-change').removeClass(deleteClassOld)
+    }
+    $('.confirm-save-change').addClass(confirmClass)
+
+    // console.log(data)
+    if(data != undefined){
+      $('.confirm-save-change').attr("data",data)
+    }else{
+      $('.confirm-save-change').attr("data","")
+    }
+    $('.confirm-delete-change').addClass(deleteClass)
+
+    confirmClassOld = confirmClass;
+    deleteClassOld = deleteClass;
+
+    $('.confirm-title').text(title)
+    $('.confirm-text').text(body)
+
+    console.log($(".js-confirm-modal"))
+    $('.js-confirm-modal').modal();
+    $('.js-confirm-modal').modal("open");
+}
