@@ -94,7 +94,7 @@ for($i = 0; $i < count($itemArrays); $i++){
                     <?php
                       $selectedVersion = $item["versions"][count($item["versions"]) - 1];
                     ?>
-                    <iframe class="iframe" src="_completed\<?= $item['filename'] ?>.pdf"></iframe>
+                    <iframe class="iframe js-lazyload-iframe" data-src="_completed/<?= $item['filename'] ?>.pdf" src=""></iframe>
                   </div>
                   <div class="card-stacked">
                     <span class="card-title center"><?= $item["name"] ?></span>
@@ -111,7 +111,7 @@ for($i = 0; $i < count($itemArrays); $i++){
                         <?php if($permission["edit"] == 1){ ?>
                           <a href="nieuw-document.php?v=<?= $selectedVersion["id"]; ?>" class="btn w30"><i class="material-icons">edit</i></a>
                         <?php } ?>
-                        <button class="btn w30"><i class="material-icons">delete</i></button>
+                        <button class="btn w30 js-delete-merged" data-mergedid="<?=$item['mergedId']?>"><i class="material-icons">delete</i></button>
                       </div>
                       <div class="row">
 
