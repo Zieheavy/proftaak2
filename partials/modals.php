@@ -8,8 +8,8 @@ $page = false;
 if($currentPage == "bronteksten.php"){
   $page = true;
 
-  dump($colleges, "");
-  dump($permissions, "");
+  // dump($colleges, "");
+  // dump($permissions, "");
 }
 
 $permitedColleges = [];
@@ -42,7 +42,7 @@ foreach ($colleges as $key => $college) {
       <?php if($page == true){ ?>
         <div class="row">
           <div class="input-field col s6">
-            <select class="js-college-select">
+            <select class="js-college-select js-source-college">
               <?php foreach ($permitedColleges as $key => $pCollege): ?>
                 <option value="<?= $pCollege["id"] ?>"><?= $pCollege["name"] ?></option>
               <?php endforeach; ?>
@@ -50,7 +50,7 @@ foreach ($colleges as $key => $college) {
             <label>College</label>
           </div>
           <div class="input-field col s6">
-            <select class="js-courseContainer-<?= $user["id"] ?>">
+            <select class="js-courseContainer js-source-course">
               <?php foreach ($permitedColleges[0]["courses"] as $key => $pCourse): ?>
                 <option value="<?= $pCourse["id"] ?>"><?= $pCourse["name"] ?></option>
               <?php endforeach; ?>
@@ -80,5 +80,18 @@ foreach ($colleges as $key => $college) {
   </div>
   <div class="modal-footer">
     <a href="#!" class="waves-effect waves-green btn-flat js-upload">Upload</a>
+  </div>
+</div>
+
+<div class="modal js-confirm-modal">
+  <div class="modal-content">
+    <h4 class="confirm-title">Modal Header</h4>
+    <p class="confirm-text">A bunch of text</p>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-light btn btn confirm-save-change">Accepteren</a>
+      <a class="waves-effect waves-dark btn btn confirm-delete-change modal-close red lighten-2">Cancel</a>
+    <!-- <div type="button" class="waves-effect waves-light btn confirm-save-change">Accepteren</div> -->
+    <!-- <div type="button" class="waves-effect waves-dark btn">Cancel</div> -->
   </div>
 </div>
