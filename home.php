@@ -53,10 +53,16 @@ for($i = 0; $i < count($itemArrays); $i++){
   }
   $stmt->close();
   $itemArrays[$i]["versions"] = $tempVersionArray;
+  $fileName = "";
+  $fileName .= $itemArrays[$i]["name"] . "_";
+  $selectedVersion = $itemArrays[$i]["versions"][count($itemArrays[$i]["versions"]) - 1];
+  $fileName .= $selectedVersion["version"];
+  if($selectedVersion["version"] >= 5){
+    $tempName = $fileName;
+    $fileName = $itemArrays[$i]["name"] . "/" . $tempName;
+  }
+  $itemArrays[$i]['filename'] = $fileName;
 }
-
-
-// dump($itemArrays, "");
 ?>
 <html>
 <head>
@@ -75,7 +81,7 @@ for($i = 0; $i < count($itemArrays); $i++){
           <div class="input-field col s12">
             <i class="material-icons prefix">search</i>
             <input class="js-merge" type="text" id="autocomplete-input" class="autocomplete">
-            <label for="autocomplete-input">Search</label>
+            <label for="autocomplete-input">Zoek</label>
           </div>
         </div>
         <?php
@@ -86,17 +92,9 @@ for($i = 0; $i < count($itemArrays); $i++){
                 <div class="card horizontal">
                   <div class="card-image">
                     <?php
-                    $fileName = "";
-                    $fileName .= $item["name"] . "_";
-                    $selectedVersion = $item["versions"][count($item["versions"]) - 1];
-                    $fileName .= $selectedVersion["version"];
-                    if($selectedVersion["version"] >= 5){
-                      $tempName = $fileName;
-                      $fileName = $item["name"] . "/" . $tempName;
-                    }
-                    // dump($fileName);
+                      $selectedVersion = $item["versions"][count($item["versions"]) - 1];
                     ?>
-                    <iframe class="iframe" src="_completed\<?= $fileName ?>.pdf"></iframe>
+                    <iframe class="iframe" src="_completed\<?= $item['filename'] ?>.pdf"></iframe>
                   </div>
                   <div class="card-stacked">
                     <span class="card-title center"><?= $item["name"] ?></span>
@@ -107,28 +105,28 @@ for($i = 0; $i < count($itemArrays); $i++){
                       <p>Opleiding:   <?= $item["courseName"]; ?></p>
                     </div>
                     <div class="card-action home-card-action">
-                      <?php if($permission["edit"] == 1){ ?>
-                        <a href="nieuw-document.php?v=<?= $selectedVersion["id"]; ?>">Edit</a>
-                      <?php } ?>
-                      <a href="_completed\<?= $fileName ?>.pdf" class="js-download" download>Download</a>
-                      <div class="input-field">
-                        <select class="js-versionSelect" data-name="<?= $item["name"] ?>">
-                          <?php
-                          $counter = 0;
-                          $echoVar = "";
-                          foreach ($item["versions"] as $version) {
-                            $counter++;
-                            $ver = $version["version"];
-                            $echoVar .= '<option value="' . $ver . '"';
-                            if($counter == count($item["versions"])){
-                              $echoVar .= " selected";
+                      <div class="row">
+
+                        <a href="_completed\<?= $item['filename'] ?>.pdf" class="js-download btn w30" download>  <i class="fa fa-download" aria-hidden="true"></i></a>
+                        <?php if($permission["edit"] == 1){ ?>
+                          <a href="nieuw-document.php?v=<?= $selectedVersion["id"]; ?>" class="btn w30"><i class="material-icons">edit</i></a>
+                        <?php } ?>
+                        <button class="btn w30"><i class="material-icons">delete</i></button>
+                      </div>
+                      <div class="row">
+
+                        <div class="input-field">
+                          <select class="js-versionSelect" data-name="<?= $item["name"] ?>">
+                            <?php
+                            foreach ($item["versions"] as $key => $version) {
+                              ?>
+                              <option <?=($key == count($item["versions"]) - 1) ? "selected" : ""?> value="<?=$version['version']?>"><?=$version['version']?></option>
+                              <?php
                             }
-                            $echoVar.= '> ' . $ver . '</option>';
-                          }
-                          echo $echoVar;
-                          ?>
-                        </select>
-                        <label>Versie</label>
+                            ?>
+                          </select>
+                          <label>Versie</label>
+                        </div>
                       </div>
                     </div>
                   </div>

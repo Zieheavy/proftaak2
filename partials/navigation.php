@@ -48,7 +48,6 @@ switch ($currentPage) {
         <?php if ($admin == 1) { ?>
           <li class="<?php if($active == 4) echo "active"; ?>"><a href="manage.php">Manage</a></li>
         <?php } ?>
-        <li class="js-delete-merged"><a href="#">DeleteMerged</a></li>
       </ul>
       <form class="" action="include/login.php" method="post">
         <button type="submit" name="logoutSub" class="btn waves-effect waves-light right js-logout">Logout</button>
