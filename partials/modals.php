@@ -22,7 +22,7 @@ foreach ($colleges as $key => $college) {
   }
 }
 
-dump($permitedColleges,"");
+// dump($permitedColleges,"");
 
 
  ?>

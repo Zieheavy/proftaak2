@@ -8,3 +8,6 @@ $('body').on('click', '.file__title', function(){
 $('body').on('click', '.js-delete-file', function(){
   $(this).closest('.file').remove();
 });
+$(document).ready(function() {
+  $('.js-version-getselect').formSelect();
+});

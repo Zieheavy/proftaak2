@@ -112,15 +112,27 @@ if(isset($_GET["v"])){
     while ($row2 = $result2->fetch_array(MYSQLI_ASSOC))
     {
       $row2["folder"] = getFolder($row2["extension"]);
+      $sql3 = "SELECT * FROM versions WHERE sourcefiles_id = ? ORDER BY version";
+      $stmt3 = $con->prepare($sql3);
+      $stmt3->bind_param('i', $row2['sourceId']);
+      $stmt3->execute();
+      $result3 = $stmt3->get_result();
+      while ($row3 = $result3->fetch_array(MYSQLI_ASSOC))
+      {
+        $row2["versions"][] = $row3;
+      }
+      $stmt3->close();
       $temp[] = $row2;
     }
+    // dump($temp);
     $stmt2->close();
+
 
     $row["sources"] = $temp;
     $itemArrays = $row;
   }
   $stmt->close();
-  // dump($itemArrays ,"");
+  dump($itemArrays ,"");
 }
 
 function getFolder($ext){
@@ -228,9 +240,12 @@ function getFolder($ext){
         <?php endforeach; ?>
       </div>
       <div class="col s4">
-        <ul class="js-sortable-copy-target copy-target col-min-500" style="min-height: 200px"aria-dropeffect="move">
+        <ul class="js-sortable-copy-target copy-target col-min-500" style="min-height: 200px" aria-dropeffect="move">
           <?php if(isset($itemArrays)){ foreach ($itemArrays["sources"] as $key => $file): ?>
-            <li data-name="<?=$file['name']?>" data-ext="<?=$file['extension']?>" data-version="<?=$file['version']?>" class="p1 mb1 item file active file--dragged" draggable="true" role="option" aria-grabbed="false" ondrag="isDragging()" aria-copied="true">
+            <li data-name="<?=$file['name']?>"
+              data-ext="<?=$file['extension']?>"
+              data-version="<?=$file['version']?>"
+              class="p1 mb1 item file active file--dragged" draggable="true" role="option" aria-grabbed="false" ondrag="isDragging()">
               <div class="card card--file">
                 <div class="card-content card-content-nopad">
                   <span class="card-title file__title">
@@ -238,28 +253,37 @@ function getFolder($ext){
                     <span class="file__name"><?=$file['name']?></span>
                   </span>
                   <div class="input-field inline file__pagenrs">
-                    <input id="pagenrs<?=$file['sourceId']?>" type="text" class="validate js-pages" value=<?=$file['pages']?>>
+                    <input id="pagenrs<?=$file['sourceId']?>" value="<?=$file['pages']?>" type="text" class="validate js-pages">
                     <label for="pagenrs<?=$file['sourceId']?>">Pagina's</label>
                   </div>
                 </div>
                 <div class="card-action file__links">
-                  <a class="dropdown-trigger btn drp" href="#" data-target="dropdown<?=$file['sourceId']?>">
+                  <a class='dropdown-trigger btn w30' href='#' data-target=''>
                     <i class="fa fa-download" aria-hidden="true"></i>
-                  </a><ul id="dropdown<?=$file['sourceId']?>" class="dropdown-content" tabindex="0" style="">
-                    <li tabindex="0">
-                      <a href="_pdf/<?=$file["name"]?>_<?=$file["version"]?>.pdf" download="">pdf</a>
+                  </a>
+                  <ul class='dropdown-content'>
+                    <li>
+                      <a class="js-download-pdf" href="_pdf/<?=$file['name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.pdf" download>pdf</a>
                     </li>
-                    <li tabindex="0">
-                      <a href="<?=$file["folder"]?>/<?=$file["name"]?>_<?=$file["version"]?>.<?=$file["extension"]?>" download=""><?=$file["extension"]?></a>
+                    <li>
+                      <a class="js-download-doc" href="<?=$file['folder']?>/<?=$file['name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.<?=$file['extension']?>" download><?=$file['extension']?></a>
                     </li>
                   </ul>
-                  <a class="btn js-delete-file" href="#">
+                  <button class="btn js-delete-file w30">
                     <i class="material-icons">delete</i>
-                  </a>
+                  </button>
+                  <div class="input-field w30">
+                    <select class="js-version-select js-version-getselect">
+                      <?php foreach ($file['versions'] as $key => $version): ?>
+                        <option <?=($file['version'] == $version['version']) ? "selected" : "" ?> value="<?=$version['version']?>"><?=$version['version']?></option>
+                      <?php endforeach; ?>
+                    </select>
+                    <label>Versie</label>
+                  </div>
                 </div>
               </div>
             </li>
-          <?php endforeach; } ?>
+          <?php endforeach;  }?>
         </ul>
       </div>
       <div class="col s4">
