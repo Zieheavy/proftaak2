@@ -50,7 +50,7 @@ dump($permitedColleges,"");
             <label>College</label>
           </div>
           <div class="input-field col s6">
-            <select class="js-courseContainer-<?= $user["id"] ?>">
+            <select class="js-courseContainer">
               <?php foreach ($permitedColleges[0]["courses"] as $key => $pCourse): ?>
                 <option value="<?= $pCourse["id"] ?>"><?= $pCourse["name"] ?></option>
               <?php endforeach; ?>
