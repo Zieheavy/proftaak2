@@ -14,7 +14,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 };
 
 var hasScrollbar = window.innerWidth > document.documentElement.clientWidth;
-console.log(hasScrollbar);
+// console.log(hasScrollbar);
 if(hasScrollbar == true){
   $("body").css("margin-right", "-5px");
 }else{
@@ -57,7 +57,7 @@ function addUrlParameter(keys, values){
           if(i == keys.length -1){
             end = "";;
           }
-          console.log(begin+end)
+          // console.log(begin+end)
           newString = begin+end;
         }
       }
@@ -237,7 +237,7 @@ function confirmModal(title, body, confirmClass, deleteClass, data){
     $('.confirm-title').text(title)
     $('.confirm-text').text(body)
 
-    console.log($(".js-confirm-modal"))
+    // console.log($(".js-confirm-modal"))
     $('.js-confirm-modal').modal();
     $('.js-confirm-modal').modal("open");
 }

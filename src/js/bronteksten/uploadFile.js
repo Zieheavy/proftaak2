@@ -36,21 +36,10 @@ $("body").on("click", ".js-upload", function(){
 });
 
 $("body").on("click", ".js-open-edit", function(){
-
-   // $('#editModal').modal('open');
-   var container = $(this).closest(".col")
-   fileToEdit = container.data("name") + "." + container.data("ext");
+  $('#editModal').modal('open');
+  var container = $(this).closest(".col")
+  fileToEdit = container.data("name") + "." + container.data("ext");
 })
-
-function reloadElements(){
-  $.post("bronteksten.php",{
-    ajax: true
-  }, function(response,status){
-    response = JSON.parse(response);
-    console.log(response);
-    mustache(".sourcefiles-template", ".js-sourcefiles-container", response);
-  });
-}
 
 // //////////////////////////////
 // // default upload functions //

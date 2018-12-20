@@ -83,6 +83,38 @@ foreach ($colleges as $key => $college) {
   </div>
 </div>
 
+<div id="newCollege" class="modal">
+  <div class="modal-content">
+    <h4 class="confirm-title">Nieuw college</h4>
+    <div class="input-field col s6">
+      <input id="newCollegeInput" type="text" class="validate js-college-input">
+      <label for="newCollegeInput">College naam</label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-light btn btn js-new-college">create</a>
+  </div>
+</div>
+
+<div id="newCourse" class="modal">
+  <div class="modal-content">
+    <h4 class="confirm-title">Nieuwe opleiding</h4>
+      <select class="js-new-cource-collegeId">
+        <?php foreach ($colleges as $key => $college): ?>
+          <option value="<?= $college["id"] ?>"><?= $college["name"] ?></option>
+        <?php endforeach; ?>
+      </select>
+      <label>Opleiding</label>
+    <div class="input-field col s6">
+      <input id="newCourseInput" type="text" class="validate js-course-input">
+      <label for="newCourseInput">Opleiding naam</label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-light btn btn js-new-course">create</a>
+  </div>
+</div>
+
 <div class="modal js-confirm-modal">
   <div class="modal-content">
     <h4 class="confirm-title">Modal Header</h4>

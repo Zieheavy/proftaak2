@@ -18,3 +18,27 @@ $('body').on('change', '.js-college-select', function(){
     }
   }
 });
+
+var fileId = -1;
+$('body').on('click', '.js-delete-source', function(){
+  fileId = $(this).closest(".js-source-files").data("id");
+  console.log($(this).closest(".js-source-files"));
+  confirmModal("Confirm", "Weet u zeker dat u een bron bestand wilt verwijderen", "js-delete-sourcefile")
+})
+
+$('body').on('click', '.js-delete-sourcefile', function(){
+
+
+  $('.js-confirm-modal').modal("close");
+  $.post("include/delete/deleteSourceFile.php",{
+    sourceid: fileId
+  }, function(response,status){
+    console.log(response);
+    if(response == "succes"){
+      M.toast({html: "bestand is succesvol verwijderd", classes: "toast--succes"});
+      reloadElements();
+    }else{
+      M.toast({html: "het bestand kan niet worden verwijderd <br> het bestand wordt gebruikt in een studiegids", classes: "toast--error"});
+    }
+  });
+})

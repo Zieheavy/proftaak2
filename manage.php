@@ -85,6 +85,10 @@ include 'include/get/getColleges.php';
   <?php include 'partials/navigation.php'; ?>
   <div class="container">
     <div class="row">
+      <?php if(strpos($permStat, '1') !== false){ ?>
+        <a class="col s6 waves-effect waves-light btn modal-trigger" href="#newCollege">Nieuwe college</a>
+        <a class="col s6 waves-effect waves-light btn modal-trigger" href="#newCourse">Nieuwe opleiding</a>
+      <?php } ?>
       <!-- <div class="col s10 offset-s1"> -->
       <div class="col s12">
         <?php foreach ($users as $key => $user): ?>
@@ -122,8 +126,7 @@ include 'include/get/getColleges.php';
                   </thead>
                   <tbody class="js-perm-container">
                     <?php foreach ($user["colleges"] as $key => $college): ?>
-                      <?php if($college["collegeId"] != 1){
-                        if($college["collegeId"] == $_SESSION["collegeId"] || $permAdmin == 1){?>
+                      <?php if($college["collegeId"] == $_SESSION["collegeId"] || $permAdmin == 1){?>
                         <tr class="js-perm-rows" data-collegeid="<?=$college["collegeId"]?>">
                           <form>
                             <td><?= $college["collegeName"] ?></td>
@@ -141,7 +144,7 @@ include 'include/get/getColleges.php';
                             </td>
                           </form>
                         </tr>
-                      <?php }} ?>
+                      <?php } ?>
                     <?php endforeach; ?>
                   </tbody>
                 </table>

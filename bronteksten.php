@@ -71,7 +71,8 @@ if(isset($_POST["ajax"])){
               <?php foreach ($sourceFiles as $key => $file): ?>
                 <?php foreach ($permissions as $key => $permission): ?>
                   <?php if($file["collegeId"] == $permission["colleges_id"] && $permission["read"] == 1){ ?>
-                  <div class="col s12 m6 js-source-files" data-course="<?=$file["courseName"]?>" data-name="<?=$file["name"]?>" data-id="<?=$file["id"]?>" data-ext="<?=$file["extension"]?>">
+
+                  <div class="col s12 m6 js-source-files" data-course="<?=$file["courseName"]?>" data-name="<?=$file["name"]?>" data-id="<?=$file["sourceId"]?>" data-ext="<?=$file["extension"]?>">
                     <div class="card">
                       <div class="card-content">
                         <span class="card-title"><?=$file["name"]?></span>
@@ -81,7 +82,8 @@ if(isset($_POST["ajax"])){
                       </div>
                       <div class="card-action">
                         <?php if($permission["edit"] == 1){ ?>
-                          <a class="js-open-edit">edit</a>
+                          <a class="waves-effect waves-light btn js-open-edit">edit</a>
+                          <a class="waves-effect waves-light btn js-delete-source">delete</a>
                         <?php } ?>
                       </div>
                     </div>

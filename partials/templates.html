@@ -11,9 +11,9 @@
     {{/.}}
 </template>
 
-<<template class="sourcefiles-template">
+<template class="sourcefiles-template">
   {{#.}}
-    <div class="col s12 m6 js-source-files" data-course="{{courseName}}" data-name="{{name}}" data-id="{{id}}" data-ext="{{extension}}">
+    <div class="col s12 m6 js-source-files" data-course="{{courseName}}" data-name="{{name}}" data-id="{{sourceId}}" data-ext="{{extension}}">
       <div class="card">
         <div class="card-content">
           <span class="card-title">{{name}}</span>
@@ -21,7 +21,7 @@
             <p>course: {{courseName}}</p>
           <p></p>
         </div>
-        <div class="card-action">
+        <div class="card-action {{perm}}">
         </div>
       </div>
     </div>
