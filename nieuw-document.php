@@ -196,8 +196,9 @@ function getFolder($ext){
                                         <span class="file__name"><?=$file['sourcefile_name']?></span>
                                       </span>
                                       <div class="input-field inline file__pagenrs">
-                                        <input id="pagenrs<?=$file['sourcefiles_id']?>" type="text" class="validate js-pages">
-                                        <label for="pagenrs<?=$file['sourcefiles_id']?>">Pagina's</label>
+                                        <?php $random = randomString();?>
+                                        <input id="pagenrs<?=$file['sourcefiles_id'].$random?>" type="text" class="validate js-pages pageNrs">
+                                        <label for="pagenrs<?=$file['sourcefiles_id'].$random?>">Pagina's</label>
                                       </div>
                                     </div>
                                     <div class="card-action file__links">
@@ -253,8 +254,9 @@ function getFolder($ext){
                     <span class="file__name"><?=$file['name']?></span>
                   </span>
                   <div class="input-field inline file__pagenrs">
-                    <input id="pagenrs<?=$file['sourceId']?>" value="<?=$file['pages']?>" type="text" class="validate js-pages">
-                    <label for="pagenrs<?=$file['sourceId']?>">Pagina's</label>
+                    <?php $random = randomString();?>
+                    <input id="pagenrs<?=$file['sourceId'].$random?>" value="<?=$file['pages']?>" type="text" class="validate js-pages pageNrs">
+                    <label for="pagenrs<?=$file['sourceId'].$random?>">Pagina's</label>
                   </div>
                 </div>
                 <div class="card-action file__links">
@@ -296,7 +298,11 @@ function getFolder($ext){
           <?php } ?>
           <label for="merged_name">First Name</label>
         </div>
-        <div class="btn waves-effect waves-light w100 js-merge">Merge</div>
+        <?php if(!isset($_GET["v"])){ ?>
+          <div class="btn waves-effect waves-light w100 js-merge">Merge</div>
+        <?php }else{ ?>
+          <div class="btn waves-effect waves-light w100 js-merge">Update</div>
+        <?php } ?>
       </div>
     </div>
   </div>

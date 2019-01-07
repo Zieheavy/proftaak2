@@ -27,8 +27,6 @@ $('body').on('click', '.js-delete-source', function(){
 })
 
 $('body').on('click', '.js-delete-sourcefile', function(){
-
-
   $('.js-confirm-modal').modal("close");
   $.post("include/delete/deleteSourceFile.php",{
     sourceid: fileId
