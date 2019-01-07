@@ -88,7 +88,7 @@ for($i = 0; $i < count($itemArrays); $i++){
         foreach($itemArrays as $item){
           foreach ($permissions as $key => $permission):
             if($permission["colleges_id"] == $item["collegeId"] && $permission["read"] == 1){?>
-              <div class="home-card col m12" data-college="<?= $item["collegeName"] ?>" data-course="<?= $item["courseName"] ?>" data-name="<?= $item["name"] ?>">
+              <div class="home-card col m12" id="<?=$item['mergedId']?>" data-college="<?= $item["collegeName"] ?>" data-course="<?= $item["courseName"] ?>" data-name="<?= $item["name"] ?>">
                 <div class="card horizontal">
                   <div class="card-image">
                     <?php
@@ -107,7 +107,19 @@ for($i = 0; $i < count($itemArrays); $i++){
                     <div class="card-action home-card-action">
                       <div class="row">
 
-                        <a href="_completed\<?= $item['filename'] ?>.pdf" class="js-download btn w30" download>  <i class="fa fa-download" aria-hidden="true"></i></a>
+                        <!-- <a href="_completed\<?= $item['filename'] ?>.pdf" class="js-download btn w30" download>    <i class="fa fa-download" aria-hidden="true"></i>
+                        </a> -->
+                        <a class='dropdown-trigger btn w30' href='#' data-target='drp<?=$item['mergedId']?>'>
+                          <i class="fa fa-download" aria-hidden="true"></i>
+                        </a>
+                        <ul class='dropdown-content' id="drp<?=$item['mergedId']?>">
+                          <li>
+                            <a class="js-download-pdf" href="_completed\<?= $item['filename'] ?>.pdf" download>pdf</a>
+                          </li>
+                          <li>
+                            <a class="js-download-doc" href="#" data-file="<?=$item['filename']?>">DOC</a>
+                          </li>
+                        </ul>
                         <?php if($permission["edit"] == 1){ ?>
                           <a href="nieuw-document.php?v=<?= $selectedVersion["id"]; ?>" class="btn w30"><i class="material-icons">edit</i></a>
                         <?php } ?>
