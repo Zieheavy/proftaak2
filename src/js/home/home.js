@@ -40,6 +40,7 @@ $(document).ready(function() {
 });
 $('body').on('click', '.js-download-doc', function(){
   var file = $(this).data('file');
+  M.toast({html: 'Bestand word omgezet naar DOCX &nbsp;' + getLoaderHTML(), classes: "toast--warning js-toast-warning", displayLength: 99999999});
   $.post("include/pdf/downloadPdfDoc.php",{
     file: file
   }, function(response,status){
@@ -48,6 +49,7 @@ $('body').on('click', '.js-download-doc', function(){
       $('body').append('<a id="temp" href="' + "_completed/" + file + '.docx" download></a>');
       $('#temp')[0].click();
       $('#temp').remove();
+      M.Toast.getInstance($(".js-toast-warning")).dismiss()
     }
   });
 });

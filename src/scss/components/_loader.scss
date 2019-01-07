@@ -1,0 +1,70 @@
+@mixin create-dots-elem ($c, $am, $s, $cs, $ranim, $bfanim, $bddanim, $col) {
+    $tot-anim: $ranim + $bfanim;
+    $l-percent: $ranim / $tot-anim * 100%;
+    $g-percent: $bfanim / $tot-anim * 100%;
+    .#{$c} {
+        position: relative;
+        margin-top: $cs / 2;
+        margin-right: $cs / 2 + $s;
+        margin-bottom: $cs / 2 + $s;
+        margin-left: $cs / 2;
+        &__dot {
+            width: $s;
+            height: $s;
+            border-radius: 100%;
+            position: absolute;
+            background-color: $col;
+            transform: rotate(-90deg) translateX(-50px);
+            animation: #{$c} $tot-anim infinite linear; /*, opac 1s infinite linear;*/
+            @for $i from 1 through $am {
+                &:nth-child(#{$i}) {
+                    animation-delay: $bddanim * $i * -1;
+                }
+            }
+        }
+    }
+
+    $per1: $l-percent / 100% * 5%;
+    $per2: $l-percent / 100% * 45%;
+    $per3: $l-percent / 100% * 55%;
+    $per4: $l-percent / 100% * 95%;
+    @include create-keyframe($c) {
+        0% {
+            transform: rotate(-90deg) translateX($cs / 2px * -1px);
+            opacity: 1;
+        }
+        #{$per1} {
+            transform: rotate(0deg) translateX($cs / 2px * -1px);
+        }
+        #{$per2} {
+            transform: rotate(180deg) translateX($cs / 2px * -1px);
+        }
+        #{$per3} {
+            transform: rotate(360deg) translateX($cs / 2px * -1px);
+        }
+        #{$per4} {
+            transform: rotate(540deg) translateX($cs / 2px * -1px);
+        }
+        #{$l-percent - 0.001%} {
+            opacity: 1;
+        }
+        #{$l-percent} {
+            transform: rotate(630deg) translateX($cs / 2px * -1px);
+            opacity: 0;
+        }
+        100% {
+            transform: rotate(630deg) translateX($cs / 2px * -1px);
+            opacity: 0;
+        }
+    }
+}
+
+
+$loader-dots-amount-dots: 5;
+$loader-dots-size: 4px;
+$loader-dots-circle-size: 30px;
+$loader-dots-rotate-animation: 2.5s; /* Time it takes to animate the dots 2 full rounds (speed ups and slow downs are calculated) */
+$loader-dots-between-full-animation-delay: 1.2s; /* Delay between every 2 full rotations */
+$loader-dots-between-dots-delay: 0.12s; /* Delay in when the animation starts between every dot in seconds */
+$loader-dots-color: black;
+@include create-dots-elem ('loading-dots', $loader-dots-amount-dots, $loader-dots-size, $loader-dots-circle-size, $loader-dots-rotate-animation, $loader-dots-between-full-animation-delay, $loader-dots-between-dots-delay, $loader-dots-color);

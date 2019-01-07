@@ -13,6 +13,16 @@ var getUrlParameter = function getUrlParameter(sParam) {
   }
 };
 
+function getLoaderHTML(){
+  var str = '<div class="loading-dots">'+
+    '<div class="loading-dots__dot"></div>'+
+    '<div class="loading-dots__dot"></div>'+
+    '<div class="loading-dots__dot"></div>'+
+    '<div class="loading-dots__dot"></div>'+
+    '<div class="loading-dots__dot"></div>'+
+  '</div>';
+  return str;
+}
 var hasScrollbar = window.innerWidth > document.documentElement.clientWidth;
 // console.log(hasScrollbar);
 if(hasScrollbar == true){

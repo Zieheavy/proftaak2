@@ -13,7 +13,7 @@ var session = [];
 var mergeName = "";
 var nameExists = false;
 $('body').on('click', '.js-merge', function(){
-  M.toast({html: "Bestanden worden omgezet", classes: "toast--warning js-toast-warning", displayLength: 99999999});
+  M.toast({html: "Bestanden worden omgezet&nbsp;"  + getLoaderHTML(), classes: "toast--warning js-toast-warning", displayLength: 99999999});
   mergeName = $(".js-mergedName").val();
   $('.file--dragged').each(function(){
     fileNames.push($(this).data("name"));
