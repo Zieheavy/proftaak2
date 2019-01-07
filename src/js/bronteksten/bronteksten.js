@@ -23,7 +23,8 @@ var fileId = -1;
 $('body').on('click', '.js-delete-source', function(){
   fileId = $(this).closest(".js-source-files").data("id");
   console.log($(this).closest(".js-source-files"));
-  confirmModal("Confirm", "Weet u zeker dat u een bron bestand wilt verwijderen", "js-delete-sourcefile")
+  confirmModal("Confirm", "Weet u zeker dat u een bron bestand wilt verwijderen", "js-delete-sourcefile");
+  console.log("hallo");
 })
 
 $('body').on('click', '.js-delete-sourcefile', function(){
