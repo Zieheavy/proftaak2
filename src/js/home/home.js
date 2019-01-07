@@ -20,12 +20,16 @@ $('body').on('click', '.js-delete-merged', function(){
   confirmModal("Weet u het zeker?", "Dit bestand zal permanent verwijderd worden", "js-delete-merged-confirmed");
   console.log(mergedId);
 });
+$(document).ready(function() {
+  $('.dropdown-trigger').dropdown();
+});
 $('body').on('click', '.js-delete-merged-confirmed', function(){
   $.post("include/delete/deleteMerged.php",{
     id: mergedId
   }, function(response,status){
     console.log(response);
     if (response == "succes") {
+      $('#' + mergedId).remove();
       M.toast({html: 'Succes', classes: 'toast--succes'})
       $('.js-confirm-modal').modal("close");
     }
@@ -33,4 +37,17 @@ $('body').on('click', '.js-delete-merged-confirmed', function(){
 });
 $(document).ready(function() {
   $('.js-lazyload-iframe').lazyload();
+});
+$('body').on('click', '.js-download-doc', function(){
+  var file = $(this).data('file');
+  $.post("include/pdf/downloadPdfDoc.php",{
+    file: file
+  }, function(response,status){
+    console.log(response);
+    if (response == "success") {
+      $('body').append('<a id="temp" href="' + "_completed/" + file + '.docx" download></a>');
+      $('#temp')[0].click();
+      $('#temp').remove();
+    }
+  });
 });
