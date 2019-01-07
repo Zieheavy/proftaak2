@@ -22,9 +22,6 @@ foreach ($colleges as $key => $college) {
   }
 }
 
-// dump($permitedColleges,"");
-
-
  ?>
 
 <!-- all global modals will be saved here -->
@@ -112,6 +109,51 @@ foreach ($colleges as $key => $college) {
   </div>
   <div class="modal-footer">
     <a class="waves-effect waves-light btn btn js-new-course">create</a>
+  </div>
+</div>
+
+<div class="modal js-confirm-modal">
+  <div class="modal-content">
+    <h4 class="confirm-title">Modal Header</h4>
+    <p class="confirm-text">A bunch of text</p>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-light btn btn confirm-save-change">Accepteren</a>
+      <a class="waves-effect waves-dark btn btn confirm-delete-change modal-close red lighten-2">Cancel</a>
+    <!-- <div type="button" class="waves-effect waves-light btn confirm-save-change">Accepteren</div> -->
+    <!-- <div type="button" class="waves-effect waves-dark btn">Cancel</div> -->
+  </div>
+</div>
+
+<div id="deleteCollege" class="modal">
+  <div class="modal-content">
+    <h4 class="confirm-title">Delete college</h4>
+    <select class="js-delete-college-collegeId">
+      <?php foreach ($colleges as $key => $college): ?>
+        <option value="<?= $college["id"] ?>"><?= $college["name"] ?></option>
+      <?php endforeach; ?>
+    </select>
+    <label>Opleiding</label>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-light btn btn js-delete-college">delete</a>
+  </div>
+</div>
+
+<div id="deleteCourse" class="modal">
+  <div class="modal-content">
+    <h4 class="confirm-title">Delete opleiding</h4>
+    <select class="js-delete-course-courseId">
+      <?php foreach ($colleges as $key => $college): ?>
+        <?php foreach ($college["courses"] as $key => $course): ?>
+          <option value="<?= $course["id"] ?>"><?= $course["name"] ?></option>
+          <?php echo $course["name"]; ?>
+        <?php endforeach; ?>
+      <?php endforeach; ?>?>
+    </select>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-light btn btn js-delete-course">delete</a>
   </div>
 </div>
 

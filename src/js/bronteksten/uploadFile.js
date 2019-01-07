@@ -1,4 +1,6 @@
 var fileToEdit = "";
+var amountToUpload = 0;
+var amountUploaded = 0;
 $('select').formSelect();
 var existingFiles = [];
 $.post("include/get/getSourceFiles.php",{}, function(response,status){
@@ -7,9 +9,13 @@ $.post("include/get/getSourceFiles.php",{}, function(response,status){
 //multiple file upload
 $("body").on("click", ".js-upload-multiple", function(){
   var file = $('#uploadMultiple')[0].files;
+  amountToUpload = file.length;
+  amountUploaded = 0;
+  M.toast({html: "Bestanden worden omgezet", classes: "toast--warning js-toast-warning", displayLength: 99999999});
   for(var i = 0; i < file.length; i++){
     var filename = file[i].name.split(".")[0];
     if(existingFiles.indexOf(filename) != -1){
+      amountUploaded++;
       console.log("file exists")
       M.toast({html: filename + " bestaat al,<br> om het bestand aantepassen gebruik edit", classes: "toast--error"});
     }else{
@@ -17,15 +23,18 @@ $("body").on("click", ".js-upload-multiple", function(){
       var upload = new Upload(file[i]);
       upload.doUpload();
     }
+    handleWorkingMessage();
   }
 });
 //single file upload
 $("body").on("click", ".js-upload", function(){
   var file = $('#uploadSingle')[0].files;
-  console.log();
-  console.log(fileToEdit);
+  amountToUpload = 1;
+  amountUploaded = 0;
+  M.toast({html: "Bestanden worden omgezet", classes: "toast--warning js-toast-warning", displayLength: 99999999});
   if(file[0].name != fileToEdit){
-
+    amountUploaded = 1;
+    handleWorkingMessage();
   }else{
     $('#editModal').modal('close');
     for(var i = 0; i < file.length; i++){
@@ -77,14 +86,17 @@ Upload.prototype.doUpload = function () {
     success: function (data) {
       console.log(data);
       var extension = data.split(".");
+      console.log(extension);
       //checks if the file is not a pdf
-      if(extension != "pdf"){
+      if(extension[1] != "pdf"){
         //if the file is excel file convert the excel to pdf
         if(extension[1] == "xlsx" || extension[1] == "xls" || extension[1] == "xlsm"){
           $.post( "include/pdf/excelToPdf.php", {
             fileName: extension[0],
             extension: extension[1]
           }, function(response,status){
+            amountUploaded++;
+            handleWorkingMessage();
             if(response == "succes"){
               M.toast({html: "Het excel bestand " + extension[0] + " is succes upgeload", classes: "toast--succes"});
               reloadElements();
@@ -99,6 +111,8 @@ Upload.prototype.doUpload = function () {
             fileName: extension[0],
             extension: extension[1]
           }, function(response,status){
+            amountUploaded++;
+            handleWorkingMessage();
             if(response == "succes"){
               M.toast({html: "Het word bestand " + extension[0] + " is succes upgeload", classes: "toast--succes"});
               reloadElements();
@@ -108,6 +122,9 @@ Upload.prototype.doUpload = function () {
           })
         }
       }else{
+        console.log("pdf")
+        amountUploaded++;
+        handleWorkingMessage();
         M.toast({html: "Het pdf bestand " + extension[0] + " is succes upgeload", classes: "toast--succes"});
         reloadElements();
       }
@@ -125,6 +142,12 @@ Upload.prototype.doUpload = function () {
     timeout: 120000
   });
 };
+
+function handleWorkingMessage(){
+  console.log(amountToUpload);
+  console.log(amountUploaded);
+  if(amountUploaded == amountToUpload) M.Toast.getInstance($(".js-toast-warning")).dismiss();
+}
 
 Upload.prototype.progressHandling = function (event) {
   var percent = 0;

@@ -13,6 +13,7 @@ var session = [];
 var mergeName = "";
 var nameExists = false;
 $('body').on('click', '.js-merge', function(){
+  M.toast({html: "Bestanden worden omgezet", classes: "toast--warning js-toast-warning", displayLength: 99999999});
   mergeName = $(".js-mergedName").val();
   $('.file--dragged').each(function(){
     fileNames.push($(this).data("name"));
@@ -43,14 +44,13 @@ $('body').on('click', '.js-merge', function(){
       $.post("include/get/getMergedFiles.php",{ },function(response,status){
         response = JSON.parse(response);
         console.log(response);
+        M.Toast.getInstance($(".js-toast-warning")).dismiss()
 
         for (var i = 0; i < response.length; i++) {
           if(mergeName == response[i].name){
             nameExists = true;
-            // console.log(response[i].colleges_id + response[i].session.collegeId);
-            // console.log(response[i].courses_id + session.courseId);
-            // console.log(" . . ")
-            if(response[i].colleges_id == session.collegeId && response[i].courses_id == session.courseId){
+            console.log(session);
+            if(response[i].colleges_id == session.collegeId && response[i].courses_id == session.courseId || session.admin == 1){
               for (var j = 0; j < permissions.length; j++) {
                 if(response[i].colleges_id == permissions[j].colleges_id){
                   console.log(permissions[j])

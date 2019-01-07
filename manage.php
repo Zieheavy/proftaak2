@@ -88,6 +88,8 @@ include 'include/get/getColleges.php';
       <?php if(strpos($permStat, '1') !== false){ ?>
         <a class="col s6 waves-effect waves-light btn modal-trigger" href="#newCollege">Nieuwe college</a>
         <a class="col s6 waves-effect waves-light btn modal-trigger" href="#newCourse">Nieuwe opleiding</a>
+        <a class="col s6 waves-effect waves-light btn modal-trigger" href="#deleteCollege">Delete college</a>
+        <a class="col s6 waves-effect waves-light btn modal-trigger" href="#deleteCourse">Delete opleiding</a>
       <?php } ?>
       <!-- <div class="col s10 offset-s1"> -->
       <div class="col s12">
