@@ -24,6 +24,12 @@ $(sortable('.js-sortable-copy')).each(function(index, el) {
     var dropdownTrigger = $(i).find('.dropdown-trigger');
     var dropdownContent = $(i).find('.dropdown-content');
     var versionSelect = $(i).find('.js-version-select');
+
+    var random = randomString2(15);
+    var inputContainer = $(i).closest("li").find(".file__pagenrs");
+    inputContainer.find("input").attr("id",random);
+    inputContainer.find("label").attr("for",random);
+
     $(i).addClass('file--dragged');
     $(dropdownTrigger).addClass('drp');
     $(dropdownTrigger).attr('data-target', "dropdown" + rnd);
