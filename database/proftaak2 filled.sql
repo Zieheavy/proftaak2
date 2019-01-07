@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 07, 2019 at 11:40 AM
+-- Generation Time: Jan 07, 2019 at 11:46 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `proftaak2`
 --
+CREATE DATABASE IF NOT EXISTS `proftaak2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `proftaak2`;
 
 -- --------------------------------------------------------
 
@@ -28,12 +30,15 @@ SET time_zone = "+00:00";
 -- Table structure for table `attached-files`
 --
 
-CREATE TABLE `attached-files` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `attached-files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `pages` varchar(400) DEFAULT NULL,
   `versions_id` int(11) NOT NULL,
-  `sourcev_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `sourcev_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_attached-files_versions1_idx` (`versions_id`),
+  KEY `fk_attached-files_versions2_idx` (`sourcev_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1609 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `attached-files`
@@ -1604,10 +1609,11 @@ INSERT INTO `attached-files` (`id`, `pages`, `versions_id`, `sourcev_id`) VALUES
 -- Table structure for table `colleges`
 --
 
-CREATE TABLE `colleges` (
-  `id` int(11) NOT NULL,
-  `name` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `colleges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `colleges`
@@ -1629,11 +1635,13 @@ INSERT INTO `colleges` (`id`, `name`) VALUES
 -- Table structure for table `courses`
 --
 
-CREATE TABLE `courses` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `courses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
-  `colleges_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `colleges_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_courses_colleges_idx` (`colleges_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `courses`
@@ -1658,12 +1666,15 @@ INSERT INTO `courses` (`id`, `name`, `colleges_id`) VALUES
 -- Table structure for table `mergedfiles`
 --
 
-CREATE TABLE `mergedfiles` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `mergedfiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) DEFAULT NULL,
   `users_id` int(11) NOT NULL,
-  `courses_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `courses_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_mergedfiles_users1_idx` (`users_id`),
+  KEY `fk_mergedfiles_courses1_idx` (`courses_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `mergedfiles`
@@ -1705,13 +1716,16 @@ INSERT INTO `mergedfiles` (`id`, `name`, `users_id`, `courses_id`) VALUES
 -- Table structure for table `permissions`
 --
 
-CREATE TABLE `permissions` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `read` tinyint(4) DEFAULT '0',
   `edit` tinyint(4) DEFAULT '0',
   `users_id` int(11) NOT NULL,
-  `colleges_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `colleges_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_permissions_users1_idx` (`users_id`),
+  KEY `fk_permissions_colleges1_idx` (`colleges_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `permissions`
@@ -1738,14 +1752,18 @@ INSERT INTO `permissions` (`id`, `read`, `edit`, `users_id`, `colleges_id`) VALU
 -- Table structure for table `sourcefiles`
 --
 
-CREATE TABLE `sourcefiles` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `sourcefiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(400) DEFAULT NULL,
   `extension` varchar(10) DEFAULT NULL,
   `users_id` int(11) NOT NULL,
   `colleges_id` int(11) DEFAULT NULL,
-  `courses_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `courses_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_sourcefiles_users1_idx` (`users_id`),
+  KEY `fk_sourcefiles_colleges1_idx` (`colleges_id`),
+  KEY `fk_sourcefiles_courses1_idx` (`courses_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `sourcefiles`
@@ -1766,8 +1784,8 @@ INSERT INTO `sourcefiles` (`id`, `name`, `extension`, `users_id`, `colleges_id`,
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(200) DEFAULT NULL,
   `password` varchar(400) DEFAULT NULL,
   `confirm` tinyint(4) DEFAULT '0',
@@ -1775,8 +1793,11 @@ CREATE TABLE `users` (
   `verified` tinyint(4) DEFAULT '0',
   `admin` tinyint(4) DEFAULT '0',
   `colleges_id` int(11) DEFAULT '1',
-  `courses_id` int(11) DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `courses_id` int(11) DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `fk_users_colleges1_idx` (`colleges_id`),
+  KEY `fk_users_courses1_idx` (`courses_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
@@ -1799,13 +1820,16 @@ INSERT INTO `users` (`id`, `username`, `password`, `confirm`, `newcollege`, `ver
 -- Table structure for table `versions`
 --
 
-CREATE TABLE `versions` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `versions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `version` int(11) DEFAULT NULL,
   `filedate` varchar(20) DEFAULT NULL,
   `mergedfiles_id` int(11) DEFAULT NULL,
-  `sourcefiles_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `sourcefiles_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_versions_mergedfiles1_idx` (`mergedfiles_id`),
+  KEY `fk_versions_sourcefiles1_idx` (`sourcefiles_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `versions`
@@ -1858,116 +1882,6 @@ INSERT INTO `versions` (`id`, `version`, `filedate`, `mergedfiles_id`, `sourcefi
 (159, 0, '20-12-2018 07:57:49', NULL, 72),
 (160, 0, '07-01-2019 10:26:45', 38, NULL);
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `attached-files`
---
-ALTER TABLE `attached-files`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_attached-files_versions1_idx` (`versions_id`),
-  ADD KEY `fk_attached-files_versions2_idx` (`sourcev_id`);
-
---
--- Indexes for table `colleges`
---
-ALTER TABLE `colleges`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `courses`
---
-ALTER TABLE `courses`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_courses_colleges_idx` (`colleges_id`);
-
---
--- Indexes for table `mergedfiles`
---
-ALTER TABLE `mergedfiles`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_mergedfiles_users1_idx` (`users_id`),
-  ADD KEY `fk_mergedfiles_courses1_idx` (`courses_id`);
-
---
--- Indexes for table `permissions`
---
-ALTER TABLE `permissions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_permissions_users1_idx` (`users_id`),
-  ADD KEY `fk_permissions_colleges1_idx` (`colleges_id`);
-
---
--- Indexes for table `sourcefiles`
---
-ALTER TABLE `sourcefiles`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_sourcefiles_users1_idx` (`users_id`),
-  ADD KEY `fk_sourcefiles_colleges1_idx` (`colleges_id`),
-  ADD KEY `fk_sourcefiles_courses1_idx` (`courses_id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_users_colleges1_idx` (`colleges_id`),
-  ADD KEY `fk_users_courses1_idx` (`courses_id`);
-
---
--- Indexes for table `versions`
---
-ALTER TABLE `versions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_versions_mergedfiles1_idx` (`mergedfiles_id`),
-  ADD KEY `fk_versions_sourcefiles1_idx` (`sourcefiles_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `attached-files`
---
-ALTER TABLE `attached-files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1609;
---
--- AUTO_INCREMENT for table `colleges`
---
-ALTER TABLE `colleges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
---
--- AUTO_INCREMENT for table `courses`
---
-ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT for table `mergedfiles`
---
-ALTER TABLE `mergedfiles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
---
--- AUTO_INCREMENT for table `permissions`
---
-ALTER TABLE `permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
---
--- AUTO_INCREMENT for table `sourcefiles`
---
-ALTER TABLE `sourcefiles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT for table `versions`
---
-ALTER TABLE `versions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 --
 -- Constraints for dumped tables
 --
