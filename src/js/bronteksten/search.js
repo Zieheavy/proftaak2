@@ -6,6 +6,17 @@ $(".js-source-files").each(function(){
 })
 setSearch(shownItems);
 
+$("body").on("click", ".collapsible-expand", function(){
+  console.log("click");
+  if($(this).hasClass("active") == false){
+    $(this).find(".js-sortableItem").each(function(){
+      console.log("loop");
+      // $(this).removeClass("active");
+      $(this).trigger("click")
+    })
+  }
+})
+
 //if the search bar text has change check if the search bar value is in the items array hide all other items
 $(".js-merge").on("change paste keyup", function(){
   var search = $(this).val().toLowerCase();

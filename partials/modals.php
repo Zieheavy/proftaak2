@@ -5,12 +5,7 @@ include 'include/get/getPermissions.php';
 $currentPage = explode("/",$_SERVER['PHP_SELF'])[2];
 $page = false;
 
-if($currentPage == "bronteksten.php"){
-  $page = true;
 
-  // dump($colleges, "");
-  // dump($permissions, "");
-}
 
 $permitedColleges = [];
 
@@ -24,20 +19,23 @@ foreach ($colleges as $key => $college) {
   }
 }
 
-$checkIfNoneExisits = false;
-foreach ($permitedColleges[0]["courses"] as $key => $pCourse){
-  if($pCourse["name"] == "none"){
-    $checkIfNoneExisits = true;
+if($currentPage == "bronteksten.php"){
+  $page = true;
+  $checkIfNoneExisits = false;
+  foreach ($permitedColleges[0]["courses"] as $key => $pCourse){
+    if($pCourse["name"] == "none"){
+      $checkIfNoneExisits = true;
+    }
   }
-}
 
-$tempArr = [];
-$tempArr["id"] = 1;
-$tempArr["name"] = "none";
-$tempArr["colleges_id"] = 2;
+  $tempArr = [];
+  $tempArr["id"] = 1;
+  $tempArr["name"] = "none";
+  $tempArr["colleges_id"] = 2;
 
-if($checkIfNoneExisits == false){
-  array_unshift($permitedColleges[0]["courses"], $tempArr);
+  if($checkIfNoneExisits == false){
+    array_unshift($permitedColleges[0]["courses"], $tempArr);
+  }
 }
  ?>
 
@@ -130,7 +128,7 @@ if($checkIfNoneExisits == false){
   </div>
 </div>
 
-<div class="modal js-confirm-modal">
+<div id="confirmModal" class="modal js-confirm-modal">
   <div class="modal-content">
     <h4 class="confirm-title">Modal Header</h4>
     <p class="confirm-text">A bunch of text</p>

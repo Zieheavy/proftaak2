@@ -220,7 +220,6 @@ Array.prototype.removeIndex = function(n) {
   return t;
 };
 
-// confirmModal("confirm", "You will delete the complete contact are you sure", "deleteModal")
 var confirmClassOld = "";
 var deleteClassOld = "";
 function confirmModal(title, body, confirmClass, deleteClass, data){
@@ -248,6 +247,7 @@ function confirmModal(title, body, confirmClass, deleteClass, data){
     $('.confirm-text').text(body)
 
     // console.log($(".js-confirm-modal"))
-    $('.js-confirm-modal').modal();
-    $('.js-confirm-modal').modal("open");
+    console.log("open modal")
+    $('#confirmModal').modal();
+    $('#confirmModal').modal("open");
 }
