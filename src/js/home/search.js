@@ -6,6 +6,18 @@ $(".home-card").each(function(){
 })
 setSearch(shownItems);
 
+$("body").on("click", ".collapsible-header", function(){
+  console.log("click");
+  if($(this).hasClass("active") == false){
+    $(this).closest(".collapsible-expand").find(".js-sortableItem").each(function(){
+      console.log("loop");
+      if($(this).hasClass("active")){
+        $(this).trigger("click")
+      }
+    })
+  }
+})
+
 //if the search bar text has change check if the search bar value is in the items array hide all other items
 $(".js-merge").on("change paste keyup", function(){
   var search = $(this).val().toLowerCase();

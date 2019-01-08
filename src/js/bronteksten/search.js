@@ -6,13 +6,14 @@ $(".js-source-files").each(function(){
 })
 setSearch(shownItems);
 
-$("body").on("click", ".collapsible-expand", function(){
+$("body").on("click", ".collapsible-header", function(){
   console.log("click");
   if($(this).hasClass("active") == false){
-    $(this).find(".js-sortableItem").each(function(){
+    $(this).closest(".collapsible-expand").find(".js-sortableItem").each(function(){
       console.log("loop");
-      // $(this).removeClass("active");
-      $(this).trigger("click")
+      if($(this).hasClass("active")){
+        $(this).trigger("click")
+      }
     })
   }
 })
@@ -37,6 +38,7 @@ $(".js-merge").on("change paste keyup", function(){
 
 //changes update color then edit the searchable array
 $("body").on("click", ".js-sortableItem", function(){
+  console.log("trigger");
   if($(this).hasClass("active")){
     $(this).removeClass("active")
   }else{
