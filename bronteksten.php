@@ -1,6 +1,7 @@
 <?php
 include 'include/database.php';
 include 'include/session.php';
+
 if(!isset($_POST["ajax"])){
   include 'include/get/getPermissions.php';
 }
@@ -25,7 +26,7 @@ $sql = "SELECT
 if (false === ($stmt = $conn->prepare($sql))) {
   echo 'error preparing statement: ' . $conn->error;
 }
-// $stmt->bind_param("i", $id);
+
 $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_array(MYSQLI_ASSOC))
@@ -38,6 +39,7 @@ if(isset($_POST["ajax"])){
   echo json_encode($sourceFiles);
   die();
 }
+
 
 ?>
 <html>

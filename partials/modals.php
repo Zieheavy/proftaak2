@@ -14,14 +14,31 @@ if($currentPage == "bronteksten.php"){
 
 $permitedColleges = [];
 
+
+
 foreach ($colleges as $key => $college) {
   foreach ($permissions as $key => $permission) {
-    if($permission["colleges_id"] == $college["id"]){
+    if($permission["colleges_id"] == $college["id"] && $permission["edit"] == 1){
       $permitedColleges[] = $college;
     }
   }
 }
 
+$checkIfNoneExisits = false;
+foreach ($permitedColleges[0]["courses"] as $key => $pCourse){
+  if($pCourse["name"] == "none"){
+    $checkIfNoneExisits = true;
+  }
+}
+
+$tempArr = [];
+$tempArr["id"] = 1;
+$tempArr["name"] = "none";
+$tempArr["colleges_id"] = 2;
+
+if($checkIfNoneExisits == false){
+  array_unshift($permitedColleges[0]["courses"], $tempArr);
+}
  ?>
 
 <!-- all global modals will be saved here -->
@@ -62,6 +79,7 @@ foreach ($colleges as $key => $college) {
     <a href="#!" class="waves-effect waves-green btn-flat js-upload-multiple">Upload</a>
   </div>
 </div>
+
 <div id="editModal" class="modal">
   <div class="modal-content">
     <div class="file-field input-field">
