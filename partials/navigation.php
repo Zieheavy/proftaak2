@@ -50,7 +50,7 @@ switch ($currentPage) {
         <?php } ?>
       </ul>
       <form class="" action="include/login.php" method="post">
-        <button type="submit" name="logoutSub" class="btn waves-effect waves-light right js-logout">Logout</button>
+        <button type="submit" name="logoutSub" class="btn waves-effect waves-light right js-logout" style="display:none;">Logout</button>
       </form>
     <?php } ?>
   </div>
