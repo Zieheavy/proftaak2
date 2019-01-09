@@ -39,7 +39,7 @@ switch ($currentPage) {
 
 <nav>
   <div class="nav-wrapper">
-    <!-- <a href="#!" class="brand-logo right"><img class="logo" src="img/logo-trans.png"></a> -->
+    <a href="#!" class="brand-logo right"><img class="logo" src="img/logo-trans.png"></a>
     <?php if($active != -1){ ?>
       <ul class="hide-on-med-and-down">
         <li class="<?php if($active == 1) echo "active"; ?>"><a href="home.php">Home</a></li>
@@ -50,7 +50,7 @@ switch ($currentPage) {
         <?php } ?>
       </ul>
       <form class="" action="include/login.php" method="post">
-        <button type="submit" name="logoutSub" class="btn waves-effect waves-light right js-logout" style="display:none;">Logout</button>
+        <button type="submit" name="logoutSub" class="btn waves-effect waves-light right js-logout">Logout</button>
       </form>
     <?php } ?>
   </div>
