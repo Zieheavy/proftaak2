@@ -22,23 +22,28 @@ $('body').on("click", ".js-perm-update", function(){
     }
   })
 
-  items.each(function(){
-    var collegeId = $(this).data("collegeid");
-    var read = $(this).find(".read").is(":checked") ? 1 : 0;
-    var edit = $(this).find(".edit").is(":checked") ? 1 : 0;
-    $.post("include/insert/insertPermissions.php",{
-      userid: userid,
-      collegeId: collegeId,
-      read: read,
-      edit: edit
-    }, function(response,status){
-      console.log(response)
-      if(response == "success"){
-        succesCount++;
-        if(succesCount == succesMaxCount){
-          M.toast({html: "Permissions van " + cardContainer.data("name") + " succesvol geupdate", classes: "toast--succes"});
+  $.post("include/delete/deletePermissions.php", {
+    userId: userid
+  },function(response,status){
+    items.each(function(){
+      var collegeId = $(this).data("collegeid");
+      var read = $(this).find(".read").is(":checked") ? 1 : 0;
+      var edit = $(this).find(".edit").is(":checked") ? 1 : 0;
+      console.log("college " + collegeId + " read " + read + " edit " + edit);
+      $.post("include/insert/insertPermissions.php",{
+        userid: userid,
+        collegeId: collegeId,
+        read: read,
+        edit: edit
+      }, function(response,status){
+        console.log(response)
+        if(response == "success"){
+          succesCount++;
+          if(succesCount == succesMaxCount){
+            M.toast({html: "Permissions van " + cardContainer.data("name") + " succesvol geupdate", classes: "toast--succes"});
+          }
         }
-      }
-    });
+      });
+    })
   })
 });
