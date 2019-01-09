@@ -28,3 +28,18 @@
 .dropdown-content li a{
   color: #26a69a !important;
 }
+.btn{
+  background-color: #29959d;
+  &:hover{
+    background-color: #33bbc6;
+  }
+  &:focus{
+    background-color: #1e6f75;
+  }
+}
+nav{
+  background-color:#2f8e7e  ;
+}
+.js-logout{
+  display: none;
+}
