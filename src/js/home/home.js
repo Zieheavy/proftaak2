@@ -40,7 +40,7 @@ $(document).ready(function() {
 });
 $('body').on('click', '.js-download-doc', function(){
   var file = $(this).data('file');
-  M.toast({html: 'Bestand word omgezet naar DOCX &nbsp;' + getLoaderHTML(), classes: "toast--warning js-toast-warning", displayLength: 99999999});
+  M.toast({html: 'Bestand word omgezet naar DOCX &nbsp;' + getLoaderHTML(), classes: "toast--info js-toast-warning", displayLength: 99999999});
   $.post("include/pdf/downloadPdfDoc.php",{
     file: file
   }, function(response,status){

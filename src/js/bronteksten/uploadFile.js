@@ -11,7 +11,7 @@ $("body").on("click", ".js-upload-multiple", function(){
   var file = $('#uploadMultiple')[0].files;
   amountToUpload = file.length;
   amountUploaded = 0;
-  M.toast({html: "Bestanden worden omgezet&nbsp;"  + getLoaderHTML(), classes: "toast--warning js-toast-warning", displayLength: 99999999});
+  M.toast({html: "Bestanden worden omgezet&nbsp;"  + getLoaderHTML(), classes: "toast--info js-toast-warning", displayLength: 99999999});
   for(var i = 0; i < file.length; i++){
     var filename = file[i].name.split(".")[0];
     if(existingFiles.indexOf(filename) != -1){
