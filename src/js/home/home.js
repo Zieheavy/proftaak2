@@ -34,6 +34,7 @@ $('body').on('click', '.js-delete-merged-confirmed', function(){
   $.post("include/delete/deleteMerged.php",{
     id: mergedId
   }, function(response,status){
+    console.log(response);
     if (response == "succes") {
       $('#' + mergedId).remove();
       M.toast({html: 'Succes', classes: 'toast--succes'});
