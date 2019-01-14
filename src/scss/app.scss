@@ -12,9 +12,11 @@
 @import 'components/file';
 @import 'components/scrollbar';
 @import 'components/loader';
-
+.js-name-helper{
+  margin-bottom: -18px;
+}
 .disnone{
-  display: none;
+  display: none !important;
 }
 
 .no-border-bot{

@@ -4,9 +4,11 @@ include 'session.php';
 
 $loginError = "";
 $registerError = "";
+
 if (isset($_POST['logoutSub'])) {
   logout();
 }
+
 if (isset($_POST['loginSub'])) {
   $name = $_POST['username'];
   $pass = $_POST['password'];
@@ -15,9 +17,30 @@ if (isset($_POST['loginSub'])) {
 
 if (isset($_POST['registerSub'])) {
   echo "register";
-  $name = $_POST['name'];
-  $mail = $_POST['mail'];
-  $pass = $_POST['pass'];
+  $name = $_POST['username'];
+  $mail = $_POST['email'];
+  $pass = $_POST['password'];
+  $pass2 = $_POST['password2'];
+  $er = 0;
+
+  if (strlen($pass) < 7) {
+    echo "shortpass";
+    header("Location: ../index.php?s=8&e=" . $mail . "&n=" . $name);
+    die();
+  }
+
+  if (strlen($name) < 5) {
+    echo "shortname";
+    header("Location: ../index.php?s=7&e=" . $mail . "&n=" . $name);
+    die();
+  }
+
+  if ($pass != $pass2) {
+    echo "wrongPass2";
+    header("Location: ../index.php?s=6&e=" . $mail . "&n=" . $name);
+    die();
+  }
+
 
   $passE = encrypt($pass);
   $sql = "SELECT * FROM users WHERE username = ?";
@@ -36,12 +59,15 @@ if (isset($_POST['registerSub'])) {
     $stmt->close();
 
     login($name, $pass);
+    echo "sdsdfsdf";
+    header("Location: ../index.php");
   }
   else{
     echo "userExists";
     header("Location: ../index.php?s=3");
   }
 }
+
 function logout(){
   resetSession();
   $loggedIn = false;

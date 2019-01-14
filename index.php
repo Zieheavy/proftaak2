@@ -1,5 +1,13 @@
 <?php
 include 'include/session.php';
+$email = "";
+$name = "";
+if (isset($_GET['e'])) {
+  $email = $_GET['e'];
+}
+if (isset($_GET['n'])) {
+  $name = $_GET['n'];
+}
 ?>
 <html>
 <head>
@@ -9,7 +17,7 @@ include 'include/session.php';
 <body class="indexPage">
   <?php include 'partials/navigation.php'; ?>
 
-  <div class="row login js-login login--active">
+  <div class="row login js-login <?=($name == "" && $email == "") ? "login--active" : ""?> ">
     <form class="col s10 m6 l4 offset-l4 offset-m3 offset-s1" method="post" action="include/logIn.php">
       <div class="card login__card">
         <div class="card-title">Login</div>
@@ -36,32 +44,33 @@ include 'include/session.php';
       </div>
     </form>
   </div>
-  <div class="row login js-register">
-    <form class="col s12 m8 l6 offset-l3 offset-m2" method="post" action="include/logIn.php">
+  <div class="row login js-register <?=($name != "" || $email != "") ? "login--active" : ""?>">
+    <form class="col s12 m8 l6 offset-l3 offset-m2 js-formsubmit" method="post" action="include/logIn.php">
       <div class="card login__card-register">
         <div class="card-title">Register</div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="name" type="text" data-type="2" class="validate js-name" name="name">
-            <label for="name">Gebruikersnaam</label>
+            <input id="username" type="text" data-type="2" value="<?=$name?>" class="validate js-name" name="username">
+            <label for="username">Gebruikersnaam</label>
+            <span class="helper-text js-name-helper" data-error="Gebruikernaam bestaat al" data-success=""></span>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="mail" type="email" class="validate js-mail" name="mail">
+            <input id="mail" type="email" value="<?=$email?>" class="validate js-mail" name="email">
             <label class="active" for="mail">email</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="pass" type="password" class="validate js-pass" name="pass">
+            <input id="pass" type="text" class="validate js-pass" name="password">
             <label class="active" for="pass">Wachtwoord</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="repeatPass" type="password" class="validate js-passR" name="repeatPass">
-            <label class="active" for="repeatPass">Heraal wachtwoord</label>
+            <input id="password2" type="text" class="validate js-passR" name="password2">
+            <label class="active" for="password2">Heraal wachtwoord</label>
           </div>
         </div>
         <div class="row btn-row">
