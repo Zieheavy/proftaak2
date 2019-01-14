@@ -3,6 +3,7 @@ var amountToUpload = 0;
 var amountUploaded = 0;
 $('select').formSelect();
 var existingFiles = [];
+//gets all the existing sourcefiles
 $.post("include/get/getSourceFiles.php",{}, function(response,status){
   existingFiles = JSON.parse(response);
 });
@@ -16,7 +17,6 @@ $("body").on("click", ".js-upload-multiple", function(){
     var filename = file[i].name.split(".")[0];
     if(existingFiles.indexOf(filename) != -1){
       amountUploaded++;
-      console.log("file exists")
       M.toast({html: filename + " bestaat al,<br> om het bestand aantepassen gebruik edit", classes: "toast--error"});
     }else{
        $('#uploadModal').modal('close');
@@ -44,6 +44,7 @@ $("body").on("click", ".js-upload", function(){
   }
 });
 
+//opens the edit modal
 $("body").on("click", ".js-open-edit", function(){
   $('#editModal').modal('open');
   var container = $(this).closest(".col")
@@ -53,7 +54,6 @@ $("body").on("click", ".js-open-edit", function(){
 // //////////////////////////////
 // // default upload functions //
 // //////////////////////////////
-//
 var Upload = function (file) {
   this.file = file;
 };
@@ -84,9 +84,7 @@ Upload.prototype.doUpload = function () {
       return myXhr;
     },
     success: function (data) {
-      console.log(data);
       var extension = data.split(".");
-      console.log(extension);
       //checks if the file is not a pdf
       if(extension[1] != "pdf"){
         //if the file is excel file convert the excel to pdf
@@ -106,7 +104,6 @@ Upload.prototype.doUpload = function () {
           })
           //if the file is word file convert the word to pdf
         }else if(extension[1] == "docx" || extension[1] == "doc"){
-          console.log(extension[0])
           $.post( "include/pdf/wordToPdf.php", {
             fileName: extension[0],
             extension: extension[1]
@@ -122,7 +119,6 @@ Upload.prototype.doUpload = function () {
           })
         }
       }else{
-        console.log("pdf")
         amountUploaded++;
         handleWorkingMessage();
         M.toast({html: "Het pdf bestand " + extension[0] + " is succes upgeload", classes: "toast--succes"});
@@ -144,8 +140,6 @@ Upload.prototype.doUpload = function () {
 };
 
 function handleWorkingMessage(){
-  console.log(amountToUpload);
-  console.log(amountUploaded);
   if(amountUploaded == amountToUpload) M.Toast.getInstance($(".js-toast-warning")).dismiss();
 }
 
@@ -157,7 +151,6 @@ Upload.prototype.progressHandling = function (event) {
   if (event.lengthComputable) {
     percent = Math.ceil(position / total * 100);
   }
-  console.log(percent)
   // update progressbars classes so it fits your code
   $(progress_bar_id + " .progress-bar").css("width", +percent + "%");
   $(progress_bar_id + " .status").text(percent + "%");

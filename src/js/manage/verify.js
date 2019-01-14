@@ -1,3 +1,4 @@
+//checks what user will be verified than updates the college and course of that user
 $('body').on("click", ".js-btn-verifiy", function(){
   var container = $(this).closest(".card");
   var usersId = container.data("id");
@@ -9,7 +10,6 @@ $('body').on("click", ".js-btn-verifiy", function(){
     college: colleges,
     course: courses
   }, function(response,status){
-    console.log(response)
     if(response == "succes"){
     M.toast({html: "Gebruiker is succesvol geverifierd", classes: "toast--succes"});
       container.find(".card-action").remove();

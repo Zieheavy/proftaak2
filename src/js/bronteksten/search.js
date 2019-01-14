@@ -7,16 +7,14 @@ $(".js-source-files").each(function(){
 setSearch(shownItems);
 
 $("body").on("click", ".collapsible-header", function(){
-  console.log("click");
   if($(this).hasClass("active") == false){
     $(this).closest(".collapsible-expand").find(".js-sortableItem").each(function(){
-      console.log("loop");
       if($(this).hasClass("active")){
-        $(this).trigger("click")
+        $(this).trigger("click");
       }
-    })
+    });
   }
-})
+});
 
 //if the search bar text has change check if the search bar value is in the items array hide all other items
 $(".js-merge").on("change paste keyup", function(){
@@ -38,9 +36,8 @@ $(".js-merge").on("change paste keyup", function(){
 
 //changes update color then edit the searchable array
 $("body").on("click", ".js-sortableItem", function(){
-  console.log("trigger");
   if($(this).hasClass("active")){
-    $(this).removeClass("active")
+    $(this).removeClass("active");
   }else{
     $(this).addClass("active");
   }
@@ -57,18 +54,18 @@ $("body").on("click", ".js-sortableItem", function(){
     if(courses.length > 0){
       if(courses.indexOf($(this).data("course")) != -1){
         $(this).show();
-        shownItems.push($(this).data("name"))
+        shownItems.push($(this).data("name"));
       }else{
         $(this).hide();
       }
     }else{
       $(this).show();
-      shownItems.push($(this).data("name"))
+      shownItems.push($(this).data("name"));
     }
-  })
-  $(".js-merge").trigger("change")
+  });
+  $(".js-merge").trigger("change");
   setSearch(shownItems);
-})
+});
 
 //sets autocomplete in the search bar to a max of 2
 function setSearch(array){
@@ -81,4 +78,4 @@ function setSearch(array){
     data: data,
     limit: 2
   });
-}
+};

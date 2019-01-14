@@ -1,3 +1,4 @@
+//updates all the permissions for the clicked user
 $('body').on("click", ".js-perm-update", function(){
   var cardContainer = $(this).closest(".card");
   var permContainer = cardContainer.find(".js-perm-container");
@@ -9,19 +10,19 @@ $('body').on("click", ".js-perm-update", function(){
   var comfirm = cardContainer.find(".js-confirm").is(":checked") ? 1 : 0;
   var admin = cardContainer.find(".js-admin").is(":checked") ? 1 : 0;
 
-  console.log(".." + newcollege + comfirm + admin + "..")
+  //this will update the persons idivitual permissions
   $.post("include/update/updateUser_perm.php",{
     id: userid,
     newcollege: newcollege,
     comfirm: comfirm,
     admin: admin
   }, function(response,status){
-    console.log(response)
     if(response == "succes"){
       succesCount++;
     }
-  })
+  });
 
+  //first all the old college permission will be deleted
   $.post("include/delete/deletePermissions.php", {
     userId: userid
   },function(response,status){
@@ -29,21 +30,21 @@ $('body').on("click", ".js-perm-update", function(){
       var collegeId = $(this).data("collegeid");
       var read = $(this).find(".read").is(":checked") ? 1 : 0;
       var edit = $(this).find(".edit").is(":checked") ? 1 : 0;
-      console.log("college " + collegeId + " read " + read + " edit " + edit);
+      //new college permission are inserted
       $.post("include/insert/insertPermissions.php",{
         userid: userid,
         collegeId: collegeId,
         read: read,
         edit: edit
       }, function(response,status){
-        console.log(response)
         if(response == "success"){
           succesCount++;
           if(succesCount == succesMaxCount){
-            M.toast({html: "Permissions van " + cardContainer.data("name") + " succesvol geupdate", classes: "toast--succes"});
+            M.toast({ html: "Permissions van " + cardContainer.data("name") + " succesvol geupdate",
+                      classes: "toast--succes"});
           }
         }
       });
-    })
-  })
+    });
+  });
 });
