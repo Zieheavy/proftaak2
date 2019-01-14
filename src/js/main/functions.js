@@ -1,3 +1,4 @@
+// Function to get a GET variable from the URL
 var getUrlParameter = function getUrlParameter(sParam) {
   var sPageURL = decodeURIComponent(window.location.search.substring(1)),
   sURLVariables = sPageURL.split('&'),
@@ -13,6 +14,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
   }
 };
 
+// Function to return the string for a loading circle
 function getLoaderHTML(){
   var str = '<div class="loading-dots">'+
     '<div class="loading-dots__dot"></div>'+
@@ -23,15 +25,17 @@ function getLoaderHTML(){
   '</div>';
   return str;
 }
+
+// Give the page a nice scrollbar
 var hasScrollbar = window.innerWidth > document.documentElement.clientWidth;
-// console.log(hasScrollbar);
+
 if(hasScrollbar == true){
   $("body").css("margin-right", "-5px");
 }else{
   $("body").css("margin-right", "0");
 }
 
-
+// Add a new parameter to the URL
 function addUrlParameter(keys, values){
   var sPageURL = decodeURIComponent(window.location.search.substring(1));
   var sURLVariables = sPageURL.split('&');
@@ -60,14 +64,12 @@ function addUrlParameter(keys, values){
             newString += "&";
           }
         }else{
-          // console.log(keys[i])
           var array = newString.split(keys[i]);
           var end = array[1].substring(array[1].indexOf("&"));
           var begin = array[0] + keys[i] + "=" + values[i];
           if(i == keys.length -1){
             end = "";;
           }
-          // console.log(begin+end)
           newString = begin+end;
         }
       }
@@ -77,6 +79,7 @@ function addUrlParameter(keys, values){
   window.history.pushState(null, null, newString);
 }
 
+// Remove Value and key from the URL
 function removeUrlParameter(key){
   // Gets everything behind the ? in the url
   var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -111,6 +114,7 @@ function removeUrlParameter(key){
   window.history.pushState(null, null, "?" +  newStr);
 }
 
+// Transforms a string to all uppercases
 function uppercase(str){
   var array1 = str.split(' ');
   var newarray1 = [];
@@ -121,6 +125,7 @@ function uppercase(str){
   return newarray1.join(' ');
 }
 
+// Function to shuffle an array
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -140,6 +145,7 @@ function shuffle(array) {
   return array;
 }
 
+// Mustache render function
 function mustache(origin, location, information, append){
   if(append == undefined){
     append = false;
@@ -224,30 +230,26 @@ var confirmClassOld = "";
 var deleteClassOld = "";
 function confirmModal(title, body, confirmClass, deleteClass, data){
     if(deleteClass == undefined){
-        deleteClass = "close-confirm"
+        deleteClass = "close-confirm";
     }
     if(confirmClass != "" && deleteClassOld != ""){
-        $('.confirm-save-change').removeClass(confirmClassOld)
-        $('.confirm-delete-change').removeClass(deleteClassOld)
+        $('.confirm-save-change').removeClass(confirmClassOld);
+        $('.confirm-delete-change').removeClass(deleteClassOld);
     }
-    $('.confirm-save-change').addClass(confirmClass)
+    $('.confirm-save-change').addClass(confirmClass);
 
-    // console.log(data)
     if(data != undefined){
-      $('.confirm-save-change').attr("data",data)
+      $('.confirm-save-change').attr("data",data);
     }else{
-      $('.confirm-save-change').attr("data","")
+      $('.confirm-save-change').attr("data","");
     }
-    $('.confirm-delete-change').addClass(deleteClass)
+    $('.confirm-delete-change').addClass(deleteClass);
 
     confirmClassOld = confirmClass;
     deleteClassOld = deleteClass;
 
-    $('.confirm-title').text(title)
-    $('.confirm-text').text(body)
-
-    // console.log($(".js-confirm-modal"))
-    console.log("open modal")
+    $('.confirm-title').text(title);
+    $('.confirm-text').text(body);
     $('#confirmModal').modal();
     $('#confirmModal').modal("open");
 }
