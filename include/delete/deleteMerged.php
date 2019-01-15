@@ -29,16 +29,20 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
   array_push($versionNames, $row['name']);
 }
 $stmt->close();
-echo json_encode($versionNames);
 foreach ($versionNames as $key => $name) {
-  try {
-    unlink("../../_completed/" . $name); // delete folder
-  } catch (Exception $e) {}
+  if(file_exists("../../_completed/" . $name)){
+    foreach (scandir("../../_completed/" . $name) as $key => $value) {
+      if(file_exists("../../_completed/" . $name . "/"  . $name . "_" . $key . ".pdf")){
+        unlink("../../_completed/" . $name . "/"  . $name . "_" . $key . ".pdf"); // delete file
+      }
+    }
+    rmdir("../../_completed/" . $name); // delete folder
+  }
 
   for ($i=0; $i < 10; $i++) {
-    try {
+    if(file_exists("../../_completed/" . $name . "_" . $i . ".pdf")){
       unlink("../../_completed/" . $name . "_" . $i . ".pdf"); // delete file
-    } catch (Exception $e) {}
+    }
   }
 }
 

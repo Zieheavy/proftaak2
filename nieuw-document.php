@@ -68,7 +68,8 @@ if(isset($_GET["v"])){
             versions v,
             mergedfiles m
           WHERE v.id = ?
-            AND v.mergedfiles_id = m.id";
+            AND v.mergedfiles_id = m.id
+          ORDER BY v.id ASC";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("i", $mergeId);
   $stmt->execute();
@@ -88,7 +89,8 @@ if(isset($_GET["v"])){
               `sourcefiles` s
             WHERE a.versions_id = ?
               AND a.sourcev_id = v.id
-              AND v.sourcefiles_id = s.id";
+              AND v.sourcefiles_id = s.id
+            ORDER BY a.id ASC";
     if (false === ($stmt2 = $conn->prepare($sql2))) {
       echo 'error preparing statement: ' . $conn->error;
     }

@@ -35,6 +35,7 @@ $('body').on('click', '.js-delete-sourcefile', function(){
   $.post("include/delete/deleteSourceFile.php",{
     sourceid: fileId
   }, function(response,status){
+    console.log(response);
     if(response == "succes"){
       M.toast({ html: "bestand is succesvol verwijderd",
                 classes: "toast--succes"});
