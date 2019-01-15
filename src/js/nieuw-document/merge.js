@@ -4,6 +4,13 @@ $('body').on("change paste keyup", ".js-mergedName" , function(){
   $(this).val(search);
 });
 
+$('body').on("change paste keyup", ".js-pages", function(){
+  console.log("input change")
+  var search = $(this).val().toLowerCase();
+  search = filter(search, 3);
+  $(this).val(search);
+})
+
 var fileNames = [];
 var fileExtensions = [];
 var fileVersions = [];

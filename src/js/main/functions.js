@@ -163,10 +163,13 @@ function mustache(origin, location, information, append){
 function filter(string, type){
   switch(type){
     case 1:
-    string = string.replace(/[^A-Za-z0-9\s_:]/g,'');
+      string = string.replace(/[^A-Za-z0-9\s_:]/g,'');
     break;
     case 2:
-    string = string.replace(/[^A-Za-z0-9\s]/g,'');
+      string = string.replace(/[^A-Za-z0-9\s]/g,'');
+    break;
+    case 3:
+      string = string.replace(/[^0-9,alAL]/g,'');
     break;
   }
   return string;
