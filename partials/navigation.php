@@ -39,19 +39,24 @@ switch ($currentPage) {
 
 <nav>
   <div class="nav-wrapper">
-    <a href="#!" class="brand-logo right"><img class="logo" src="img/logo-trans.png"></a>
+    <a href="#!" class="brand-logo"><img class="logo" src="img/logo-trans.png"></a>
     <?php if($active != -1){ ?>
       <ul class="hide-on-med-and-down">
-        <li class="<?php if($active == 1) echo "active"; ?>"><a href="home.php">Home</a></li>
-        <li class="<?php if($active == 2) echo "active"; ?>"><a href="bronteksten.php">Bronteksten</a></li>
-        <li class="<?php if($active == 3) echo "active"; ?>"><a href="nieuw-document.php">Nieuw Document</a></li>
-        <?php if ($admin == 1) { ?>
-          <li class="<?php if($active == 4) echo "active"; ?>"><a href="manage.php">Manage</a></li>
-        <?php } ?>
+        <div>
+          <li class="<?php if($active == 1) echo "active"; ?>"><a href="home.php">Home</a></li>
+          <li class="<?php if($active == 2) echo "active"; ?>"><a href="bronteksten.php">Bronteksten</a></li>
+          <li class="<?php if($active == 3) echo "active"; ?>"><a href="nieuw-document.php">Nieuw Document</a></li>
+          <?php if ($admin == 1) { ?>
+            <li class="<?php if($active == 4) echo "active"; ?>"><a href="manage.php">Manage</a></li>
+          <?php } ?>
+        </div>
+        <div>
+          <form class="" action="include/login.php" method="post">
+            <button type="submit" name="logoutSub" class=" logout-btn js-logout">Logout</button>
+          </form>
+        </div>
       </ul>
-      <form class="" action="include/login.php" method="post">
-        <button type="submit" name="logoutSub" class="btn waves-effect waves-light right js-logout">Logout</button>
-      </form>
+
     <?php } ?>
   </div>
 </nav>
