@@ -1,10 +1,13 @@
 <?php
+
   include '../database.php';
+
   $id = $_POST['id'];
   $newcollege = $_POST['newcollege'];
   $comfirm = $_POST['comfirm'];
   $admin = $_POST['admin'];
 
+  //updates the permission of the user
   $sql = "UPDATE `users` SET `confirm`=?, `newcollege` = ?, `admin` = ? WHERE id = ?";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param('iiii',$comfirm, $newcollege, $admin, $id);

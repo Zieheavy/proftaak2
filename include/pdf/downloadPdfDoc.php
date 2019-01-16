@@ -2,7 +2,10 @@
 $file = $_POST['file'];
 define("APPLICATION_PATH",  str_replace("include\\pdf","",dirname(__FILE__)));
 $directory = APPLICATION_PATH;
+
+//checks if the file exists
 if (!file_exists($directory . '\\_completed\\' . $file . '.docx')) {
+  //opens a new word application
   $word = new COM("Word.Application") or die ("Could not initialise Object.");
   // set it to 1 to see the MS Word window (the actual opening of the document)
   $word->Visible = 0;
@@ -10,7 +13,7 @@ if (!file_exists($directory . '\\_completed\\' . $file . '.docx')) {
   $word->DisplayAlerts = 0;
   $word->Documents->Open($directory . '\\_completed\\' . $file . ".pdf", false, true, false);
   $word->ActiveDocument->SaveAs($directory . '\\_completed\\' . $file . '.docx');
-
+  //closes the word application
   $word->Quit(false);
   // clean up
   unset($word);

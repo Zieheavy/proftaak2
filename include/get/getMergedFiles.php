@@ -3,6 +3,8 @@
 include '../database.php';
 
 $files = [];
+
+//gets a merged with the correct course id from the database
 $sql = "SELECT m.name, m.users_id, m.courses_id, c.colleges_id FROM `mergedfiles` m, courses c WHERE m.courses_id = c.id";
 $stmt = $conn->prepare($sql);
 $stmt->execute();

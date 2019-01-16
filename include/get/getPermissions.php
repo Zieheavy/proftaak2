@@ -1,11 +1,16 @@
 <?php
+
 $currentPage = explode("/",$_SERVER['PHP_SELF'])[2];
+$permissions = [];
+
+//checks if you enterd the page via a ajax request
 if(isset($_POST["ajax"])){
   include '../session.php';
 }
 
-$permissions = [];
+//check if a admin is not logged in
 if($_SESSION["admin"] == 0){
+  //get the permisions from the logged in user
   $sql = "SELECT * FROM permissions WHERE users_id = ?";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("i", $id);
@@ -17,10 +22,13 @@ if($_SESSION["admin"] == 0){
   }
   $stmt->close();
 
+  //if you do not have permsions and are not on the loggin page you will be redirected to login
   if(count($permissions) <= 0 && $currentPage != "index.php"){
     header("Location: include/noPermissions.php");
   }
-}else{
+}
+else{
+  //sets all the permision for a admin user
   $sql = "SELECT c.id as colleges_id  FROM `colleges` c";
   $stmt = $conn->prepare($sql);
   $stmt->execute();
@@ -34,6 +42,7 @@ if($_SESSION["admin"] == 0){
   $stmt->close();
 }
 
+//if you have enterd the page via ajax request return the object array
 if(isset($_POST["ajax"])){
   echo json_encode($permissions);
 }

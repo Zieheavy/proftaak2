@@ -3,14 +3,16 @@
 include "../database.php";
 
 $sourceId = $_POST["sourceid"];
+$files = [];
 
+//delets all the version of the source file
 $sql = "DELETE FROM `versions` WHERE sourcefiles_id = ?";
 $stmt = $con->prepare($sql);
 $stmt->bind_param("i", $sourceId);
 $stmt->execute();
 $stmt->close();
 
-$files = [];
+//selects the source files from the database
 $sql = "SELECT * FROM `sourcefiles` WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $sourceId);
@@ -22,6 +24,7 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
 }
 $stmt->close();
 
+//removes all the files from the server
 foreach ($files as $num => $name) {
   foreach (scandir("../../_pdf/") as $key => $value2) {
     if(file_exists("../../_docs/" . $name . "_" . $key . ".docx")){
@@ -45,6 +48,7 @@ foreach ($files as $num => $name) {
   }
 }
 
+//deletes the sourcefiles from the database
 $sql = "DELETE FROM `sourcefiles` WHERE id = ?";
 $stmt = $con->prepare($sql);
 $stmt->bind_param("i", $sourceId);

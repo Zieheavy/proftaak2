@@ -6,5 +6,6 @@ foreach ($folderContent as $value) {
   $_SESSION['pdfs'][] = $value;
 }
 
+//echo the array so that ajax can understand it
 echo json_encode($_SESSION["pdfs"]);
 ?>
