@@ -1,5 +1,7 @@
 <?php
 $colleges = [];
+
+//gets all the colleges from the database
 $sql = "SELECT * FROM colleges";
 $stmt = $con->prepare($sql);
 $stmt->execute();
@@ -10,6 +12,7 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
 }
 $stmt->close();
 
+//loops trew all the colleges and selects the correct course
 for ($i=0; $i < count($colleges); $i++) {
   $colleges[$i]["courses"] = [];
   $sql = "SELECT * FROM courses WHERE colleges_id = ?";
@@ -24,7 +27,9 @@ for ($i=0; $i < count($colleges); $i++) {
   $stmt->close();
 }
 ?>
+
 <ul class="collapsible expandable">
+  <!-- loops trew all the colleges and adds them to a list -->
   <?php foreach ($colleges as $key => $college): if($college["name"] != "none"){?>
     <li class="collapsible-expand active">
       <div class="collapsible-header">
@@ -34,6 +39,7 @@ for ($i=0; $i < count($colleges); $i++) {
       </div>
       <div class="collapsible-body">
         <ul class="collection">
+          <!-- loops trew all the courses and adds them to a list -->
           <?php foreach ($college["courses"] as $key => $course): ?>
             <li data-college="<?= $college["name"] ?>" data-course="<?= $course["name"] ?>" class="collection-item item-cursor js-sortableItem"><?= $course["name"] ?></li>
           <?php endforeach; ?>

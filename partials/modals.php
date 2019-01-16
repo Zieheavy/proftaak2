@@ -4,13 +4,9 @@ include 'include/get/getPermissions.php';
 
 $currentPage = explode("/",$_SERVER['PHP_SELF'])[2];
 $page = false;
-
-
-
 $permitedColleges = [];
 
-
-
+//loops threw all the colleges and checks if you have permison to edit
 foreach ($colleges as $key => $college) {
   foreach ($permissions as $key => $permission) {
     if($permission["colleges_id"] == $college["id"] && $permission["edit"] == 1){
@@ -19,9 +15,11 @@ foreach ($colleges as $key => $college) {
   }
 }
 
+//checks if you are on the bronteksten page
 if($currentPage == "bronteksten.php"){
   $page = true;
   $checkIfNoneExisits = false;
+  //loop threw all the colleges and check if it hase the option none
   foreach ($permitedColleges[0]["courses"] as $key => $pCourse){
     if($pCourse["name"] == "none"){
       $checkIfNoneExisits = true;
@@ -33,6 +31,7 @@ if($currentPage == "bronteksten.php"){
   $tempArr["name"] = "none";
   $tempArr["colleges_id"] = 2;
 
+  //if it does not contain the option none add the option none
   if($checkIfNoneExisits == false){
     array_unshift($permitedColleges[0]["courses"], $tempArr);
   }

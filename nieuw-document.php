@@ -8,14 +8,14 @@ include 'include/get/getPermissions.php';
 // This query gets every sourceFile
 $files = [];
 $sql = "SELECT s.id as sourcefiles_id,
-        s.name as sourcefile_name,
-        s.extension,
-        u.id as users_id,
-        u.username as users_name,
-        c.id as colleges_id,
-        c.name as colleges_name,
-        co.id as courses_id,
-        co.name as courses_name
+          s.name as sourcefile_name,
+          s.extension,
+          u.id as users_id,
+          u.username as users_name,
+          c.id as colleges_id,
+          c.name as colleges_name,
+          co.id as courses_id,
+          co.name as courses_name
         FROM sourcefiles s
         INNER JOIN users u ON s.users_id = u.id
         INNER JOIN colleges c ON s.colleges_id = c.id
@@ -25,6 +25,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_array(MYSQLI_ASSOC))
 {
+  //gets all the versions from the selected source file
   $sql2 = "SELECT * FROM versions WHERE sourcefiles_id = ? ORDER BY version";
   $stmt2 = $con->prepare($sql2);
   $stmt2->bind_param('i', $row['sourcefiles_id']);
@@ -38,10 +39,8 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
   $files[] = $row;
 }
 $stmt->close();
-// dump($files, "");
-// die();
 
-// REstructures the array into a multi-dimensional array, where the keys are the colleges and courses
+//Restructures the array into a multi-dimensional array, where the keys are the colleges and courses
 $newfiles = [];
 foreach ($files as $key => $file) {
   $ext = $file['extension'];
@@ -56,9 +55,11 @@ foreach ($files as $key => $file) {
 }
 $files = $newfiles;
 
+//checks if you want to edit the page
 if(isset($_GET["v"])){
   $itemArrays = [];
   $mergeId = $_GET["v"];
+  //gets the correct version of the selected file
   $sql = "SELECT
             v.version,
             v.filedate,
@@ -77,6 +78,7 @@ if(isset($_GET["v"])){
   while ($row = $result->fetch_array(MYSQLI_ASSOC))
   {
     $temp = [];
+    //gets all the files that where to create the document
     $sql2 = "SELECT
               a.pages,
               v.version,
@@ -100,6 +102,7 @@ if(isset($_GET["v"])){
     while ($row2 = $result2->fetch_array(MYSQLI_ASSOC))
     {
       $row2["folder"] = getFolder($row2["extension"]);
+      //gets all the version of the selected sourcefile
       $sql3 = "SELECT * FROM versions WHERE sourcefiles_id = ? ORDER BY version";
       $stmt3 = $con->prepare($sql3);
       $stmt3->bind_param('i', $row2['sourceId']);
@@ -112,9 +115,7 @@ if(isset($_GET["v"])){
       $stmt3->close();
       $temp[] = $row2;
     }
-    // dump($temp);
     $stmt2->close();
-
 
     $row["sources"] = $temp;
     $itemArrays = $row;
@@ -123,6 +124,7 @@ if(isset($_GET["v"])){
   dump($itemArrays ,"");
 }
 
+//gets the folder for the selected extension
 function getFolder($ext){
   $folder = "";
   switch ($ext) {

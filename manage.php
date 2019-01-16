@@ -1,6 +1,7 @@
 <?php
 include 'include/session.php';
 include 'include/database.php';
+
 $id = $_SESSION['userId'];
 $menuCollums = "6";
 
@@ -11,10 +12,11 @@ $permStat = "";
 $permCollums = "12";
 
 if($permNew == 0 && $permConfirm == 0){
-    header("Location: include/noPermissions.php");
+  header("Location: include/noPermissions.php");
 }
 
 $users = [];
+//selects all th euser from the database
 $sql = "SELECT * FROM `users`";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
@@ -24,11 +26,10 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
   $users[] = $row;
 }
 $stmt->close();
-// dump($users, "");
-
 
 for($j = 0; $j < count($users); $j++){
   $colleges = [];
+  //selects all the colleges from the database with clearer names
   $sql = "SELECT c.id as collegeId, c.name as collegeName FROM `colleges` c";
   $stmt = $conn->prepare($sql);
   $stmt->execute();
@@ -40,6 +41,7 @@ for($j = 0; $j < count($users); $j++){
   $stmt->close();
 
   for ($i = 0; $i < count($colleges); $i++) {
+    //gets all the permsion for the selected user from the correct college
     $sql = "SELECT * FROM `permissions` WHERE users_id = ? AND colleges_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $users[$j]["id"], $colleges[$i]["collegeId"]);
@@ -56,6 +58,7 @@ for($j = 0; $j < count($users); $j++){
   $users[$j]["colleges"] = $colleges;
 }
 
+//checks what permison you have and adds them to a string
 if($permNew == 1){
   $permStat .= 1;
 }
@@ -66,10 +69,12 @@ if($permAdmin == 1){
   $permStat = 123;
 }
 
+//removes the admin from the user list
 if($permAdmin == 0){
   array_shift($users);
 }
 
+//checks how many permision the user has
 if(strlen($permStat) == 3){ $permCollums = "4"; }
 else if(strlen($permStat) == 2){ $permCollums = "6"; }
 
@@ -91,7 +96,6 @@ include 'include/get/getColleges.php';
         <a class="col s6 waves-effect waves-light btn modal-trigger" href="#deleteCollege">Delete college</a>
         <a class="col s6 waves-effect waves-light btn modal-trigger" href="#deleteCourse">Delete opleiding</a>
       <?php } ?>
-      <!-- <div class="col s10 offset-s1"> -->
       <div class="col s12">
         <?php foreach ($users as $key => $user): ?>
           <?php if ($_SESSION["userId"] != $user["id"]) { ?>
