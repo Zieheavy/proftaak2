@@ -1,11 +1,13 @@
 <?php
 include '../functions.php';
 define("APPLICATION_PATH",  str_replace("include\\pdf","",dirname(__FILE__)));
-$directory = APPLICATION_PATH;
 
+$directory = APPLICATION_PATH;
 $fileName = $_POST['fileName'];
 $extension = $_POST['extension'];
 
+
+//opens a new word application
 $word = new COM("Word.Application") or die ("Could not initialise Object.");
 // set it to 1 to see the MS Word window (the actual opening of the document)
 $word->Visible = 0;
@@ -15,7 +17,7 @@ $word->DisplayAlerts = 0;
 if($extension == "docx"){
   $word->Documents->Open($directory . '_docs\\' . $fileName  . '.docx');
 
-  // save it as word 2003
+  // save it as word 2003 under a random generated name
   $rndString = randomString(20);
   $word->ActiveDocument->SaveAs($directory . '_doc\\' .$rndString . '.doc');
 }else{

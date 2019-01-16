@@ -1,5 +1,4 @@
 <?php
-// $directory = __DIR__ . DIRECTORY_SEPARATOR;
 $fileName = $_POST["fileName"];
 $extension = $_POST["extension"];
 

@@ -1,10 +1,13 @@
 <?php
 
+$colleges = [];
+
+//checks if you enterd the page via a ajax request
 if(isset($_POST["ajax"])){
   include '../database.php';
 }
 
-$colleges = [];
+//selects all the colleges from the database
 $sql = "SELECT * FROM `colleges`";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
@@ -16,6 +19,7 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
 }
 $stmt->close();
 
+//puts the courses with the correct college in a object array
 for ($i=0; $i < count($colleges); $i++) {
   $temp = [];
   $sql = "SELECT * FROM `courses` WHERE colleges_id = ?";
@@ -32,6 +36,7 @@ for ($i=0; $i < count($colleges); $i++) {
   $colleges[$i]["courses"] = $temp;
 }
 
+//if you have enterd the page via ajax request return the object array
 if(isset($_POST["ajax"])){
   echo json_encode($colleges);
 }

@@ -63,7 +63,6 @@ if(file_exists("../../_completed/" . $mergeName)){
   $folderContent = array_diff(scandir("../../_completed/".$mergeName), array('..', '.'));
   foreach ($folderContent as $value) {
     //checks if a file name is equal to the file name you have given version++
-
     $temp = -1;
     $temp = explode("_",$value)[1];
     $temp = explode(".",$temp)[0] + 1;
@@ -124,11 +123,11 @@ if(getMergedFiles($mergeName,$userId,$courseId, $conn) == -1){
   $stmt->execute();
   $mergeId = $stmt->insert_id;
   $stmt->close();
-
 }else{
   $mergeId = getMergedFiles($mergeName,$userId,$courseId, $conn);
 }
 
+//inserst a new version into the database
 $sql = "INSERT INTO versions (`version`, `filedate`, `mergedfiles_id`)
 VALUES (?,?,?)";
 $stmt = $con->prepare($sql);
@@ -223,9 +222,7 @@ function split_pdf($filename, $directory, $split_directory)
 
     try {
       $new_filename = str_replace('.pdf', '', $filename).'_'.$i.".pdf";
-      // echo $new_filename;
       $new_pdf->Output(APPLICATION_PATH . $split_directory . "/" . $new_filename, "F");
-      // echo "Page ".$i." split into ".$new_filename."<br />\n";
     } catch (Exception $e) {
       echo 'Caught exception: ',  $e->getMessage(), "\n";
     }
