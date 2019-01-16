@@ -1,8 +1,10 @@
 <?php
 session_start();
-include 'database.php'; // Should create a var $conn
+include 'database.php'; // Should create a var $conn (and $con)
 include 'functions.php';
 
+// This is what the session should look like, customize this however you want. If the session is not like this it will reset
+// The values are the standard values the session has when you enter the site for the first time
 $shouldBeInSession = [
   'loggedIn' => 0,
   'userId' => -1,
@@ -23,12 +25,20 @@ foreach ($shouldBeInSession as $key => $value) {
   }
 }
 
+// Checks if there are variables in the session that shouldnt be there, if there are, resets
+foreach ($_SESSION as $key => $value) {
+  if (!array_key_exists($key, $shouldBeInSession)) {
+    resetSession();
+  }
+}
+
+// If a _POST is given it returns the whole session as a JSON
 if(isset($_POST["return"])){
   echo json_encode($_SESSION);
 }
 
-$loggedIn = $_SESSION['loggedIn'];
-if ($loggedIn) {
+// if the user is logged in it checks the username and password in the database
+if ($_SESSION['loggedIn']) {
   $id = $_SESSION['userId'];
   $sql = 'SELECT username, password FROM users WHERE id=?';
   $stmt = $conn->prepare($sql);
@@ -52,6 +62,7 @@ if ($loggedIn) {
 
   unset($userinfo, $smtp, $sql);
 }
+
 // The reset
 function resetSession(){
   global $shouldBeInSession;
@@ -62,17 +73,23 @@ function resetSession(){
   // header("Location: index.php");
 }
 
+// Function to set the session, the $params count should be equal to or less than the amount of vars in $shouldBeInSession
+// You can also give 1 array with the same keys as the $shouldBeInSession
 function setSession_revised(...$params){
+  // GLobalized the $shouldBeInSession to use in this funciton
   global $shouldBeInSession;
+
   if (!is_array($params[0])) {
     $shouldCount = count($shouldBeInSession);
     $paramCount = count($params);
+    // If the amount of params is equal it just sets the session with the values of the given params
     if ($paramCount == $shouldCount) {
       $_SESSION = [];
       $keys = array_keys($shouldBeInSession);
       $newAr = array_combine($keys, $params);
       $_SESSION = $newAr;
     }
+    // If the amount of params is lower than $shouldBeInSession, it fills the rest with whats left from $shouldBeInSession
     else if ($paramCount < $shouldCount){
       $_SESSION = [];
       $numerical = array_values($shouldBeInSession);
@@ -89,10 +106,12 @@ function setSession_revised(...$params){
       $newAr = array_combine($keys, $values);
       $_SESSION = $newAr;
     }
+    // Can't have too many
     else{
       return "too many params";
     }
   }
+  // If it's an array it just sets the keys with the values to the session
   else{
     $params = $params[0];
     foreach ($params as $key => $value) {
