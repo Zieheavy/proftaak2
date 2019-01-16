@@ -3,7 +3,7 @@ include 'include/session.php';
 include 'include/database.php';
 include 'include/get/getPermissions.php';
 $id = $_SESSION['userId'];
-
+// Gets all the mergedfiles from the database
 $itemArrays = [];
 $sql = "SELECT
           m.id as mergedId,
@@ -27,12 +27,10 @@ $sql = "SELECT
 if (false === ($stmt = $conn->prepare($sql))) {
   echo 'error preparing statement: ' . $conn->error;
 }
-// elseif (!$stmt->bind_param("i", $id)) {
-//   echo 'error binding params: ' . $stmt->error;
-// }
 elseif (!$stmt->execute()) {
   echo 'error executing statement: ' . $stmt->error;
 }
+
 $result = $stmt->get_result();
 while ($row = $result->fetch_array(MYSQLI_ASSOC))
 {
@@ -40,6 +38,7 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
 }
 $stmt->close();
 
+// Gets the versions for every file
 for($i = 0; $i < count($itemArrays); $i++){
   $tempVersionArray = [];
   $sql = "SELECT * FROM versions WHERE mergedfiles_id = ? ORDER BY version";
@@ -106,9 +105,6 @@ for($i = 0; $i < count($itemArrays); $i++){
                     </div>
                     <div class="card-action home-card-action">
                       <div class="row">
-
-                        <!-- <a href="_completed\<?= $item['filename'] ?>.pdf" class="js-download btn w30" download>    <i class="fa fa-download" aria-hidden="true"></i>
-                        </a> -->
                         <a class='dropdown-trigger btn w30' href='#' data-target='drp<?=$item['mergedId']?>'>
                           <i class="fa fa-download" aria-hidden="true"></i>
                         </a>
@@ -126,7 +122,6 @@ for($i = 0; $i < count($itemArrays); $i++){
                         <button class="btn w30 js-delete-merged" data-mergedid="<?=$item['mergedId']?>"><i class="material-icons">delete</i></button>
                       </div>
                       <div class="row">
-
                         <div class="input-field">
                           <select class="js-versionSelect" data-name="<?= $item["name"] ?>">
                             <?php
