@@ -53,9 +53,10 @@ $('body').on('click', '.js-download-doc', function(){
     file: file
   }, function(response,status){
     if (response == "success") {
-      $('body').append('<a id="temp" href="' + "_completed/" + file + '.docx" download></a>');
-      $('#temp')[0].click();
-      $('#temp').remove();
+      var rnd = randomString2(10);
+      $('body').append('<a id="temp' + rnd + '" href="_completed/' + file + '.docx" download></a>');
+      $('#temp' + rnd)[0].click();
+      $('#temp' + rnd).remove();
       M.Toast.getInstance($(".js-toast-warning")).dismiss();
     }
   });
