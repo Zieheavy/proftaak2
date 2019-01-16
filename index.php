@@ -1,5 +1,7 @@
 <?php
 include 'include/session.php';
+include 'include/database.php';
+include 'include/db.php';
 // If the login fails it has get variables so it fills the inputs
 $email = "";
 $name = "";
@@ -9,6 +11,16 @@ if (isset($_GET['e'])) {
 if (isset($_GET['n'])) {
   $name = $_GET['n'];
 }
+
+$sql = "SELECT * FROM users WHERE id = ? AND username = ?";
+
+$db = new db($con);
+$db->prepare($sql);
+$db->bindParam('is', 1, 'admin');
+$ar = $db->getResult();
+$db->close();
+dump($ar);
+
 ?>
 <html>
 <head>
