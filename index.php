@@ -1,5 +1,6 @@
 <?php
 include 'include/session.php';
+// If the login fails it has get variables so it fills the inputs
 $email = "";
 $name = "";
 if (isset($_GET['e'])) {

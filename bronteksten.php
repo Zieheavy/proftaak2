@@ -6,6 +6,7 @@ if(!isset($_POST["ajax"])){
   include 'include/get/getPermissions.php';
 }
 
+// Gets all the sourcefiles with versions etc.
 $sourceFiles = [];
 $sql = "SELECT
           s.name,
