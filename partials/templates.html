@@ -1,16 +1,12 @@
 <!-- mustach modals -->
-<template class="">
-    {{#.}}
-    {{/.}}
-</template>
-
-
+<!-- A template for the selects in manage.php -->
 <template class="courses-manage-template">
     {{#.}}
       <option value="{{id}}">{{name}}</option>
     {{/.}}
 </template>
 
+<!-- Template for the sourcefile cards in bronteksten.php -->
 <template class="sourcefiles-template">
   {{#.}}
     <div class="col s12 m6 js-source-files" data-course="{{courseName}}" data-name="{{name}}" data-id="{{sourceId}}" data-ext="{{extension}}">
