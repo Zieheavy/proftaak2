@@ -105,7 +105,7 @@ for($i = 0; $i < count($itemArrays); $i++){
                     </div>
                     <div class="card-action home-card-action">
                       <div class="row">
-                        <a class='dropdown-trigger btn <?php if($permission["edit"] == 1){ echo "w30";}else{echo "w100";} ?> href='#' data-target='drp<?=$item['mergedId']?>'>
+                        <a class='dropdown-trigger btn <?php if($permission["edit"] == 1){ echo "w30";}else{echo "w100";} ?>' href='#' data-target='drp<?=$item['mergedId']?>'>
                           <i class="fa fa-download" aria-hidden="true"></i>
                         </a>
                         <ul class='dropdown-content' id="drp<?=$item['mergedId']?>">
