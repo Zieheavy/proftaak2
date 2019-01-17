@@ -33,10 +33,12 @@ if($_SESSION["loggedIn"] == -1){
 //check if you want to split the file
 for($i = 0; $i < count($files); $i++){
   if($pages[$i] != "all"){
-    split_pdf($files[$i], '_pdf', "_pdf-split");
+    // echo json_encode($files[$i]);
+    split_pdf($files[$i] . "_" . $fileVersions[$i], '_pdf', "_pdf-split");
     $numbers = explode(",",$pages[$i]);
     for($j = 0; $j < count($numbers); $j++){
-      $mergeOrder[] = "../../_pdf-split/" . $files[$i] . "_" . $numbers[$j] . ".pdf";
+      //name_version_page
+      $mergeOrder[] = "../../_pdf-split/" . $files[$i] . "_" . $fileVersions[$i] . "_" . $numbers[$j] . ".pdf";
     }
   }else{
     $mergeOrder[] = "../../_pdf/" . $files[$i] . "_" . $fileVersions[$i] . ".pdf";

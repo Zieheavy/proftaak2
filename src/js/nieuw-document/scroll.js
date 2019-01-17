@@ -43,7 +43,6 @@ $(sortable('.js-sortable-copy')).each(function(index, el) {
       var newVersion = $(this).val();
       var fileElem = $(this).closest('.file');
       var ext = $(fileElem).data('ext');
-      console.log(newVersion);
       $(fileElem).data('version', newVersion);
       $(fileElem).attr('data-version', newVersion);
       var pdfSrc = $(fileElem).find('.js-download-pdf').attr('href');

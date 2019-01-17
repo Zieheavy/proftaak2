@@ -121,7 +121,6 @@ if(isset($_GET["v"])){
     $itemArrays = $row;
   }
   $stmt->close();
-  dump($itemArrays ,"");
 }
 
 //gets the folder for the selected extension

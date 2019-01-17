@@ -31,7 +31,7 @@ $("body").on("click", ".js-upload", function(){
   var file = $('#uploadSingle')[0].files;
   amountToUpload = 1;
   amountUploaded = 0;
-  M.toast({html: "Bestanden worden omgezet", classes: "toast--warning js-toast-warning", displayLength: 99999999});
+  M.toast({html: "Bestanden worden omgezet"  + getLoaderHTML(), classes: "toast--info js-toast-warning", displayLength: 99999999});
   if(file[0].name != fileToEdit){
     amountUploaded = 1;
     handleWorkingMessage();
