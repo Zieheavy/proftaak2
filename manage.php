@@ -155,6 +155,7 @@ include 'include/get/getColleges.php';
                   </tbody>
                 </table>
                 <a class="waves-effect waves-light btn col s12 js-perm-update">SAVE</a>
+                <a class="waves-effect waves-light btn col s12 js-delete-user">delete</a>
               </div>
               <?php if($user["verified"] == 0 && $permConfirm == 1){ ?>
                 <div class="card-action" style="height:100px">

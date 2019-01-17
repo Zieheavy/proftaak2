@@ -31,3 +31,16 @@ $('body').on('click', '.js-delete-course', function(){
     }
   });
 })
+
+
+$('body').on("click", ".js-delete-user", function(){
+  var cardContainer = $(this).closest(".card");
+  var userid = cardContainer.data("id");
+
+  //first all the old college permission will be deleted
+  $.post("include/delete/deleteUser.php", {
+    userId: userid
+  },function(response,status){
+    console.log(response);
+  });
+});
