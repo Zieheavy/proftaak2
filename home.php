@@ -105,7 +105,7 @@ for($i = 0; $i < count($itemArrays); $i++){
                     </div>
                     <div class="card-action home-card-action">
                       <div class="row">
-                        <a class='dropdown-trigger btn w30' href='#' data-target='drp<?=$item['mergedId']?>'>
+                        <a class='dropdown-trigger btn <?php if($permission["edit"] == 1){ echo "w30";}else{echo "w100";} ?> href='#' data-target='drp<?=$item['mergedId']?>'>
                           <i class="fa fa-download" aria-hidden="true"></i>
                         </a>
                         <ul class='dropdown-content' id="drp<?=$item['mergedId']?>">
@@ -118,8 +118,8 @@ for($i = 0; $i < count($itemArrays); $i++){
                         </ul>
                         <?php if($permission["edit"] == 1){ ?>
                           <a href="nieuw-document.php?v=<?= $selectedVersion["id"]; ?>" class="btn w30"><i class="material-icons">edit</i></a>
+                          <button class="btn w30 js-delete-merged" data-mergedid="<?=$item['mergedId']?>"><i class="material-icons">delete</i></button>
                         <?php } ?>
-                        <button class="btn w30 js-delete-merged" data-mergedid="<?=$item['mergedId']?>"><i class="material-icons">delete</i></button>
                       </div>
                       <div class="row">
                         <div class="input-field">
