@@ -10,6 +10,7 @@ class db {
   function __construct($con)
   {
     $this->con = $con;
+    // echo $con;
   }
 
   function setQuery($q){
@@ -25,7 +26,7 @@ class db {
     }
 
     if (false === ($this->stmt = $this->con->prepare($q))) {
-      echo 'error preparing statement: ' . $con->error;
+      echo 'error preparing statement: ' . $this->con->error;
     }
   }
 
@@ -35,13 +36,16 @@ class db {
     }
   }
 
-  function execute(){
+  function execute($c = false){
     if (false === ($this->stmt->execute())) {
       echo 'error executing statement: ' . $this->stmt->error;
     }
     else{
       $this->insertid = $this->stmt->insert_id;
       $this->executed = true;
+    }
+    if ($c) {
+      $this->stmt->close();
     }
   }
 

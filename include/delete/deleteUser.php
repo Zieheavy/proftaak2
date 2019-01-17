@@ -60,17 +60,18 @@ $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_array(MYSQLI_ASSOC))
 {
-  echo $row["id"];
-  echo "\n <br>  ";
   $db = new db($con);
-  $db->prepare('DELETE FROM `attached-files` WHERE mergedfiles_id = ?');
+  $db->prepare('SELECT id FROM versions WHERE mergedfiles_id = ?');
   $db->bindParam('i', $row["id"]);
-  $db->execute();
-  // $sql3 = "DELETE FROM `attached-files` WHERE mergedfiles_id = ?";
-  // $stmt3 = $conn->prepare($sql3);
-  // $stmt3->bind_param('i', $row["id"]);
-  // $stmt3->execute();
-  // $stmt3->close();
+  $versions = $db->getResult();
+
+  $db = new db($con);
+  $db->prepare('DELETE FROM `attached-files` WHERE versions_id = ?');
+  foreach ($versions as $key => $value) {
+    $db->bindParam('i', $value["id"]);
+    $db->execute();
+  }
+  $db->close();
 
   //delets the versions for each merged file
   $sql2 = "DELETE FROM `versions` WHERE mergedfiles_id = ?";
@@ -78,9 +79,6 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
   $stmt2->bind_param('i', $row["id"]);
   $stmt2->execute();
   $stmt2->close();
-
-
-
   echo "mid point";
 
   //delets the mergedfiles
