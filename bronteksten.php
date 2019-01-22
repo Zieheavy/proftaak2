@@ -54,7 +54,9 @@ if(isset($_POST["ajax"])){
   <?php include 'partials/modals.php'; ?>
   <div class="container">
     <div class="row">
-      <a class="col s12 waves-effect waves-light btn modal-trigger" href="#uploadModal">Nieuw bron bestand uploaden</a>
+      <div class="col s12">
+        <a class="col s12 waves-effect waves-light btn modal-trigger" href="#uploadModal">Nieuw bron bestand uploaden</a>
+      </div>
     </div>
     <div class="row">
       <div class="col m4 hide-on-small-only">

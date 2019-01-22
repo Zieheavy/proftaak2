@@ -1,15 +1,19 @@
 <?php
 class db {
-
   var $con;
   var $query;
   var $stmt;
   var $insertid;
   var $executed = false;
+  var $numRows;
+  var $result;
 
-  function __construct($con)
+  function __construct($con, $q = "")
   {
     $this->con = $con;
+    if ($q != "") {
+      $this->prepare($q);
+    }
   }
 
   function setQuery($q){
@@ -42,6 +46,7 @@ class db {
     else{
       $this->insertid = $this->stmt->insert_id;
       $this->executed = true;
+      $this->result = $this->stmt->get_result();
     }
     if ($c) {
       $this->stmt->close();
@@ -57,15 +62,17 @@ class db {
     if (!$e) {
       $this->execute();
     }
-    $result = $this->stmt->get_result();
+    // $result = $this->stmt->get_result();
     $returnAr = [];
-    while ($row = $result->fetch_array(MYSQLI_ASSOC))
+    while ($row = $this->result->fetch_array(MYSQLI_ASSOC))
     {
       $returnAr[] = $row;
     }
     return $returnAr;
   }
-
+  function num_rows(){
+    return $this->result->num_rows;
+  }
   function insert_id(){
     return $this->insertid;
   }

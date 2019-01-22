@@ -2,6 +2,7 @@
 include 'include/session.php';
 include 'include/database.php';
 include 'include/get/getPermissions.php';
+
 $id = $_SESSION['userId'];
 // Gets all the mergedfiles from the database
 $itemArrays = [];
