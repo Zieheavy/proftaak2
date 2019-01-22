@@ -39,8 +39,8 @@ if (isset($_GET['n'])) {
             <button class="btn waves-effect waves-light login__btn" type="submit" name="loginSub">Login</button>
           </div>
         </div>
-        <div class="card-action">
-          <a class="blue-text js-activate-registerForm" href="#">Of klik hier om te registreren</a>
+        <div class="card-action register-btn-container">
+          <a class="blue-text js-activate-registerForm register-btn" href="#">Of klik hier om te registreren</a>
         </div>
       </div>
     </form>
@@ -75,11 +75,11 @@ if (isset($_GET['n'])) {
           </div>
         </div>
         <div class="row btn-row">
-          <div class="input-field col s6">
+          <div class="col s6">
             <button class="btn waves-effect waves-light login-btn jsRegister" name="registerSub">Registreer</button>
           </div>
           <div class="col s6">
-            <a class="js-activate-loginSub btn white black-text waves-effect waves-light" href="#">Terug</a>
+            <a class="js-activate-loginSub btn white black-text waves-effect waves-light right" href="#">Terug</a>
           </div>
         </div>
       </div>
