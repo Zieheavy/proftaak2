@@ -90,7 +90,7 @@ include 'include/get/getColleges.php';
   <?php include 'partials/navigation.php'; ?>
   <div class="container">
       <?php if(strpos($permStat, '1') !== false){ ?>
-        <div class="row">
+        <!-- <div class="row">
           <div class="col s6">
             <a class="s12 col waves-effect waves-light btn modal-trigger" href="#newCollege">Nieuwe college</a>
           </div>
@@ -105,13 +105,13 @@ include 'include/get/getColleges.php';
           <div class="col s6">
             <a class="s12 col waves-effect waves-light btn modal-trigger" href="#deleteCourse">Delete opleiding</a>
           </div>
-        </div>
+        </div> -->
       <?php } ?>
     <div class="row">
       <div class="col s12">
         <?php foreach ($users as $key => $user): ?>
           <?php if ($_SESSION["userId"] != $user["id"]) { ?>
-            <div class="col s6">
+            <div class="col xl6 l12">
               <div class="card col s12" data-id="<?= $user["id"] ?>" data-name="<?= $user["username"] ?>">
                 <div class="card-content">
                   <span class="card-title"><?= $user["username"] ?></span>
@@ -204,6 +204,19 @@ include 'include/get/getColleges.php';
       </div>
     </div>
   </div>
+  <?php if(strpos($permStat, '1') !== false){ ?>
+    <div class="fixed-action-btn">
+      <a class="btn-floating floating-btn-activate btn">
+        <i class="large material-icons">mode_edit</i>
+      </a>
+      <ul class="floating-btn-container">
+        <li><a class="btn-floating floating-btn waves-effect waves-light btn modal-trigger" href="#newCollege">Nieuwe college</a></li>
+        <li><a class="btn-floating floating-btn waves-effect waves-light btn modal-trigger" href="#newCourse">Nieuwe opleiding</a></li>
+        <li><a class="btn-floating floating-btn waves-effect waves-light btn modal-trigger" href="#deleteCollege">Delete college</a></li>
+        <li><a class="btn-floating floating-btn waves-effect waves-light btn modal-trigger" href="#deleteCourse">Delete opleiding</a></li>
+      </ul>
+    </div>
+  <?php } ?>
 
   <?php include 'partials/templates.html'; ?>
   <?php include 'partials/modals.php'; ?>

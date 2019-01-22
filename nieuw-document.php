@@ -153,8 +153,25 @@ function getFolder($ext){
   <div id="dragScrolBot" class="scroll scroll--bot"></div>
   <?php include 'partials/navigation.php'; ?>
   <div class="container">
+    <div class="row hide-on-med-and-up show-on-medium-and-down">
+      <div class="input-field col s12 m6">
+        <?php if(!isset($itemArrays["name"])){?>
+          <input placeholder="Merged name" id="merged_name" type="text" class="validate js-mergedName">
+        <?php }else{ ?>
+          <input placeholder="Merged name" id="merged_name" type="text" class="validate js-mergedName" value="<?=$itemArrays["name"]?>">
+        <?php } ?>
+        <label for="merged_name">First Name</label>
+      </div>
+      <div class="col s12 m6">
+        <?php if(!isset($_GET["v"])){ ?>
+          <div class="btn waves-effect waves-light w100 js-merge">Merge</div>
+        <?php }else{ ?>
+          <div class="btn waves-effect waves-light w100 js-merge">Update</div>
+        <?php } ?>
+      </div>
+    </div>
     <div class="row">
-      <div class="col s4">
+      <div class="col s6 l4">
         <h4>Bestanden</h4>
         <?php foreach ($files as $key => $college): ?>
           <ul class="collapsible expandable noMargin" data-collapsible="accordion">
@@ -229,7 +246,7 @@ function getFolder($ext){
           </ul>
         <?php endforeach; ?>
       </div>
-      <div class="col s4">
+      <div class="col s6 l4">
         <ul class="js-sortable-copy-target copy-target col-min-500" style="min-height: 200px" aria-dropeffect="move">
           <?php if(isset($itemArrays)){ foreach ($itemArrays["sources"] as $key => $file): ?>
             <li data-name="<?=$file['name']?>"
@@ -277,9 +294,9 @@ function getFolder($ext){
           <?php endforeach;  }?>
         </ul>
       </div>
-      <div class="col s4">
+      <div class="col l4 hide-on-med-and-down">
         <iframe class="js-frm preview" src="" width="" height=""></iframe>
-        <div class="input-field col s6">
+        <div class="input-field col s12">
           <?php if(!isset($itemArrays["name"])){?>
             <input placeholder="Merged name" id="merged_name" type="text" class="validate js-mergedName">
           <?php }else{ ?>

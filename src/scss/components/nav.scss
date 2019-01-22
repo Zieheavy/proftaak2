@@ -35,3 +35,26 @@
     }
   }
 }
+.sidenav{
+  .logout-btn{
+    color: rgba(0,0,0,0.87);
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 32px;
+    width: 100%;
+    border: 0;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    &:hover{
+      background-color: rgba(0,0,0,0.05);
+    }
+  }
+}
+.nav-btn{
+  position: absolute !important;
+  right: 10px;
+}

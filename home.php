@@ -72,10 +72,10 @@ for($i = 0; $i < count($itemArrays); $i++){
   <?php include 'partials/navigation.php'; ?>
   <div class="container">
     <div class="row">
-      <div class="col s4">
+      <div class="col m4  hide-on-small-only">
         <?php include 'partials/courseList.php'; ?>
       </div>
-      <div class="col s8">
+      <div class="col m8 s12">
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix">search</i>
@@ -87,7 +87,7 @@ for($i = 0; $i < count($itemArrays); $i++){
         foreach($itemArrays as $item){
           foreach ($permissions as $key => $permission):
             if($permission["colleges_id"] == $item["collegeId"] && $permission["read"] == 1){?>
-              <div class="home-card col m12" id="<?=$item['mergedId']?>" data-college="<?= $item["collegeName"] ?>" data-course="<?= $item["courseName"] ?>" data-name="<?= $item["name"] ?>">
+              <div class="home-card col s12" id="<?=$item['mergedId']?>" data-college="<?= $item["collegeName"] ?>" data-course="<?= $item["courseName"] ?>" data-name="<?= $item["name"] ?>">
                 <div class="card horizontal">
                   <div class="card-image">
                     <?php

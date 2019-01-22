@@ -8,6 +8,7 @@
 @import 'components/toast';
 @import 'components/nav';
 @import 'components/home';
+@import 'components/manage';
 @import 'components/collapsible';
 @import 'components/file';
 @import 'components/scrollbar';
@@ -44,4 +45,24 @@ nav{
 }
 .js-logout{
   // display: none;
+}
+
+// @for $i from 0 through 101 {
+//   .w#{$i} { width: 0% + $i;}
+// }
+
+.w100{
+  width: 100%;
+}
+
+.w50{
+  width: 50%;
+}
+
+.w33{
+  width: 33%;
+}
+
+.w30{
+  width: 30%;
 }

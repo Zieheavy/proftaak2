@@ -1,0 +1,18 @@
+$btnOptionsW: 140px;
+$btnActivateW: 50px;
+
+.floating-btn-activate{
+  width: $btnActivateW;
+  height: $btnActivateW;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.floating-btn-container{
+  left: ($btnOptionsW - $btnActivateW) * -1 !important;
+}
+.floating-btn{
+  width: $btnOptionsW;
+  border-radius: 5%;
+  text-transform: none;
+}

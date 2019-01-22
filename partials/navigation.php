@@ -42,6 +42,7 @@ switch ($currentPage) {
   <div class="nav-wrapper">
     <a href="#!" class="brand-logo"><img class="logo" src="img/logo-trans.png"></a>
     <?php if($active != -1){ ?>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger nav-btn"><i class="material-icons">menu</i></a>
       <ul class="hide-on-med-and-down">
         <div>
           <!-- displays the active page  -->
@@ -63,3 +64,18 @@ switch ($currentPage) {
     <?php } ?>
   </div>
 </nav>
+
+<ul class="sidenav" id="mobile-demo">
+  <li class="<?php if($active == 1) echo "active"; ?>"><a href="home.php">Home</a></li>
+  <li class="<?php if($active == 2) echo "active"; ?>"><a href="bronteksten.php">Bronteksten</a></li>
+  <li class="<?php if($active == 3) echo "active"; ?>"><a href="nieuw-document.php">Nieuw Document</a></li>
+  <!-- only displays the cms page if you have the correct privilages -->
+  <?php if ($admin == 1) { ?>
+    <li class="<?php if($active == 4) echo "active"; ?>"><a href="manage.php">Manage</a></li>
+  <?php } ?>
+  <li>
+    <form class="" action="include/login.php" method="post">
+      <button type="submit" name="logoutSub" class=" logout-btn js-logout">Logout</button>
+    </form>
+  </li>
+</ul>

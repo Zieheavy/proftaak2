@@ -57,10 +57,10 @@ if(isset($_POST["ajax"])){
       <a class="col s12 waves-effect waves-light btn modal-trigger" href="#uploadModal">Nieuw bron bestand uploaden</a>
     </div>
     <div class="row">
-      <div class="col s4">
+      <div class="col m4 hide-on-small-only">
         <?php include 'partials/courseList.php'; ?>
       </div>
-      <div class="col s8">
+      <div class="col m8 s12">
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix">search</i>
@@ -75,7 +75,7 @@ if(isset($_POST["ajax"])){
                 <?php foreach ($permissions as $key => $permission): ?>
                   <?php if($file["collegeId"] == $permission["colleges_id"] && $permission["read"] == 1){ ?>
 
-                  <div class="col s12 m6 js-source-files" data-course="<?=$file["courseName"]?>" data-name="<?=$file["name"]?>" data-id="<?=$file["sourceId"]?>" data-ext="<?=$file["extension"]?>">
+                  <div class="col s12 l6 js-source-files" data-course="<?=$file["courseName"]?>" data-name="<?=$file["name"]?>" data-id="<?=$file["sourceId"]?>" data-ext="<?=$file["extension"]?>">
                     <div class="card">
                       <div class="card-content">
                         <span class="card-title"><?=$file["name"]?></span>
@@ -85,8 +85,14 @@ if(isset($_POST["ajax"])){
                       </div>
                       <div class="card-action">
                         <?php if($permission["edit"] == 1){ ?>
-                          <a class="waves-effect waves-light btn js-open-edit">edit</a>
-                          <a class="waves-effect waves-light btn js-delete-source">delete</a>
+                          <div class="row">
+                            <div class="col s6">
+                              <a class="waves-effect waves-light btn js-open-edit w100">edit</a>
+                            </div>
+                            <div class="col s6">
+                              <a class="waves-effect waves-light btn js-delete-source w100">delete</a>
+                            </div>
+                          </div>
                         <?php } ?>
                       </div>
                     </div>

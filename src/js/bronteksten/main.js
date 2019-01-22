@@ -23,10 +23,17 @@ function reloadElements(){
 
       //addes the edit buttons
       $(".card-action").each(function(){
+        var html = "";
+        html += '<div class="row">';
+        html += '  <div class="col s6">';
+        html += '    <a class="waves-effect waves-light btn js-open-edit w100">edit</a>';
+        html += '  </div>';
+        html += '  <div class="col s6">';
+        html += '    <a class="waves-effect waves-light btn js-delete-source w100">delete</a>';
+        html += '  </div>';
+        html += '</div>';
         if($(this).hasClass("perm")){
-          $(this) .html("")
-                  .append('<a class="waves-effect waves-light btn js-open-edit">edit</a>')
-                  .append('<a class="waves-effect waves-light btn js-delete-source">delete</a>')
+          $(this) .html(html)
                   .removeClass("perm");
           $(".js-open-edit").css("margin-right", "5px");
         };
