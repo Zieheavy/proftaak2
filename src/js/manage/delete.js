@@ -5,12 +5,22 @@ $('body').on('click', '.js-delete-college', function(){
   $.post("include/delete/deleteCollege.php",{
     collegeId: collegeId
   }, function(response,status){
+    console.log(response);
     if(response == "succes"){
       M.toast({ html: "Opleiding succesvol verwijderd",
                 classes: "toast--succes"});
-    }else{
+    }
+    else if (response == "mergedfiles") {
+      M.toast({ html: "Er zijn bestanden gekoppeld aan dit college, verwijder deze eerst",
+      classes: "toast--error"});
+    }
+    else if (response == "sourcefiles") {
+      M.toast({ html: "Er zijn bronbestanden gekoppeld aan dit college, verwijder deze eerst",
+      classes: "toast--error"});
+    }
+    else{
       M.toast({ html: "Er is iets fout gegaan bij het verwijderen van een nieuw opleiding",
-                classes: "toast--error"});
+      classes: "toast--error"});
     }
   });
 })
