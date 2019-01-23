@@ -21,3 +21,13 @@ body{
   position: relative;
   overflow: auto;
 }
+@include portrait{
+  .drag-container{
+    height: 30%;
+    width: 100% !important;
+    overflow-y: scroll;
+  }
+  .drop-container{
+    width: 100% !important;
+  }
+}

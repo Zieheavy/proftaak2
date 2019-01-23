@@ -171,7 +171,7 @@ function getFolder($ext){
       </div>
     </div>
     <div class="row">
-      <div class="col s6 l4">
+      <div class="col s6 l4 drag-container">
         <h4>Bestanden</h4>
         <?php foreach ($files as $key => $college): ?>
           <ul class="collapsible expandable noMargin" data-collapsible="accordion">
@@ -207,7 +207,7 @@ function getFolder($ext){
                                         <label for="pagenrs<?=$file['sourcefiles_id'].$random?>">Pagina's</label>
                                       </div>
                                     </div>
-                                    <div class="card-action file__links">
+                                    <div class="card-action file__links hide-on-small-only">
                                       <a class='dropdown-trigger btn w30' href='#' data-target=''>
                                         <i class="fa fa-download" aria-hidden="true"></i>
                                       </a>
@@ -231,6 +231,30 @@ function getFolder($ext){
                                         <label>Versie</label>
                                       </div>
                                     </div>
+                                    <div class="card-action file__links show-on-small hide-on-med-and-up">
+                                      <a class='dropdown-trigger btn w100' href='#' data-target=''>
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                      </a>
+                                      <ul class='dropdown-content'>
+                                        <li>
+                                          <a class="js-download-pdf" href="_pdf/<?=$file['sourcefile_name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.pdf" download>pdf</a>
+                                        </li>
+                                        <li>
+                                          <a class="js-download-doc" href="<?=$file['folder']?>/<?=$file['sourcefile_name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.<?=$file['extension']?>" download><?=$file['extension']?></a>
+                                        </li>
+                                      </ul>
+                                      <button class="btn js-delete-file w100">
+                                        <i class="material-icons">delete</i>
+                                      </button>
+                                      <div class="input-field w100">
+                                        <select class="js-version-select">
+                                          <?php foreach ($file['versions'] as $key => $version): ?>
+                                            <option value="<?=$version['version']?>"><?=$version['version']?></option>
+                                          <?php endforeach; ?>
+                                        </select>
+                                        <label>Versie</label>
+                                      </div>
+                                    </div>
                                   </div>
                                 </li>
                               <?php endforeach; ?>
@@ -246,7 +270,7 @@ function getFolder($ext){
           </ul>
         <?php endforeach; ?>
       </div>
-      <div class="col s6 l4">
+      <div class="col s6 l4 drop-container">
         <ul class="js-sortable-copy-target copy-target col-min-500" style="min-height: 200px" aria-dropeffect="move">
           <?php if(isset($itemArrays)){ foreach ($itemArrays["sources"] as $key => $file): ?>
             <li data-name="<?=$file['name']?>"
@@ -265,7 +289,7 @@ function getFolder($ext){
                     <label for="pagenrs<?=$file['sourceId'].$random?>">Pagina's</label>
                   </div>
                 </div>
-                <div class="card-action file__links">
+                <div class="card-action file__links hide-on-small-only">
                   <a class='dropdown-trigger btn w30' href='#' data-target=''>
                     <i class="fa fa-download" aria-hidden="true"></i>
                   </a>
@@ -282,6 +306,30 @@ function getFolder($ext){
                   </button>
                   <div class="input-field w30">
                     <select class="js-version-select js-version-getselect">
+                      <?php foreach ($file['versions'] as $key => $version): ?>
+                        <option <?=($file['version'] == $version['version']) ? "selected" : "" ?> value="<?=$version['version']?>"><?=$version['version']?></option>
+                      <?php endforeach; ?>
+                    </select>
+                    <label>Versie</label>
+                  </div>
+                </div>
+                <div class="card-action file__links show-on-small hide-on-med-and-up">
+                  <a class='dropdown-trigger btn w100' href='#' data-target=''>
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                  </a>
+                  <ul class='dropdown-content'>
+                    <li>
+                      <a class="js-download-pdf" href="_pdf/<?=$file['name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.pdf" download>pdf</a>
+                    </li>
+                    <li>
+                      <a class="js-download-doc" href="<?=$file['folder']?>/<?=$file['name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.<?=$file['extension']?>" download><?=$file['extension']?></a>
+                    </li>
+                  </ul>
+                  <button class="btn js-delete-file w100">
+                    <i class="material-icons">delete</i>
+                  </button>
+                  <div class="input-field w100">
+                    <select class="js-version-select">
                       <?php foreach ($file['versions'] as $key => $version): ?>
                         <option <?=($file['version'] == $version['version']) ? "selected" : "" ?> value="<?=$version['version']?>"><?=$version['version']?></option>
                       <?php endforeach; ?>

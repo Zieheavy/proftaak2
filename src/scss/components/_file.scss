@@ -24,6 +24,9 @@
       box-shadow: none;
       border: 0;
     }
+    & .file__links{
+      display: none !important;
+    }
   }
   &--dragged{
     & .file__pagenrs{

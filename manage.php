@@ -111,7 +111,7 @@ include 'include/get/getColleges.php';
       <div class="col s12">
         <?php foreach ($users as $key => $user): ?>
           <?php if ($_SESSION["userId"] != $user["id"]) { ?>
-            <div class="col xl6 l12">
+            <div class="col xl6 s12">
               <div class="card col s12" data-id="<?= $user["id"] ?>" data-name="<?= $user["username"] ?>">
                 <div class="card-content">
                   <span class="card-title"><?= $user["username"] ?></span>

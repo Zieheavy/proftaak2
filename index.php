@@ -64,13 +64,13 @@ if (isset($_GET['n'])) {
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="pass" type="text" class="validate js-pass" name="password">
+            <input id="pass" type="password" class="validate js-pass" name="password">
             <label class="active" for="pass">Wachtwoord</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="password2" type="text" class="validate js-passR" name="password2">
+            <input id="password2" type="password" class="validate js-passR" name="password2">
             <label class="active" for="password2">Heraal wachtwoord</label>
           </div>
         </div>
