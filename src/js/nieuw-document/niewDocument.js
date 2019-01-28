@@ -1,4 +1,4 @@
-removeUrlParameter("v");
+// removeUrlParameter("v");
 $('body').on('click', '.file__title', function(){
   var elem = $(this).closest('.file');
   var file = $(elem).data('name');

@@ -1,8 +1,12 @@
 <?php
+include 'include/get/getPermissions.php';
+
 $currentPage = explode("/",$_SERVER['PHP_SELF'])[2];
 $active = -1;
 $admin = -1;
 $verified = $_SESSION["verified"];
+$anyEditRights = false;
+$createDocument = false;
 
 //checks if you have permisons to verify a user or if you have permission to create a new college
 if($_SESSION["newcollege"] == 1 || $_SESSION["confirm"] == 1){
@@ -36,6 +40,16 @@ switch ($currentPage) {
     $active = -1;
     break;
 }
+
+foreach ($permissions as $key => $permission) {
+  if($permission["edit"] == 1){
+    $anyEditRights = true;
+    if($_SESSION["collegeId"] == $permission["colleges_id"]){
+      $createDocument = true;
+    }
+  }
+}
+
 ?>
 
 <nav>
@@ -47,8 +61,12 @@ switch ($currentPage) {
         <div>
           <!-- displays the active page  -->
           <li class="<?php if($active == 1) echo "active"; ?>"><a href="home.php">Home</a></li>
-          <li class="<?php if($active == 2) echo "active"; ?>"><a href="bronteksten.php">Bronteksten</a></li>
-          <li class="<?php if($active == 3) echo "active"; ?>"><a href="nieuw-document.php">Nieuw Document</a></li>
+          <?php if($anyEditRights == true){ ?>
+            <li class="<?php if($active == 2) echo "active"; ?>"><a href="bronteksten.php">Bronteksten</a></li>
+            <?php if($createDocument == true){ ?>
+              <li class="<?php if($active == 3) echo "active"; ?>"><a href="nieuw-document.php">Nieuw Document</a></li>
+            <?php } ?>
+          <?php } ?>
           <!-- only displays the cms page if you have the correct privilages -->
           <?php if ($admin == 1) { ?>
             <li class="<?php if($active == 4) echo "active"; ?>"><a href="manage.php">Manage</a></li>

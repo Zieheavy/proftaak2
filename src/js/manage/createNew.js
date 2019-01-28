@@ -15,7 +15,7 @@ $('body').on('click', '.js-new-college', function(){
         $('select').formSelect();
       });
     }else{
-      M.toast({ html: "Er is iets fout gegaan bij het aanmaken van een nieuw college",
+      M.toast({ html: "U heeft nog niet alle gebruikers of documenten verwijdern van dit college",
                 classes: "toast--error"});
     }
   });
@@ -34,7 +34,7 @@ $('body').on('click', '.js-new-course', function(){
       M.toast({ html: "Nieuwe opleiding succesvol aangemaakt",
                 classes: "toast--succes"});
     }else{
-      M.toast({ html: "Er is iets fout gegaan bij het aanmaken van een nieuw opleiding",
+      M.toast({ html: "U heeft nog niet alle gebruikers of documenten verwijdern van dit college",
                 classes: "toast--error"});
     }
   });

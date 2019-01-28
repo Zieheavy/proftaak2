@@ -142,6 +142,21 @@ function getFolder($ext){
   }
   return $folder;
 }
+
+$noPermissions = true;
+if(!isset($_GET["v"])){
+  foreach ($permissions as $key => $permission) {
+    if($permission["edit"] == 1){
+      if($_SESSION["collegeId"] == $permission["colleges_id"]){
+        $noPermissions = false;
+      }
+    }
+  }
+  if($noPermissions == true){
+    header("Location: home.php");
+    die("NO PERMSIOSNSONS");
+  }
+}
 ?>
 <html>
 <head>
@@ -152,7 +167,7 @@ function getFolder($ext){
   <div id="dragScrolTop" class="scroll scroll--top"></div>
   <div id="dragScrolBot" class="scroll scroll--bot"></div>
   <?php include 'partials/navigation.php'; ?>
-  <div class="container">
+  <div class="container" <?php if(isset($_GET["v"])){ echo "data-update='true'";} ?>>
     <div class="row hide-on-med-and-up show-on-medium-and-down">
       <div class="input-field col s12 m6">
         <?php if(!isset($itemArrays["name"])){?>
