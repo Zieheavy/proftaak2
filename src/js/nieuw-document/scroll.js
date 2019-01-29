@@ -21,8 +21,8 @@ $(sortable('.js-sortable-copy')).each(function(index, el) {
     $('.scroll').removeClass('scroll--show');
     var i = e.detail.item;
     var rnd = randomString2(10)
-    var dropdownTrigger = $(i).find('.dropdown-trigger');
-    var dropdownContent = $(i).find('.dropdown-content');
+    var dropdownTrigger = $(i).find('.dropdown-download-trigger');
+    var dropdownContent = $(i).find('.dropdown-download-content');
     var versionSelect = $(i).find('.js-version-select');
 
     var random = randomString2(15);
@@ -54,8 +54,6 @@ $(sortable('.js-sortable-copy')).each(function(index, el) {
       docSrc = docSrc.replace('.' + ext, '');
       docSrc = docSrc.slice(0, -1) + newVersion + "." + ext;
       $(fileElem).find('.js-download-doc').attr('href', docSrc);
-
-      // TODO: DOWNLOAD BUTTON LINK FIX
     });
   });
 });

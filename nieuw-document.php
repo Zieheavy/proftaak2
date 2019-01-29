@@ -223,10 +223,10 @@ if(!isset($_GET["v"])){
                                       </div>
                                     </div>
                                     <div class="card-action file__links hide-on-small-only">
-                                      <a class='dropdown-trigger btn w30' href='#' data-target=''>
+                                      <a class='dropdown-trigger btn w30 dropdown-download-trigger' href='#' data-target=''>
                                         <i class="fa fa-download" aria-hidden="true"></i>
                                       </a>
-                                      <ul class='dropdown-content'>
+                                      <ul class='dropdown-content dropdown-download-content'>
                                         <li>
                                           <a class="js-download-pdf" href="_pdf/<?=$file['sourcefile_name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.pdf" download>pdf</a>
                                         </li>
