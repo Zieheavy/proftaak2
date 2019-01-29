@@ -9,12 +9,14 @@ $filename = $temp[0];
 $extension = $temp[1];
 unset($temp);
 $folder = getFolder($extension);
-
+if ($folder == "DIE") {
+  echo $filename . "." . $extension;
+  die();
+}
 $userId = $_SESSION['userId'];
 $collegeId = $_POST["college"];
 $courseId = $_POST["course"];
 $dateLong = date("d-m-Y H:i:s");
-
 // If there is something wrong with the uploading of a file it just fucking dies
 if ($_FILES['file']['error'] != 0){
   echo "Something whent Wrong";
@@ -81,6 +83,9 @@ function getFolder($extension){
     $folder .= "_docs/";
   }else if($extension == "pdf"){
     $folder .= "_pdf/";
+  }
+  else {
+    $folder = "DIE";
   }
   return $folder;
 }
