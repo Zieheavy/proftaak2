@@ -2,6 +2,7 @@
 
 include '../database.php';
 include '../db.php';
+include '../functions.php';
 
 $userid = $_POST["userId"];
 
@@ -10,7 +11,6 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param('i', $userid);
 $stmt->execute();
 $stmt->close();
-
 //gets source files
 $sql = "SELECT id FROM `sourcefiles` WHERE users_id = ?";
 $stmt = $conn->prepare($sql);
@@ -79,7 +79,6 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC))
   $stmt2->bind_param('i', $row["id"]);
   $stmt2->execute();
   $stmt2->close();
-  echo "mid point";
 
   //delets the mergedfiles
   $sql2 = "DELETE FROM `mergedfiles` WHERE id = ?";
@@ -95,5 +94,5 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param('i', $userid);
 $stmt->execute();
 $stmt->close();
-
+echo "succes";
  ?>

@@ -1,5 +1,6 @@
 $('.drp').dropdown();
-$('.version').formSelect();
+// $('.version').formSelect();
+$('.js-version-select').formSelect();
 M.updateTextFields();
 sortable('.js-sortable-copy', {
   forcePlaceholderSize: true,
@@ -23,7 +24,7 @@ $(sortable('.js-sortable-copy')).each(function(index, el) {
     var rnd = randomString2(10)
     var dropdownTrigger = $(i).find('.dropdown-download-trigger');
     var dropdownContent = $(i).find('.dropdown-download-content');
-    var versionSelect = $(i).find('.js-version-select');
+    var versionSelect = $(i).find('.js-version-select-drag');
 
     var random = randomString2(15);
     var inputContainer = $(i).closest("li").find(".file__pagenrs");
