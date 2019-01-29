@@ -5,6 +5,7 @@ $(document).ready(function(){
   var param = getUrlParameter("s");
   //gets the correct error message returned from include/login.php
   if(param >= 0){
+    var toastLength = 2000;
     switch (param) {
       case "1":
         message = 'Gebruikernaam of Wachtwoord is incorrect';
@@ -38,12 +39,17 @@ $(document).ready(function(){
         message = 'Het wachtwoordmoet langer dan 6 tekens zijn';
         type = 'toast--error';
         break;
+      case "9":
+        message = 'Je account is geregistreerd, het moet nog geverifieerd worden door een gebruiker met de permissies';
+        type = 'toast--succes';
+        toastLength = 4000;
+        break;
       default:
         message = 'default message';
         type = 'toast--info';
         break;
     }
-    M.toast({html: message, classes: type, displayLength: 2000});
+    M.toast({html: message, classes: type, displayLength: toastLength});
     removeUrlParameter("s");
     removeUrlParameter("e");
     removeUrlParameter("n");

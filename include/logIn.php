@@ -66,10 +66,8 @@ if (isset($_POST['registerSub'])) {
     $stmt->bind_param('ss', $name, $passE);
     $stmt->execute();
     $stmt->close();
-
-    login($name, $pass);
-    echo "sdsdfsdf";
-    header("Location: ../index.php");
+    echo "Succesfully created user";
+    header("Location: ../index.php?s=9");
   }
   else{
     echo "userExists";
