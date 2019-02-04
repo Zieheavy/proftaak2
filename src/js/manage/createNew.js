@@ -6,7 +6,14 @@ $('body').on('click', '.js-new-college', function(){
     name: name
   }, function(response,status){
     if(response == "succes"){
-      M.toast({html: "Nieuw college succesvol aangemaakt", classes: "toast--succes"});
+      M.toast({
+        html: "Nieuw college succesvol aangemaakt",
+        classes: "toast--succes",
+        displayLength: 1500,
+        completeCallback: function () {
+          window.location.reload();
+        }
+      });
       $.post("include/get/getColleges.php",{
         ajax: true
       }, function(response,status){
@@ -31,8 +38,14 @@ $('body').on('click', '.js-new-course', function(){
     collegeId: collegeId
   }, function(response,status){
     if(response == "succes"){
-      M.toast({ html: "Nieuwe opleiding succesvol aangemaakt",
-                classes: "toast--succes"});
+      M.toast({
+        html: "Nieuwe opleiding succesvol aangemaakt",
+        classes: "toast--succes",
+        displayLength: 1500,
+        completeCallback: function () {
+          window.location.reload();
+        }
+      });
     }else{
       M.toast({ html: "U heeft nog niet alle gebruikers of documenten verwijdern van dit college",
                 classes: "toast--error"});

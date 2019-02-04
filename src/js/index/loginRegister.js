@@ -90,7 +90,7 @@ $('.js-formsubmit').submit( function(ev) {
       return;
     break;
   }
-  $(this).append('<input type="text" name="registerSub" value="1"></input>');
+  $(this).append('<input class="disnone" type="text" name="registerSub" value="1"></input>');
   $(this).unbind('submit').submit();
 
 });

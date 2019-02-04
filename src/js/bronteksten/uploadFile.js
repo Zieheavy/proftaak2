@@ -84,6 +84,7 @@ Upload.prototype.doUpload = function () {
       return myXhr;
     },
     success: function (data) {
+      console.log(data);
       var extension = data.split(".");
       //checks if the file is not a pdf
       if(extension[1] != "pdf"){
@@ -117,6 +118,11 @@ Upload.prototype.doUpload = function () {
               M.toast({html: "Er is iets fout gegaan tijdens het uploaden van " + extension[0], classes: "toast--error"});
             }
           })
+        }
+        else {
+          amountUploaded++;
+          handleWorkingMessage();
+          M.toast({html: "Het bestand " + extension[0] + " heeft een ongeldig bestandstype", classes: "toast--error"});
         }
       }else{
         amountUploaded++;

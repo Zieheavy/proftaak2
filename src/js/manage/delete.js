@@ -8,7 +8,12 @@ $('body').on('click', '.js-delete-college', function(){
     console.log(response);
     if(response == "succes"){
       M.toast({ html: "Opleiding succesvol verwijderd",
-                classes: "toast--succes"});
+                classes: "toast--succes",
+                displayLength: 1500,
+                completeCallback: function () {
+                  window.location.reload();
+                }
+              });
     }
     else if (response == "mergedfiles") {
       M.toast({ html: "Er zijn bestanden gekoppeld aan dit college, verwijder deze eerst",
@@ -34,7 +39,12 @@ $('body').on('click', '.js-delete-course', function(){
   }, function(response,status){
     if(response == "succes"){
       M.toast({ html: "Opleiding succesvol verwijderd",
-                classes: "toast--succes"});
+                classes: "toast--succes",
+                displayLength: 1500,
+                completeCallback: function () {
+                  window.location.reload();
+                }
+            });
     }else{
       M.toast({ html: "Er is iets fout gegaan bij het verwijderen van een nieuw opleiding",
                 classes: "toast--error"});
@@ -52,5 +62,13 @@ $('body').on("click", ".js-delete-user", function(){
     userId: userid
   },function(response,status){
     console.log(response);
+    if(response == "succes"){
+      M.toast({ html: "Gebruiker succesvol verwijderd",
+                classes: "toast--succes"});
+      $(cardContainer).remove();
+    }else{
+      M.toast({ html: "Er is iets fout gegaan bij het verwijderen van een gebruiker",
+                classes: "toast--error"});
+    }
   });
 });

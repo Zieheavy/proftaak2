@@ -1,5 +1,6 @@
 $('.drp').dropdown();
-$('.version').formSelect();
+// $('.version').formSelect();
+$('.js-version-select').formSelect();
 M.updateTextFields();
 sortable('.js-sortable-copy', {
   forcePlaceholderSize: true,
@@ -21,9 +22,9 @@ $(sortable('.js-sortable-copy')).each(function(index, el) {
     $('.scroll').removeClass('scroll--show');
     var i = e.detail.item;
     var rnd = randomString2(10)
-    var dropdownTrigger = $(i).find('.dropdown-trigger');
-    var dropdownContent = $(i).find('.dropdown-content');
-    var versionSelect = $(i).find('.js-version-select');
+    var dropdownTrigger = $(i).find('.dropdown-download-trigger');
+    var dropdownContent = $(i).find('.dropdown-download-content');
+    var versionSelect = $(i).find('.js-version-select-drag');
 
     var random = randomString2(15);
     var inputContainer = $(i).closest("li").find(".file__pagenrs");
@@ -54,8 +55,6 @@ $(sortable('.js-sortable-copy')).each(function(index, el) {
       docSrc = docSrc.replace('.' + ext, '');
       docSrc = docSrc.slice(0, -1) + newVersion + "." + ext;
       $(fileElem).find('.js-download-doc').attr('href', docSrc);
-
-      // TODO: DOWNLOAD BUTTON LINK FIX
     });
   });
 });

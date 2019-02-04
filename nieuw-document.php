@@ -223,10 +223,10 @@ if(!isset($_GET["v"])){
                                       </div>
                                     </div>
                                     <div class="card-action file__links hide-on-small-only">
-                                      <a class='dropdown-trigger btn w30' href='#' data-target=''>
+                                      <a class='dropdown-trigger btn w30 dropdown-download-trigger' href='#' data-target=''>
                                         <i class="fa fa-download" aria-hidden="true"></i>
                                       </a>
-                                      <ul class='dropdown-content'>
+                                      <ul class='dropdown-content dropdown-download-content'>
                                         <li>
                                           <a class="js-download-pdf" href="_pdf/<?=$file['sourcefile_name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.pdf" download>pdf</a>
                                         </li>
@@ -238,7 +238,7 @@ if(!isset($_GET["v"])){
                                         <i class="material-icons">delete</i>
                                       </button>
                                       <div class="input-field w30">
-                                        <select class="js-version-select">
+                                        <select class="js-version-select-drag">
                                           <?php foreach ($file['versions'] as $key => $version): ?>
                                             <option value="<?=$version['version']?>"><?=$version['version']?></option>
                                           <?php endforeach; ?>
@@ -305,10 +305,11 @@ if(!isset($_GET["v"])){
                   </div>
                 </div>
                 <div class="card-action file__links hide-on-small-only">
-                  <a class='dropdown-trigger btn w30' href='#' data-target=''>
+                  <?php $rnd = randomString(); ?>
+                  <a class='dropdown-trigger drp btn w30' href='#' data-target='<?=$rnd?>'>
                     <i class="fa fa-download" aria-hidden="true"></i>
                   </a>
-                  <ul class='dropdown-content'>
+                  <ul class='dropdown-content' id="<?=$rnd?>">
                     <li>
                       <a class="js-download-pdf" href="_pdf/<?=$file['name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.pdf" download>pdf</a>
                     </li>
@@ -329,10 +330,11 @@ if(!isset($_GET["v"])){
                   </div>
                 </div>
                 <div class="card-action file__links show-on-small hide-on-med-and-up">
-                  <a class='dropdown-trigger btn w100' href='#' data-target=''>
+                  <?php $rnd = randomString(); ?>
+                  <a class='dropdown-trigger drp btn w100' href='#' data-target='<?=$rnd?>'>
                     <i class="fa fa-download" aria-hidden="true"></i>
                   </a>
-                  <ul class='dropdown-content'>
+                  <ul class='dropdown-content' id="<?=$rnd?>">
                     <li>
                       <a class="js-download-pdf" href="_pdf/<?=$file['name']?>_<?=$file['versions'][count($file['versions']) - 1]['version']?>.pdf" download>pdf</a>
                     </li>
