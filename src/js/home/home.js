@@ -25,10 +25,23 @@ $(document).on('change', '.js-versionSelect', function() {
 //open a confirm modal so the user can confirm that a item wil be deleted
 $('body').on('click', '.js-delete-merged', function(){
   mergedId = $(this).data('mergedid');
-  confirmModal( "Weet u het zeker?",
-                "Dit bestand zal permanent verwijderd worden",
-                "js-delete-merged-confirmed");
+  // confirmModal( "Weet u het zeker?",
+  //               "Dit bestand zal permanent verwijderd worden",
+  //               "js-delete-merged-confirmed");
+
+  var toastHTML =  '<span>Weet u zeker dat u een bron bestand wilt verwijderen'
+      toastHTML += '</span><button class="btn-flat toast-action js-delete-merged-confirmed">yes</button>'
+      toastHTML += '<button class="btn-flat toast-action js-toast-no">no</button>';
+  if($('.js-toast-confirm').length <= 0){
+    //displays confirm message
+    M.toast({html: toastHTML, displayLength: 10000, classes:"js-toast-confirm"});
+  }
 });
+
+$('body').on('click','.js-toast-no',function(){
+  M.Toast.getInstance($(".js-toast-confirm")).dismiss();
+})
+
 //if the user has pressed confirm deletes the item from the database and server
 $('body').on('click', '.js-delete-merged-confirmed', function(){
   $.post("include/delete/deleteMerged.php",{
@@ -37,6 +50,7 @@ $('body').on('click', '.js-delete-merged-confirmed', function(){
     console.log(response);
     if (response == "succes") {
       $('#' + mergedId).remove();
+      M.Toast.getInstance($(".js-toast-confirm")).dismiss();
       M.toast({html: 'Succes', classes: 'toast--succes'});
       $('.js-confirm-modal').modal("close");
     }
