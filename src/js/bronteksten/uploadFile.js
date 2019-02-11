@@ -32,6 +32,7 @@ $("body").on("click", ".js-upload", function(){
   amountToUpload = 1;
   amountUploaded = 0;
   M.toast({html: "Bestanden worden omgezet"  + getLoaderHTML(), classes: "toast--info js-toast-warning", displayLength: 99999999});
+  console.log("upload name: ", file[0].name, ",    filetoedit: ", fileToEdit);
   if(file[0].name != fileToEdit){
     amountUploaded = 1;
     handleWorkingMessage();
@@ -47,8 +48,10 @@ $("body").on("click", ".js-upload", function(){
 //opens the edit modal
 $("body").on("click", ".js-open-edit", function(){
   $('#editModal').modal('open');
-  var container = $(this).closest(".col")
-  fileToEdit = container.data("name") + "." + container.data("ext");
+  var container = $(this).closest(".js-source-files")
+  console.log(container);
+  fileToEdit = container.data("name") + "." + container.data("ext")
+  console.log(fileToEdit);;
 })
 
 // //////////////////////////////
